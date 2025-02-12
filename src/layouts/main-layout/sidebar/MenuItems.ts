@@ -39,6 +39,13 @@ const generateMenuItems = (): IMenuitems[] => [
   },
   {
     id: uniqueId(),
+    title: i18next.t("MasterData"),
+    icon: HomeIcon,
+    href: paths.masterData,
+    available: true,
+  },
+  {
+    id: uniqueId(),
     title: i18next.t("Packages"),
     icon: OrderIcon,
     href: paths.packages,

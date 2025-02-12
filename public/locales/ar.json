@@ -87,9 +87,10 @@
                  "Sub-Admins":"المديرين الفرعيين","addSub-Admins":"اضافة مدير فرعى",
                  "Recommendations":"التوصيات",
                  "add-Recommendations":"اضافة توصية"
+,
 
-
-
+                 "MasterData":"البيانات الرئيسية",
+                 "addCompany":"اضافة شركة"
 
       
   }

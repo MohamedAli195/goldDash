@@ -11,6 +11,7 @@ export const rootPaths = {
 const paths = {
   default: `${rootPaths.root}`,
   categories: `${rootPaths.pagesRoot}categories`,
+  masterData: `${rootPaths.pagesRoot}masterData`,
   packages: `${rootPaths.pagesRoot}packages`,
   products: `${rootPaths.pagesRoot}products`,
   customers: `${rootPaths.pagesRoot}customers`,

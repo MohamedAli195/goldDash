@@ -24,6 +24,7 @@ import { selectUserToken } from 'app/features/user/userSlice';
 import RecommendationsPage from 'pages/recommendationsPage';
 import ViewRecommendationsForm from 'components/viewRecomendationsForm';
 import RecommendationsDetails from 'pages/recommendationsPage/recommendationsDetails';
+import MasterDataPage from 'pages/masterData';
 
 
 // Lazy-loaded components
@@ -49,7 +50,8 @@ const NotFoundPage = lazy(() => import('pages/not-found'));
 // const token = useAppSelector((state)=>state.user.token)
 
 // const token =selectUserToken((state:RootState)=>state.user.token)
-const isLoggedIn = localStorage.getItem("token") ? Boolean(localStorage.getItem("token")) :false
+// const isLoggedIn = localStorage.getItem("token") ? Boolean(localStorage.getItem("token")) :false
+const isLoggedIn = true
 
 
 console.log("isLoggedIn",isLoggedIn)
@@ -85,14 +87,14 @@ export const routes = [
               </ProtectedRoute>
             ),
           },
-          // {
-          //   path: paths.products,
-          //   element: (
-          //     <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-          //       <ProductsPage />
-          //     </ProtectedRoute>
-          //   ),
-          // },
+          {
+            path: paths.masterData,
+            element: (
+              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
+                <MasterDataPage />
+              </ProtectedRoute>
+            ),
+          },
           {
             path: paths.customers,
             element: (
