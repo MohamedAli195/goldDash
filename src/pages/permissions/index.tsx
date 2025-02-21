@@ -4,8 +4,8 @@ import Paper from '@mui/material/Paper';
 import { useQuery } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import BasicModal from 'components/modal/ShareModal';
-import AddPackageForm from 'components/addPacageForm';
-import UpdatePackageForm from 'components/updatePacageForm';
+
+import UpdatePermissionsForm from 'components/updatePermissionsForm';
 // import { fetchPackages } from './packagesFunct';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -224,7 +224,7 @@ console.log(data)
       {/* update modal */}
       <BasicModal open={openU} handleClose={handleCloseU}>
         <h2>{t('editPackage')}</h2>
-        <UpdatePackageForm
+        <UpdatePermissionsForm
           handleClose={handleCloseU}
           refetch={refetch}
           id={tempIdUpdate}

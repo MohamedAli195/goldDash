@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
 import { Box, Button, Stack, TextField } from '@mui/material';
 import axios from 'axios';
+import InputFileUpload from 'components/UploadImage';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
 
 import { CloudUpload } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { fetchOne } from 'functions';
+// import { fetchPackage } from 'pages/packages/packagesFunct';
+
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -18,6 +23,7 @@ const VisuallyHiddenInput = styled('input')({
   whiteSpace: 'nowrap',
   width: 1,
 });
+
 interface IFormInput {
   name: {
     en: string;
@@ -28,18 +34,30 @@ interface IFormInput {
   price: string;
 }
 
-function AddPackageForm({ handleClose, refetch }: { handleClose: () => void; refetch: () => void }) {
-  const [fileName, setFileName] = useState<string | null>(null); // State to store the selected file name
+function UpdatePermissionsForm({
+  handleClose,
+  refetch,
+  id,
+}: {
+  handleClose: () => void;
+  refetch: () => void;
+
+  id: number;
+}) {
+  const { register, setValue, handleSubmit, watch } = useForm<IFormInput>();
   const { t } = useTranslation();
+  const url = import.meta.env.VITE_API_URL;
+  // Fetch packages using React Query
+  const { data, error, isLoading, isError } = useQuery({
+    queryKey: [`packages-${id}`],
+    queryFn: () => fetchOne(id,'packages'),
+  });
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<IFormInput>();
-  const [preview, setPreview] = useState<string | null>(null);
-
+  // const [previewImage, setPreviewImage] = useState<string | null>(data?.data?.image|| null);
+  // const selectedImage = watch('image');
+  const ImageFromApi = data?.data?.image;
+  // console.log(ImageFromApi);
+  const [preview, setPreview] = useState<string | undefined | null>(ImageFromApi);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -50,48 +68,67 @@ function AddPackageForm({ handleClose, refetch }: { handleClose: () => void; ref
       reader.readAsDataURL(file);
     }
   };
-  const selectedImage = watch('image');
-  const url = import.meta.env.VITE_API_URL;
-  
 
-  const onSubmitPackage: SubmitHandler<IFormInput> = async (data) => {
+  // if (isLoading) return <p>Loading...</p>;
+  // if (isError) return <p>Error: {error.message}</p>;
+
+  // console.log(data.data.image)
+
+  useEffect(() => {
+    if (data) {
+      setValue('name.en', data?.data?.name.en);
+      setValue('name.ar', data?.data?.name.ar);
+      setValue('name.fr', data?.data?.name.fr);
+      setValue('price', data?.data?.price);
+    }
+  }, [data?.data, setValue]);
+
+  // useEffect(() => {
+  //   if (selectedImage && selectedImage.length > 0) {
+  //     const file = selectedImage[0];
+  //     setPreviewImage(URL.createObjectURL(file));
+  //   }
+  // }, [selectedImage]);
+
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
-      // Create a FormData object and append the data
       const formData = new FormData();
       formData.append('name[en]', data.name.en);
       formData.append('name[ar]', data.name.ar);
-      formData.append('name[fr]', data.name.fr);
-      formData.append('image', data.image[0]);
+      formData.append('name[fr]', data.name.ar);
       formData.append('price', data.price);
 
-      // Define headers with the token
+      if (data.image && data.image.length > 0) {
+        formData.append('image', data.image[0]);
+      }
+
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'multipart/form-data',
       };
 
       const response = await axios.post(
-        `${url}/admin/packages`,
+        `${url}/admin/packages/${id}/update`,
         formData,
-        { headers }
+        { headers },
       );
 
-      toast.success('Package added successfully');
-      handleClose();
+      toast.success(t('Package updated successfully'));
       refetch();
+      handleClose();
     } catch (err) {
-      // console.error('Error signing in:', err);
-      toast.error('Failed to add package, please check your input.');
+      // console.error('Error updating package:', err);
+      toast.error(t('Failed to update package, please check your input.'));
     }
   };
 
   return (
-  <Box
+    <Box
       sx={{
         mt: { sm: 5, xs: 2.5 },
       }}
       component="form"
-      onSubmit={handleSubmit(onSubmitPackage)}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <Stack spacing={3}>
         <Stack flexDirection={'row'} gap={2}>
@@ -173,4 +210,4 @@ function AddPackageForm({ handleClose, refetch }: { handleClose: () => void; ref
   );
 }
 
-export default AddPackageForm;
+export default UpdatePermissionsForm;

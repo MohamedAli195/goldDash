@@ -5,25 +5,10 @@ import { lazy, Suspense } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import paths, { rootPaths } from './path';
 import ProtectedRoute from 'components/protectedRoute/ProtectedRoute';
-import PackagesPage from 'pages/packages';
-import PackageDetails from 'pages/packages/PackageDetails';
+
 import CategoriesDetails from 'pages/categories/CategoriesDetails';
-import CoursesPage from 'pages/courses';
-import AddCoursePage from 'pages/courses/AddCoursePage';
-import CourseDetails from 'pages/courses/CourseDetails';
-import AddCourseLectuerPage from 'pages/courses/AddCourseLectuerPage';
-import CourseUpdate from 'pages/courses/CourseUpdate';
-import UpdateLectuerForm from 'components/updateLectuerForm';
-import LectuerDetails from 'components/lectuerTable/LectuerDetails';
-import ViewCustomer from 'components/ViewCustomer';
 import PermissionsPage from 'pages/permissions';
 import SubAdminsPage from 'pages/subadmins';
-import { useSelector } from 'react-redux';
-import { useAppSelector } from 'app/store';
-import { selectUserToken } from 'app/features/user/userSlice';
-import RecommendationsPage from 'pages/recommendationsPage';
-import ViewRecommendationsForm from 'components/viewRecomendationsForm';
-import RecommendationsDetails from 'pages/recommendationsPage/recommendationsDetails';
 import MasterDataPage from 'pages/masterData';
 
 
@@ -35,13 +20,8 @@ const SignUpPage = lazy(() => import('pages/authentication/register'));
 const ForgotPasswordPage = lazy(() => import('pages/authentication/forgot-password'));
 const PasswordResetPage = lazy(() => import('pages/authentication/reset-password'));
 const CategoriesPage = lazy(() => import('pages/categories'));
-const OrdersPage = lazy(() => import('pages/orders'));
 const Dashboard = lazy(() => import('pages/dashboard/index'));
 // const ProductsPage = lazy(() => import('pages/products'));
-const CustomersPage = lazy(() => import('pages/customers'));
-const ReportsPage = lazy(() => import('pages/reports'));
-const CouponsPage = lazy(() => import('pages/coupons'));
-const InboxPage = lazy(() => import('pages/inbox'));
 const NotFoundPage = lazy(() => import('pages/not-found'));
 
 
@@ -95,64 +75,9 @@ export const routes = [
               </ProtectedRoute>
             ),
           },
-          {
-            path: paths.customers,
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <CustomersPage isDashBoard={false} />
-              </ProtectedRoute>
-            ),
-          },
-          
-          {
-            path: paths.orders,
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-              <OrdersPage isDashBoard={false} />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: paths.reports,
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <ReportsPage />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: paths.coupons,
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <CouponsPage />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: paths.courses,
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <CoursesPage isDashBoard={false}/>
-              </ProtectedRoute>
-            ),
-          },
 
-          {
-            path: `${paths.courses}/add`,
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <AddCoursePage />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: `${paths.courses}/:id/add-lectuer`,
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <AddCourseLectuerPage />
-              </ProtectedRoute>
-            ),
-          },
+          
+
           {
             path: paths.permissions,
             element: (
@@ -161,43 +86,12 @@ export const routes = [
               </ProtectedRoute>
             ),
           },
-          {
-            path: paths.recommendations,
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <RecommendationsPage isDashBoard={false}/>
-              </ProtectedRoute>
-            ),
-          },
+
           {
             path: paths.subAdmins,
             element: (
               <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
                 <SubAdminsPage isDashBoard={false}/>
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: paths.inbox,
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <InboxPage />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: paths.packages, // Fixed typo
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <PackagesPage isDashBoard={false} />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: `${paths.packages}/:id`, // Fixed typo
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <PackageDetails />
               </ProtectedRoute>
             ),
           },
@@ -209,55 +103,8 @@ export const routes = [
               </ProtectedRoute>
             ),
           },
-          {
-            path: `${paths.courses}/:id`, // Fixed typo
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <CourseDetails />
-              </ProtectedRoute>
-            ),
-          },
+          
 
-          {
-            path: `${paths.courses}/update/:id`, // Fixed typo
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <CourseUpdate />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: `${paths.lectuers}/:id`, // Fixed typo
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <LectuerDetails />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: `${paths.lectuers}/update/:id`, // Fixed typo
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <UpdateLectuerForm />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: `${paths.customers}/:id`,
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <ViewCustomer />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: `${paths.recommendations}/:id`,
-            element: (
-              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <RecommendationsDetails />
-              </ProtectedRoute>
-            ),
-          },
         ],
       },
       {

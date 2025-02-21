@@ -1,5 +1,5 @@
 import { Box, Grid } from '@mui/material';
-import PageHeader from 'components/common/PageHeader';
+// import PageHeader from 'components/common/PageHeader';
 // import TeamMembers from 'components/sections/dashboard/members/TeamMembers';
 // import OrdersSection from 'components/sections/dashboard/orders/OrdersSection';
 // import ProgressTracker from 'components/sections/dashboard/progressTracker/ProgressTracker';
@@ -11,12 +11,12 @@ import StatisticsCards from 'components/sections/dashboard/statistics/StatisticC
 // import TransactionTable from 'components/sections/dashboard/transactions/TransactionTable';
 import { checkPermissions } from 'functions';
 // import CategoriesPage from 'pages/categories';
-import CoursesPage from 'pages/courses';
-import CustomersPage from 'pages/customers';
+
 // import PackagesPage from 'pages/packages';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Ipermisson } from "interfaces";
+import PageHeader from 'components/common/PageHeader';
 const Dashboard = () => {
 
   // const storedPermissions= JSON.parse(localStorage.getItem('permissions'));
@@ -46,7 +46,7 @@ if (storedPermissions) {
         pb: 1,
       }}
     >
-      <PageHeader>{t("dashboard")}</PageHeader>
+      <PageHeader>{t('dashboard')}</PageHeader>
       {/* /* ------------- Stats section ---------------- */}
 
       <Grid container spacing={3} mt={1} mb={3}>
@@ -64,21 +64,19 @@ if (storedPermissions) {
         </Grid>
       </Grid> */}
       {/* /* ------------- Table section ---------------- */}
-      
-        
-          <Grid container spacing={3} mb={3}>
+
+{/*
+      <Grid container spacing={3} mb={3}>
         <Grid item xs={12} xl={6} zIndex={1}>
-          
           <CoursesPage isDashBoard={true} />
         </Grid>
         <Grid item xs={12} xl={6}>
-          <CustomersPage  isDashBoard={true}/>
+          <CustomersPage isDashBoard={true} />
         </Grid>
-       
       </Grid>
+      */}
 
-      
-{/* 
+      {/* 
       <Grid container spacing={3} mb={3}>
         <Grid item xs={12} xl={6} zIndex={1}>
           

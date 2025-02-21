@@ -44,21 +44,7 @@ const generateMenuItems = (): IMenuitems[] => [
     href: paths.masterData,
     available: true,
   },
-  {
-    id: uniqueId(),
-    title: i18next.t("Packages"),
-    icon: OrderIcon,
-    href: paths.packages,
-    chipColor: 'secondary',
-    available: false,
-  },
-  {
-    id: uniqueId(),
-    title: i18next.t("Courses"),
-    icon: ProductsIcon,
-    href: paths.courses,
-    available: false,
-  },
+
   {
     id: uniqueId(),
     title: i18next.t("Categories"),
@@ -68,26 +54,11 @@ const generateMenuItems = (): IMenuitems[] => [
   },
   {
     id: uniqueId(),
-    title: i18next.t("Orders"),
-    icon: InboxIcon,
-    href: paths.orders,
-    available: false,
-  },
-  {
-    id: uniqueId(),
-    title: i18next.t("Customers"),
-    icon: CustomersIcon,
-    href: paths.customers,
-    available: false,
-  },
-  {
-    id: uniqueId(),
     title: i18next.t("Permissions"),
     icon: CustomersIcon,
     href: paths.permissions,
     available: false,
   },
-
   {
     id: uniqueId(),
     title: i18next.t("Sub-Admins"),
@@ -95,13 +66,7 @@ const generateMenuItems = (): IMenuitems[] => [
     href: paths.subAdmins,
     available: false,
   },
-  {
-    id: uniqueId(),
-    title: i18next.t("Recommendations"),
-    icon: CustomersIcon,
-    href: paths.recommendations,
-    available: false,
-  },
+
   
 ];
 
