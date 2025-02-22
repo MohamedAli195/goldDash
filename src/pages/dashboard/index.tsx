@@ -15,30 +15,28 @@ import { checkPermissions } from 'functions';
 // import PackagesPage from 'pages/packages';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Ipermisson } from "interfaces";
+import { Ipermisson } from 'interfaces';
 import PageHeader from 'components/common/PageHeader';
 const Dashboard = () => {
-
   // const storedPermissions= JSON.parse(localStorage.getItem('permissions'));
-// const [parsedDataRec,setParsedDataRec]=useState()
+  // const [parsedDataRec,setParsedDataRec]=useState()
   const storedPermissions = localStorage.getItem('permissions');
-  
-  let parsedData:Ipermisson[];
-if (storedPermissions) {
-  parsedData = JSON.parse(storedPermissions);
-    // console.log(parsedData);
-} else {
-    console.log('No data found!');
-}
 
-// console.log(parsedData)
+  let parsedData: Ipermisson[];
+  if (storedPermissions) {
+    parsedData = JSON.parse(storedPermissions);
+    // console.log(parsedData);
+  } else {
+    console.log('No data found!');
+  }
+
+  // console.log(parsedData)
 
   const { t, i18n } = useTranslation();
   useEffect(() => {
     document.documentElement.lang = i18n.language;
-    document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
-    console.log(parsedData)
-    
+    document.documentElement.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
+    console.log(parsedData);
   }, [i18n.language]);
   return (
     <Box
@@ -65,7 +63,7 @@ if (storedPermissions) {
       </Grid> */}
       {/* /* ------------- Table section ---------------- */}
 
-{/*
+      {/*
       <Grid container spacing={3} mb={3}>
         <Grid item xs={12} xl={6} zIndex={1}>
           <CoursesPage isDashBoard={true} />
@@ -100,6 +98,7 @@ if (storedPermissions) {
         </Grid>
       </Grid> */}
       {/* /* ------------- Table section ---------------- * */}
+
     </Box>
   );
 };

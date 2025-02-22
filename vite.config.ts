@@ -3,12 +3,14 @@ import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
+import tailwindcss from '@tailwindcss/vite'
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
     chunkSizeWarningLimit: 10000, // Set limit to 1000 kB (1 MB)
   },
   plugins: [
+    tailwindcss(),
     react(),
     tsconfigPaths(),
     checker({
