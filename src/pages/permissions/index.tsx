@@ -111,7 +111,7 @@ function PermissionsPage({isDashBoard}:IProps) {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => navigate(`${paths.default}/${params.row.id}`)}
+            // onClick={() => navigate(`${paths.default}/${params.row.id}`)}
           >
       
             <Eye />
