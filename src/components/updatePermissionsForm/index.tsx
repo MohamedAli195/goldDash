@@ -1,6 +1,5 @@
 import { Box, Button, Stack, TextField } from '@mui/material';
 import axios from 'axios';
-import InputFileUpload from 'components/UploadImage';
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';

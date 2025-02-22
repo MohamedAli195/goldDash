@@ -111,9 +111,9 @@ function PermissionsPage({isDashBoard}:IProps) {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => navigate(`${paths.packages}/${params.row.id}`)}
+            onClick={() => navigate(`${paths.default}/${params.row.id}`)}
           >
-            {/* {t('view')} */}
+      
             <Eye />
           </Button>
           <Button variant="contained" color="info" onClick={() => handleEditOpen(params.row)}>
