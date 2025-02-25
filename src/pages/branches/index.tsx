@@ -23,6 +23,7 @@ import { deleteAnyThingGold, fetchAllDataGold } from 'functionsWork';
 import UpdateBrancheForm from 'components/Branches/UpdateBrancheForm/UpdateBrancheForm';
 
 import BranchTable from 'components/Branches/BranchTable';
+import PaginationComponent from 'components/common/pagination';
 // Fetch packages function
 interface IProps {
   isDashBoard: boolean;
@@ -79,8 +80,8 @@ function BranchesPage({ isDashBoard }: IProps) {
           ...branch,
         }))
       : [];
-  // const totalItems = data.data?.total;
-  return (
+      const totalItems = data.data?.pagination?.total;
+   return (
     <>
       {!isDashBoard && (
         <Stack flexDirection="row" alignItems="center" justifyContent="space-between" mb={3}>
@@ -120,11 +121,11 @@ function BranchesPage({ isDashBoard }: IProps) {
           alignItems={'center'}
           sx={{ marginTop: 2, mx: 2 }}
         >
-          {/* <PaginationComponent
+          <PaginationComponent
             page={page}
-            // pageCounter={totalItems / per <= 1 ? 1 : Math.ceil(totalItems / per)}
+            pageCounter={totalItems / per <= 1 ? 1 : Math.ceil(totalItems / per)}
             setPage={setPage}
-          /> */}
+          />
           <SelectPerPage perPage={per} setPerPage={setper} />
         </Stack>
       </Paper>

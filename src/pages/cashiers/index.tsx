@@ -24,6 +24,7 @@ import { deleteAnyThingGold, fetchAllDataGold } from 'functionsWork';
 import AddCashierForm from 'components/Cashiers/addCashierForm';
 import UpdateCashierForm from 'components/Cashiers/UpdateCashierForm/UpdateCashierForm';
 import CashierTable from 'components/Cashiers/CashierTable';
+import PaginationComponent from 'components/common/pagination';
 // Fetch packages function
 interface IProps {
   isDashBoard: boolean;
@@ -142,7 +143,7 @@ function CashiersPage({ isDashBoard }: IProps) {
           ...cashier,
         }))
       : [];
-  // const totalItems = data.data?.total;
+      const totalItems = data.data?.pagination?.total;
   return (
     <>
       {!isDashBoard && (
@@ -199,11 +200,11 @@ function CashiersPage({ isDashBoard }: IProps) {
           alignItems={'center'}
           sx={{ marginTop: 2, mx: 2 }}
         >
-          {/* <PaginationComponent
+          <PaginationComponent
             page={page}
-            // pageCounter={totalItems / per <= 1 ? 1 : Math.ceil(totalItems / per)}
+            pageCounter={totalItems / per <= 1 ? 1 : Math.ceil(totalItems / per)}
             setPage={setPage}
-          /> */}
+          />
           <SelectPerPage perPage={per} setPerPage={setper} />
         </Stack>
       </Paper>
