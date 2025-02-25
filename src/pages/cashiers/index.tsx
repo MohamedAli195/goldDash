@@ -23,6 +23,7 @@ import { deleteAnyThingGold, fetchAllDataGold } from 'functionsWork';
 
 import AddCashierForm from 'components/Cashiers/addCashierForm';
 import UpdateCashierForm from 'components/Cashiers/UpdateCashierForm/UpdateCashierForm';
+import CashierTable from 'components/Cashiers/CashierTable';
 // Fetch packages function
 interface IProps {
   isDashBoard: boolean;
@@ -62,68 +63,68 @@ function CashiersPage({ isDashBoard }: IProps) {
   // fetchCategories();
 
   // Columns configuration
-  const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID' },
+  // const columns: GridColDef[] = [
+  //   { field: 'id', headerName: 'ID' },
 
-    i18n.language === 'ar'
-      ? { field: 'name', headerName: 'أسم الكاشير', flex: 0.4 }
-      : { field: 'name', headerName: 'Cashier Name', flex: 0.4 },
+  //   i18n.language === 'ar'
+  //     ? { field: 'name', headerName: 'أسم الكاشير', flex: 0.4 }
+  //     : { field: 'name', headerName: 'Cashier Name', flex: 0.4 },
 
-    i18n.language === 'ar'
-      ? { field: 'national_id', headerName: 'رقم الهوية', flex: 0.4 }
-      : { field: 'national_id', headerName: 'National ID', flex: 0.4 },
+  //   i18n.language === 'ar'
+  //     ? { field: 'national_id', headerName: 'رقم الهوية', flex: 0.4 }
+  //     : { field: 'national_id', headerName: 'National ID', flex: 0.4 },
 
-    i18n.language === 'ar'
-      ? { field: 'phone1', headerName: 'رقم الهاتف 1', flex: 0.4 }
-      : { field: 'phone1', headerName: 'Phone Number 1', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'phone2', headerName: 'رقم الهاتف 2', flex: 0.4 }
-      : { field: 'phone2', headerName: 'Phone Number 2', flex: 0.4 },
+  //   i18n.language === 'ar'
+  //     ? { field: 'phone1', headerName: 'رقم الهاتف 1', flex: 0.4 }
+  //     : { field: 'phone1', headerName: 'Phone Number 1', flex: 0.4 },
+  //   i18n.language === 'ar'
+  //     ? { field: 'phone2', headerName: 'رقم الهاتف 2', flex: 0.4 }
+  //     : { field: 'phone2', headerName: 'Phone Number 2', flex: 0.4 },
 
-    i18n.language === 'ar'
-      ? { field: 'email', headerName: 'البريد الألكترونى', flex: 0.4 }
-      : { field: 'email', headerName: 'email', flex: 0.4 },
+  //   i18n.language === 'ar'
+  //     ? { field: 'email', headerName: 'البريد الألكترونى', flex: 0.4 }
+  //     : { field: 'email', headerName: 'email', flex: 0.4 },
 
-    i18n.language === 'ar'
-      ? { field: 'address', headerName: 'العنوان', flex: 0.4 }
-      : { field: 'address', headerName: 'Address', flex: 0.4 },
+  //   i18n.language === 'ar'
+  //     ? { field: 'address', headerName: 'العنوان', flex: 0.4 }
+  //     : { field: 'address', headerName: 'Address', flex: 0.4 },
 
-    {
-      field: 'actions',
-      headerName: i18n.language === 'ar' ? 'العمليات' : 'actions',
-      flex: 1,
-      renderCell: (params) => (
-        <Stack direction="row" gap={1}>
-          <Button
-            variant="contained"
-            color="error"
-            // onClick={() => deleteCategory(params.row.id, refetch)}
-            onClick={() => {
-              handleOpend();
-              setTempId(params.row.id);
-            }}
-          >
-            {/* {t("delete")} */}
-            <Trash2 />
-          </Button>
+  //   {
+  //     field: 'actions',
+  //     headerName: i18n.language === 'ar' ? 'العمليات' : 'actions',
+  //     flex: 1,
+  //     renderCell: (params) => (
+  //       <Stack direction="row" gap={1}>
+  //         <Button
+  //           variant="contained"
+  //           color="error"
+  //           // onClick={() => deleteCategory(params.row.id, refetch)}
+  //           onClick={() => {
+  //             handleOpend();
+  //             setTempId(params.row.id);
+  //           }}
+  //         >
+  //           {/* {t("delete")} */}
+  //           <Trash2 />
+  //         </Button>
 
-          <Button
-            variant="contained"
-            color="info"
-            onClick={() => navigate(`${paths.categories}/${params.row.id}`)}
-          >
-            {/* {t("view")}  */}
-            <Eye />
-          </Button>
+  //         <Button
+  //           variant="contained"
+  //           color="info"
+  //           onClick={() => navigate(`${paths.categories}/${params.row.id}`)}
+  //         >
+  //           {/* {t("view")}  */}
+  //           <Eye />
+  //         </Button>
 
-          <Button variant="contained" color="primary" onClick={() => handleEditOpen(params.row)}>
-            {/* {t("edit")} */}
-            <Pencil />
-          </Button>
-        </Stack>
-      ),
-    },
-  ];
+  //         <Button variant="contained" color="primary" onClick={() => handleEditOpen(params.row)}>
+  //           {/* {t("edit")} */}
+  //           <Pencil />
+  //         </Button>
+  //       </Stack>
+  //     ),
+  //   },
+  // ];
 
   // Fetch packages using React Query
   const { data, error, isLoading, isError, refetch } = useQuery({
@@ -170,7 +171,7 @@ function CashiersPage({ isDashBoard }: IProps) {
 
           <SearchForm setsearch={setSearch} isDashBoard={isDashBoard} />
         </Stack>
-        <DataGrid
+        {/* <DataGrid
           rows={rows}
           columns={columns}
           // initialState={{ pagination: { paginationModel } }}
@@ -184,6 +185,13 @@ function CashiersPage({ isDashBoard }: IProps) {
           disableRowSelectionOnClick
           disableMultipleRowSelection
           hideFooterPagination={true}
+        /> */}
+        {/* <CashierTable /> */}
+        <CashierTable
+          data={data?.data?.data}
+          handleEditOpen={handleEditOpen}
+          handleOpend={handleOpend}
+          setTempId={setTempId}
         />
         <Stack
           direction={'row'}
