@@ -3,7 +3,7 @@ import { DataGrid, GridColDef, GridRowClassNameParams } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import { useQuery } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
-import BasicModal from 'components/modal/ShareModal';
+import BasicModal from 'components/common/modal/ShareModal';
 // import AddPackageForm from 'components/addPacageForm';
 import UpdatePermissionsForm from 'components/updatePermissionsForm';
 // import { fetchPackages } from './packagesFunct';
@@ -13,16 +13,16 @@ import paths from 'routes/path';
 import { useTranslation } from 'react-i18next';
 import { IPackage, IPackageSelected } from 'interfaces';
 import { Eye, Trash2, Pencil } from 'lucide-react';
-import PaginationComponent from 'components/pagination';
-import SelectPerPage from 'components/selectPerPAge';
-import SearchForm from 'components/searchForm';
-import SelectSort from 'components/selectSort';
-import SwitchStatus from 'components/switch';
-import DeleteModal from 'components/deleteModal';
+import PaginationComponent from 'components/common/pagination';
+import SelectPerPage from 'components/common/selectPerPAge';
+import SearchForm from 'components/common/searchForm';
+import SelectSort from 'components/common/selectSort';
+import SwitchStatus from 'components/common/switch';
+import DeleteModal from 'components/common/deleteModal'; 
 import { deleteAnyThing, fetchAllData } from 'functions';
 import AddPermissinsForm from 'components/addPermissions';
 import AddSubAdminForm from 'components/addSubAdmin';
-import PackagesPageSkeleton from 'components/skelton';
+import PackagesPageSkeleton from 'components/common/skelton';
 
 // Fetch packages function
 interface IProps {

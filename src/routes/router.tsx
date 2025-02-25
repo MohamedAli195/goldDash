@@ -1,10 +1,10 @@
-import PageLoader from 'components/loading/PageLoader';
-import Splash from 'components/loading/Splash';
+import PageLoader from 'components/common/loading/PageLoader';
+import Splash from 'components/common/loading/Splash';
 import AuthLayout from 'layouts/auth-layout';
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import paths, { rootPaths } from './path';
-import ProtectedRoute from 'components/protectedRoute/ProtectedRoute';
+import ProtectedRoute from 'components/common/protectedRoute/ProtectedRoute';
 
 import CategoriesDetails from 'pages/comapanies/CategoriesDetails';
 import PermissionsPage from 'pages/permissions';

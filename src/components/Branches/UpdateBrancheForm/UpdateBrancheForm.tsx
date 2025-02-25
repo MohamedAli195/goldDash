@@ -55,10 +55,8 @@ function UpdateBrancheForm({
     formState: { errors },
   } = useForm<IFormInput>();
   const { t } = useTranslation();
-  const [companyID, setcompanyID] = useState(initialData?.id);
-  // console.log(ImageFromApi)
-  // const [preview, setPreview] = useState<string | FileList | undefined | null>(ImageFromApi);
-  // const [imageSrc, setImageSrc] = useState<string | undefined>();
+  const [companyID, setcompanyID] = useState(initialData?.company?.id);
+
 
   useEffect(() => {
     console.log(initialData);
@@ -75,10 +73,12 @@ function UpdateBrancheForm({
   }, [initialData, setValue]);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+
+    console.log(data)
     try {
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('clintToken')}`,
-        'Content-Type': 'multipart/form-data',
+       'Content-Type': 'application/json',
       };
 
       const response = await axios.put(
@@ -242,9 +242,9 @@ function UpdateBrancheForm({
             }}
           >
             {data?.data?.data?.map((company: ICompany) => (
-              <MenuItem key={company.id} value={company.id}>
+             company.id ? <MenuItem key={company.id} value={company.id}>
                 {company.name}
-              </MenuItem>
+              </MenuItem> :""
             ))}
           </TextField>
         </Stack>

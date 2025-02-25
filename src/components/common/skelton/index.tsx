@@ -6,10 +6,10 @@ import { Toaster } from 'react-hot-toast';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import PaginationComponent from 'components/pagination';
-import SelectPerPage from 'components/selectPerPAge';
-import SearchForm from 'components/searchForm';
-import SelectSort from 'components/selectSort';
+import PaginationComponent from 'components/common/pagination';
+import SelectPerPage from 'components/common/selectPerPAge';
+import SearchForm from 'components/common/searchForm';
+import SelectSort from 'components/common/selectSort';
 
 function PackagesPageSkeleton() {
 //   const { t } = useTranslation();

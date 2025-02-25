@@ -51,7 +51,7 @@ function UpdateCashierForm({
     formState: { errors },
   } = useForm<IFormInput>();
   const { t } = useTranslation();
-  const [companyID, setcompanyID] = useState(initialData?.id);
+  const [branchID, setBranchID] = useState(initialData?.branch?.id);
   // console.log(ImageFromApi)
   // const [preview, setPreview] = useState<string | FileList | undefined | null>(ImageFromApi);
   // const [imageSrc, setImageSrc] = useState<string | undefined>();
@@ -65,22 +65,26 @@ function UpdateCashierForm({
       setValue('email', initialData.email);
       setValue('phone1', initialData.phone1);
       setValue('phone2', initialData.phone2);
+      
     }
   }, [initialData, setValue]);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+
+    console.log(data) 
     try {
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('clintToken')}`,
-        'Content-Type': 'multipart/form-data',
+         'Content-Type': 'application/json',
       };
 
       const response = await axios.put(
         `https://4b96-197-59-106-248.ngrok-free.app/api/v1/cashiers/${initialData?.id}`,
-        data,
+        {...data},
         { headers },
       );
 
+      console.log(response)
       toast.success(t('Cashier updated successfully'));
       refetch();
       handleClose();
@@ -189,13 +193,13 @@ function UpdateCashierForm({
           <TextField
             select
             variant="outlined"
-            value={companyID}
+            value={branchID}
             label={t('Company name')}
             error={!!errors.branch_id}
             helperText={errors.branch_id?.message}
             {...register('branch_id', { required: t('branch_idReq') })}
             onChange={(e) => {
-              setcompanyID(+e.target.value);
+              setBranchID(+e.target.value);
             }}
             sx={{
               '.MuiOutlinedInput-root': {
@@ -205,9 +209,10 @@ function UpdateCashierForm({
             }}
           >
             {data?.data?.data?.map((branch: IBranch) => (
-              <MenuItem key={branch.id} value={branch.id}>
-                {branch.name}
-              </MenuItem>
+              branch.id ? <MenuItem key={branch.id} value={+branch.id}>
+              {branch.name}
+            </MenuItem> :""
+              
             ))}
           </TextField>
         </Stack>

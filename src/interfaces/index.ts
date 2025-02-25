@@ -48,6 +48,10 @@ export interface IBranch {
   tax_end_date: string;
   tax_num: string;
   updated_at?: string;
+  company:{
+    name:string
+    id:number
+  }
 }
 
 export interface ICashier {
@@ -61,6 +65,11 @@ export interface ICashier {
   address: string;
   created_at?: string;
   updated_at?: string;
+  branch:{
+    id:number;
+    name:string
+  }
+
 }
 
 //package done

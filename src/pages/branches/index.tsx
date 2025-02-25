@@ -3,25 +3,24 @@ import { DataGrid, GridColDef, GridRowClassNameParams } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import { useQuery } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
-import BasicModal from 'components/modal/ShareModal';
+import BasicModal from 'components/common/modal/ShareModal';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import paths from 'routes/path';
-import AddBranchForm from 'components/addBranchForm';
+import AddBranchForm from 'components/Branches/addBranchForm';
 import { useTranslation } from 'react-i18next';
 import { IBranch } from 'interfaces';
 import { Eye, Trash2, Pencil } from 'lucide-react';
 
-import SelectPerPage from 'components/selectPerPAge';
-import SearchForm from 'components/searchForm';
-import SelectSort from 'components/selectSort';
+import SelectPerPage from 'components/common/selectPerPAge';
+import SearchForm from 'components/common/searchForm';
+import SelectSort from 'components/common/selectSort';
 
-import DeleteModal from 'components/deleteModal';
-
-import PackagesPageSkeleton from 'components/skelton';
+import DeleteModal from 'components/common/deleteModal'; 
+import PackagesPageSkeleton from 'components/common/skelton';
 import { deleteAnyThingGold, fetchAllDataGold } from 'functionsWork';
 
-import UpdateBrancheForm from 'components/UpdateBrancheForm/UpdateBrancheForm';
+import UpdateBrancheForm from 'components/Branches/UpdateBrancheForm/UpdateBrancheForm';
 // Fetch packages function
 interface IProps {
   isDashBoard: boolean;

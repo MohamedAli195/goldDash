@@ -1,9 +1,10 @@
 import { Button, Typography ,Box } from '@mui/material'
-import BasicModal from 'components/modal/ShareModal'
+import BasicModal from 'components/common/modal/ShareModal'
 import Lottie from 'lottie-react'
 import {  } from 'lucide-react'
 
-import deleteAnimation from "./../../../src/components/animations/delete.json";
+// import deleteAnimation from "./../../../src/components/animations/delete.json";
+import deleteAnimation from "./../animations/delete.json";
 import { t } from 'i18next';
 interface IProps {
     opend:boolean;
