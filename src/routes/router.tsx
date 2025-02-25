@@ -11,6 +11,9 @@ import PermissionsPage from 'pages/permissions';
 import SubAdminsPage from 'pages/subadmins';
 import MasterDataPage from 'pages/masterData';
 import PageNotFound from 'errors/PageNotFound';
+import CompaniesPage from 'pages/comapanies';
+import BranchesPage from 'pages/branches';
+import CashiersPage from 'pages/cashiers';
 
 // Lazy-loaded components
 const App = lazy(() => import('App'));
@@ -65,6 +68,20 @@ export const routes = [
                 <MasterDataPage />
               </ProtectedRoute>
             ),
+            children: [
+              {
+                index: true, // Default route for /master-data
+                element: <CompaniesPage isDashBoard={false} />,
+              },
+              {
+                path: "branch",
+                element: <BranchesPage isDashBoard={false} />,
+              },
+              {
+                path: "cashier",
+                element: <CashiersPage isDashBoard={false} />,
+              },
+            ],
           },
 
           {

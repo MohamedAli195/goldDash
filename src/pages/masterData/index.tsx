@@ -1,40 +1,28 @@
-import React, { useState } from 'react';
-import Company from './components/Company';
-import Cashier from './components/Cashier';
-import Branch from './components/Branch';
-
+import React from 'react';
+import { Routes, Route, Link, Navigate, Outlet } from 'react-router-dom';
 import { Box, Button, Stack } from '@mui/material';
 import CompaniesPage from 'pages/comapanies';
 import BranchesPage from 'pages/branches';
 import CashiersPage from 'pages/cashiers';
 
-// interface IContent {
-//     content : "company"|"cashier"|"branch"|"factory"
-// }
 function MasterDataPage() {
-  const [content, setContent] = useState('company');
-
-  const render = () => {
-    if (content === 'company') return <CompaniesPage isDashBoard={false} />;
-    if (content === 'cashier') return <CashiersPage isDashBoard={false} />;
-    if (content === 'branch') return <BranchesPage isDashBoard={false} />;
-  };
-
   return (
     <>
-      <Stack flexDirection={'row'}>
-        <Box onClick={() => setContent('company')}>
-          <Button>company</Button>
+      <Stack flexDirection={'row'} alignItems={"center"}>
+        <Box>
+          <Button component={Link} to="/masterData">Company</Button>
         </Box>
-        <Box onClick={() => setContent('branch')}>
-          <Button>branch</Button>
+        <Box>
+          <Button component={Link} to="/masterData/branch">Branch</Button>
         </Box>
-        <Box onClick={() => setContent('cashier')}>
-          <Button>cashier</Button>
+        <Box>
+          <Button component={Link} to="/masterData/cashier">Cashier</Button>
         </Box>
       </Stack>
 
-      {render()}
+
+      <Outlet />
+
     </>
   );
 }
