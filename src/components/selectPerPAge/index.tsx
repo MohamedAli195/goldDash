@@ -16,8 +16,19 @@ export default function SelectPerPage({ perPage, setPerPage }: Iprops) {
 
   return (
     <Box>
-      <FormControl fullWidth sx={{display:"flex",flexDirection:"row", gap:2 ,justifyContent:"space-between",alignItems:"center"}}>
-        <InputLabel id="demo-simple-select-label" sx={{ minWidth: 90 }}>Row Per Page</InputLabel>
+      <FormControl
+        fullWidth
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          gap: 2,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <InputLabel id="demo-simple-select-label" sx={{ minWidth: 90 }}>
+          Row Per Page
+        </InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
@@ -31,7 +42,7 @@ export default function SelectPerPage({ perPage, setPerPage }: Iprops) {
             },
           }}
         >
-          {[10, 20, 30, 40, 50].map((item) => {
+          {[10, 20, 30, 40].map((item) => {
             return (
               <MenuItem key={item} value={item}>
                 {item}
@@ -40,7 +51,6 @@ export default function SelectPerPage({ perPage, setPerPage }: Iprops) {
           })}
         </Select>
       </FormControl>
-      
     </Box>
   );
 }

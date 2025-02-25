@@ -1,5 +1,3 @@
-
-
 export interface ISelectCategory {
   id: number;
   nameAr: string;
@@ -18,7 +16,52 @@ export interface ICategory {
   image: FileList | string;
 }
 
+export interface ICompany {
+  address: string;
+  client_name: string;
+  created_at?: string;
+  email: string;
+  id?: number;
+  logo?: string | undefined | null;
 
+  name: string;
+  phone1: string;
+  phone2: string;
+  tax_end_date: string;
+  tax_num: string;
+  updated_at?: string;
+  // name: { en: string; ar: string };
+}
+
+export interface IBranch {
+  address: string;
+  company_id: number;
+  company_name: string;
+  client_name: string;
+  created_at?: string;
+  email: string;
+  id?: number;
+  logo?: string | undefined | null;
+  name: string;
+  phone1: string;
+  phone2: string;
+  tax_end_date: string;
+  tax_num: string;
+  updated_at?: string;
+}
+
+export interface ICashier {
+  id?: number;
+  branch_id: number;
+  name: string;
+  national_id: string;
+  phone1: string;
+  phone2: string;
+  email: string;
+  address: string;
+  created_at?: string;
+  updated_at?: string;
+}
 
 //package done
 
@@ -36,12 +79,11 @@ export interface IPackage {
   name: { en: string; ar: string };
   price: string;
   image: string | null | FileList;
-  status: string | null  ;
+  status: string | null;
 }
 
-
-
-
 export interface Ipermisson {
-  id:number,name:string,display_name:string
+  id: number;
+  name: string;
+  display_name: string;
 }

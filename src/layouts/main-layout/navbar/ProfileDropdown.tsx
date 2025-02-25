@@ -31,30 +31,16 @@ const ProfileDropdown = () => {
   };
   const handleLogout = async () => {
     try {
-      await axios.post(
-        'https://market-mentor.flexi-code.com/public/api/admin/logout',
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        }
-      );
-  
-      // Clear the token from local storage
-      localStorage.removeItem('token');
-  
+      localStorage.removeItem('clintToken');
+
       // Show a success message
       toast.success('Logout successful');
-  
-      // Redirect to the login page
-      navigate(paths.login);
-
-      window.location.reload();
+      setTimeout(() => {
+        location.replace(paths.login);
+      }, 100);
     } catch (error) {
       // Handle errors
       toast.error('Logout failed. Please try again.');
-      // console.error(error);
     }
   };
   return (
@@ -134,7 +120,9 @@ const ProfileDropdown = () => {
               width: '80%',
               py: 0.5,
             }}
-            onClick={()=>{handleLogout()}}
+            onClick={() => {
+              handleLogout();
+            }}
           >
             Logout
           </Button>

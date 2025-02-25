@@ -6,11 +6,11 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import paths, { rootPaths } from './path';
 import ProtectedRoute from 'components/protectedRoute/ProtectedRoute';
 
-import CategoriesDetails from 'pages/categories/CategoriesDetails';
+import CategoriesDetails from 'pages/comapanies/CategoriesDetails';
 import PermissionsPage from 'pages/permissions';
 import SubAdminsPage from 'pages/subadmins';
 import MasterDataPage from 'pages/masterData';
-
+import PageNotFound from 'errors/PageNotFound';
 
 // Lazy-loaded components
 const App = lazy(() => import('App'));
@@ -19,22 +19,13 @@ const LoginPage = lazy(() => import('pages/authentication/login'));
 const SignUpPage = lazy(() => import('pages/authentication/register'));
 const ForgotPasswordPage = lazy(() => import('pages/authentication/forgot-password'));
 const PasswordResetPage = lazy(() => import('pages/authentication/reset-password'));
-const CategoriesPage = lazy(() => import('pages/categories'));
+const CategoriesPage = lazy(() => import('pages/comapanies'));
 const Dashboard = lazy(() => import('pages/dashboard/index'));
-// const ProductsPage = lazy(() => import('pages/products'));
-const NotFoundPage = lazy(() => import('pages/not-found'));
 
+const isLoggedIn = localStorage.getItem('clintToken')
+  ? Boolean(localStorage.getItem('clintToken'))
+  : false;
 
-// Check if user is logged in
-
-// const token = useAppSelector((state)=>state.user.token)
-
-// const token =selectUserToken((state:RootState)=>state.user.token)
-const isLoggedIn = localStorage.getItem("token") ? Boolean(localStorage.getItem("token")) :false
-// const isLoggedIn = true
-
-
-console.log("isLoggedIn",isLoggedIn)
 export const routes = [
   {
     element: (
@@ -63,7 +54,7 @@ export const routes = [
             path: paths.categories,
             element: (
               <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <CategoriesPage isDashBoard={false}/>
+                <CategoriesPage isDashBoard={false} />
               </ProtectedRoute>
             ),
           },
@@ -76,13 +67,11 @@ export const routes = [
             ),
           },
 
-          
-
           {
             path: paths.permissions,
             element: (
               <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <PermissionsPage isDashBoard={false}/>
+                <PermissionsPage isDashBoard={false} />
               </ProtectedRoute>
             ),
           },
@@ -91,7 +80,7 @@ export const routes = [
             path: paths.subAdmins,
             element: (
               <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <SubAdminsPage isDashBoard={false}/>
+                <SubAdminsPage isDashBoard={false} />
               </ProtectedRoute>
             ),
           },
@@ -103,8 +92,6 @@ export const routes = [
               </ProtectedRoute>
             ),
           },
-          
-
         ],
       },
       {
@@ -138,13 +125,13 @@ export const routes = [
         children: [
           {
             path: paths.notFound,
-            element: <NotFoundPage />,
+            element: <PageNotFound />,
           },
         ],
       },
       {
         path: '*',
-        element: <Navigate to={paths.notFound} replace />,
+        element: <PageNotFound />,
       },
     ],
   },

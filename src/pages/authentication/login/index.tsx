@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Link, Stack, Typography } from '@mui/material';
+import { Box, Card, Grid, Stack, Typography } from '@mui/material';
 import LoginForm from 'components/sections/authentication/LoginForm';
 
 const LoginPage = () => {
@@ -26,14 +26,12 @@ const LoginPage = () => {
                 sx={{
                   typography: {
                     whiteSpace: 'nowrap',
-                    fontSize:"40px"
+                    fontSize: '40px',
                   },
                 }}
               >
                 Sign In
               </Typography>
-
-              
             </Stack>
             <LoginForm />
           </Card>
