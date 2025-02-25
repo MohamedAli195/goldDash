@@ -16,13 +16,13 @@ import SelectPerPage from 'components/common/selectPerPAge';
 import SearchForm from 'components/common/searchForm';
 import SelectSort from 'components/common/selectSort';
 
-
-import DeleteModal from 'components/common/deleteModal'; 
+import DeleteModal from 'components/common/deleteModal';
 import PackagesPageSkeleton from 'components/common/skelton';
 import { deleteAnyThingGold, fetchAllDataGold } from 'functionsWork';
 import imgNotFound from './../../../public/images/No_Image_Available.jpg';
 import AddCompanyForm from 'components/Companies/addCompanyForm';
 import UpdateCompanyForm from 'components/Companies/updateCompanyForm/UpdateCompanyForm';
+import CompanyTable from 'components/Companies/CompanyTable';
 // Fetch packages function
 interface IProps {
   isDashBoard: boolean;
@@ -58,96 +58,7 @@ function CompaniesPage({ isDashBoard }: IProps) {
     handleOpenU(); // Open the update modal
   };
 
-  // fetch from api
-  // fetchCategories();
 
-  // Columns configuration
-  const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID' },
-    i18n.language === 'ar'
-      ? { field: 'address', headerName: 'العنوان', flex: 0.4 }
-      : { field: 'address', headerName: 'Address', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'client_name', headerName: 'أسم العميل', flex: 0.4 }
-      : { field: 'client_name', headerName: 'Client Name', flex: 0.4 },
-
-    i18n.language === 'ar'
-      ? { field: 'email', headerName: 'البريد الألكترونى', flex: 0.4 }
-      : { field: 'email', headerName: 'email', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'name', headerName: 'أسم الشركة', flex: 0.4 }
-      : { field: 'name', headerName: 'Company Name', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'phone1', headerName: 'رقم الهاتف 1', flex: 0.4 }
-      : { field: 'phone1', headerName: 'Phone Number 1', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'phone2', headerName: 'رقم الهاتف 2', flex: 0.4 }
-      : { field: 'phone2', headerName: 'Phone Number 2', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'tax_end_date', headerName: 'انتهاء البطاقة الضريبية', flex: 0.4 }
-      : { field: 'tax_end_date', headerName: 'Tax End Date', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'tax_num', headerName: 'رقم البطاقة', flex: 0.4 }
-      : { field: 'tax_num', headerName: 'Tax Number', flex: 0.4 },
-    {
-      field: 'logo',
-      headerName: i18n.language === 'ar' ? 'الصورة' : 'logo',
-
-      flex: 1,
-
-      renderCell: (params) =>
-        params.value ? (
-          <img
-            src={params.row.logo}
-            alt={params.row.name}
-            style={{ width: '100%', height: '100%' }}
-            onClick={() => console.log(params)}
-          />
-        ) : (
-          <img
-            src={imgNotFound}
-            alt={params.row.name}
-            style={{ width: '100%', height: '100%' }}
-            onClick={() => console.log(params)}
-          />
-        ),
-    },
-    {
-      field: 'actions',
-      headerName: i18n.language === 'ar' ? 'العمليات' : 'actions',
-      flex: 1,
-      renderCell: (params) => (
-        <Stack direction="row" gap={1}>
-          <Button
-            variant="contained"
-            color="error"
-            // onClick={() => deleteCategory(params.row.id, refetch)}
-            onClick={() => {
-              handleOpend();
-              setTempId(params.row.id);
-            }}
-          >
-            {/* {t("delete")} */}
-            <Trash2 />
-          </Button>
-
-          <Button
-            variant="contained"
-            color="info"
-            onClick={() => navigate(`${paths.categories}/${params.row.id}`)}
-          >
-            {/* {t("view")}  */}
-            <Eye />
-          </Button>
-
-          <Button variant="contained" color="primary" onClick={() => handleEditOpen(params.row)}>
-            {/* {t("edit")} */}
-            <Pencil />
-          </Button>
-        </Stack>
-      ),
-    },
-  ];
 
   // Fetch packages using React Query
   const { data, error, isLoading, isError, refetch } = useQuery({
@@ -193,20 +104,13 @@ function CompaniesPage({ isDashBoard }: IProps) {
 
           <SearchForm setsearch={setSearch} isDashBoard={isDashBoard} />
         </Stack>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          // initialState={{ pagination: { paginationModel } }}
-          // pageSizeOptions={[5, 10]}
-          sx={{ border: 0 }}
-          autoHeight
-          getRowHeight={() => 200} // Set each row's height to 200px
-          getRowClassName={(params: GridRowClassNameParams) =>
-            params.indexRelativeToCurrentPage % 2 === 0 ? 'even-row' : 'odd-row'
-          }
-          disableRowSelectionOnClick
-          disableMultipleRowSelection
-          hideFooterPagination={true}
+
+
+        <CompanyTable
+          data={data?.data?.data}
+          handleEditOpen={handleEditOpen}
+          handleOpend={handleOpend}
+          setTempId={setTempId}
         />
         <Stack
           direction={'row'}
