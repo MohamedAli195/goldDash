@@ -12,42 +12,37 @@ interface IProps {
   handleOpend:()=>void
   setTempId:(val:number)=>void
   data: ICompany[];
+  handleViewOpen:(val:ICompany)=>void
 }
-function CompanyTable({data,handleEditOpen,setTempId,handleOpend}: IProps) {
+function CompanyTable({data,handleEditOpen,setTempId,handleOpend,handleViewOpen}: IProps) {
 
   const navigate = useNavigate();
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID' },
-    i18n.language === 'ar'
-      ? { field: 'address', headerName: 'العنوان', flex: 0.4 }
-      : { field: 'address', headerName: 'Address', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'client_name', headerName: 'أسم العميل', flex: 0.4 }
-      : { field: 'client_name', headerName: 'Client Name', flex: 0.4 },
-
-    i18n.language === 'ar'
-      ? { field: 'email', headerName: 'البريد الألكترونى', flex: 0.4 }
-      : { field: 'email', headerName: 'email', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'name', headerName: 'أسم الشركة', flex: 0.4 }
-      : { field: 'name', headerName: 'Company Name', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'phone1', headerName: 'رقم الهاتف 1', flex: 0.4 }
-      : { field: 'phone1', headerName: 'Phone Number 1', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'phone2', headerName: 'رقم الهاتف 2', flex: 0.4 }
-      : { field: 'phone2', headerName: 'Phone Number 2', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'tax_end_date', headerName: 'انتهاء البطاقة الضريبية', flex: 0.4 }
-      : { field: 'tax_end_date', headerName: 'Tax End Date', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'tax_num', headerName: 'رقم البطاقة', flex: 0.4 }
-      : { field: 'tax_num', headerName: 'Tax Number', flex: 0.4 },
+    { field: 'address', headerName: i18n.language === 'ar' ? 'العنوان' :'Address', flex: 0.4 },
+    { field: 'client_name', headerName: i18n.language === 'ar' ? 'أسم العميل' :'Client Name', flex: 0.4 },
+    { field: 'email', headerName: i18n.language === 'ar' ? 'البريد الألكترونى' :'email', flex: 0.4 },
+    { field: 'name', headerName: i18n.language === 'ar' ? 'أسم الشركة' :'Company Name', flex: 0.4 },
+    // i18n.language === 'ar'
+    //   ? { field: 'name', headerName: 'أسم الشركة', flex: 0.4 }
+    //   : { field: 'name', headerName: 'Company Name', flex: 0.4 },
+    // i18n.language === 'ar'
+    //   ? { field: 'phone1', headerName: 'رقم الهاتف 1', flex: 0.4 }
+    //   : { field: 'phone1', headerName: 'Phone Number 1', flex: 0.4 },
+    // i18n.language === 'ar'
+    //   ? { field: 'phone2', headerName: 'رقم الهاتف 2', flex: 0.4 }
+    //   : { field: 'phone2', headerName: 'Phone Number 2', flex: 0.4 },
+    // i18n.language === 'ar'
+    //   ? { field: 'tax_end_date', headerName: 'انتهاء البطاقة الضريبية', flex: 0.4 }
+    //   : { field: 'tax_end_date', headerName: 'Tax End Date', flex: 0.4 },
+    // i18n.language === 'ar'
+    //   ? { field: 'tax_num', headerName: 'رقم البطاقة', flex: 0.4 }
+    //   : { field: 'tax_num', headerName: 'Tax Number', flex: 0.4 },
     {
       field: 'logo',
       headerName: i18n.language === 'ar' ? 'الصورة' : 'logo',
 
-      flex: 1,
+      flex: 0.5,
 
       renderCell: (params) =>
         params.value ? (
@@ -88,7 +83,8 @@ function CompanyTable({data,handleEditOpen,setTempId,handleOpend}: IProps) {
           <Button
             variant="contained"
             color="info"
-            onClick={() => navigate(`${paths.categories}/${params.row.id}`)}          >
+            // onClick={() => navigate(`${paths.categories}/${params.row.id}`)}     
+            onClick={() => handleViewOpen(params.row)} >
             {/* {t("view")}  */}
             <Eye />
           </Button>

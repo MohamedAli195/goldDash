@@ -23,6 +23,7 @@ import imgNotFound from './../../../public/images/No_Image_Available.jpg';
 import AddCompanyForm from 'components/Companies/addCompanyForm';
 import UpdateCompanyForm from 'components/Companies/updateCompanyForm/UpdateCompanyForm';
 import CompanyTable from 'components/Companies/CompanyTable';
+import ViewCompanyForm from 'components/Companies/viewCompanyForm/ViewCompanyForm';
 // Fetch packages function
 interface IProps {
   isDashBoard: boolean;
@@ -46,6 +47,11 @@ function CompaniesPage({ isDashBoard }: IProps) {
   const [openU, setOpenU] = useState(false);
   const handleOpenU = () => setOpenU(true);
   const handleCloseU = () => setOpenU(false);
+
+    // view modal
+    const [openV, setOpenV] = useState(false);
+    const handleOpenV = () => setOpenV(true);
+    const handleCloseV = () => setOpenV(false);
   // delete modal
   const [opend, setOpend] = useState(false);
   const handleOpend = () => setOpend(true);
@@ -56,6 +62,11 @@ function CompaniesPage({ isDashBoard }: IProps) {
   const handleEditOpen = (companyData: ICompany) => {
     setselectedcompany(companyData); // Set selected package data
     handleOpenU(); // Open the update modal
+  };
+
+  const handleViewOpen = (companyData: ICompany) => {
+    setselectedcompany(companyData); // Set selected package data
+    handleOpenV(); // Open the update modal
   };
 
 
@@ -81,13 +92,13 @@ function CompaniesPage({ isDashBoard }: IProps) {
       {!isDashBoard && (
         <Stack flexDirection="row" alignItems="center" justifyContent="space-between" mb={3}>
           <Typography variant="h1" color="initial">
-            {t('categories')}
+            {t('Companies')}
           </Typography>
 
           {
             // checkPermissions(parsedData,'add-category') &&
             <Button variant="contained" color="info" onClick={handleOpen}>
-              {t('AddCategory')}
+              {t('Add-Company')}
             </Button>
           }
         </Stack>
@@ -111,6 +122,7 @@ function CompaniesPage({ isDashBoard }: IProps) {
           handleEditOpen={handleEditOpen}
           handleOpend={handleOpend}
           setTempId={setTempId}
+          handleViewOpen={handleViewOpen}
         />
         <Stack
           direction={'row'}
@@ -129,7 +141,7 @@ function CompaniesPage({ isDashBoard }: IProps) {
 
       {/* add modal */}
       <BasicModal open={open} handleClose={handleClose}>
-        <h2>{t('AddCategory')}</h2>
+        <Box component={"h2"} sx={{fontSize:"32px",textAlign:"center" }}>{t('Add Company')}</Box>
 
         <AddCompanyForm handleClose={handleClose} refetch={refetch} />
       </BasicModal>
@@ -145,13 +157,31 @@ function CompaniesPage({ isDashBoard }: IProps) {
       />
       {/* update modal */}
       <BasicModal open={openU} handleClose={handleCloseU}>
-        <h2>{t('updateCategory')}</h2>
+        
+        {/* <Box component={"h2"} sx={{fontSize:"32px",textAlign:"center" }}>{t('Update Company')}</Box> */}
         <UpdateCompanyForm
           handleClose={handleCloseU}
           initialData={selectedcompany}
           refetch={refetch}
         />
       </BasicModal>
+
+
+
+      {/*  */}
+
+{/* update modal */}
+<BasicModal open={openV} handleClose={handleCloseV}>
+        
+        {/* <Box component={"h2"} sx={{fontSize:"32px",textAlign:"center" }}>{t('Update Company')}</Box> */}
+        <ViewCompanyForm
+          handleClose={handleCloseV}
+          initialData={selectedcompany}
+          refetch={refetch}
+        />
+      </BasicModal>
+
+      {/*  */}
       <Toaster position="bottom-center" reverseOrder={false} />
     </>
   );

@@ -24,6 +24,7 @@ import UpdateBrancheForm from 'components/Branches/UpdateBrancheForm/UpdateBranc
 
 import BranchTable from 'components/Branches/BranchTable';
 import PaginationComponent from 'components/common/pagination';
+import ViewBrancheForm from 'components/Branches/ViewBrancheForm/ViewBrancheForm';
 // Fetch packages function
 interface IProps {
   isDashBoard: boolean;
@@ -47,6 +48,11 @@ function BranchesPage({ isDashBoard }: IProps) {
   const [openU, setOpenU] = useState(false);
   const handleOpenU = () => setOpenU(true);
   const handleCloseU = () => setOpenU(false);
+
+    // view modal
+    const [openV, setOpenV] = useState(false);
+    const handleOpenV = () => setOpenV(true);
+    const handleCloseV = () => setOpenV(false);
   // delete modal
   const [opend, setOpend] = useState(false);
   const handleOpend = () => setOpend(true);
@@ -57,6 +63,11 @@ function BranchesPage({ isDashBoard }: IProps) {
   const handleEditOpen = (BranchData: IBranch) => {
     setSelectedBranch(BranchData); // Set selected package data
     handleOpenU(); // Open the update modal
+  };
+
+  const handleViewOpen = (BranchData: IBranch) => {
+    setSelectedBranch(BranchData); // Set selected package data
+    handleOpenV(); // Open the update modal
   };
 
   // fetch from api
@@ -92,7 +103,7 @@ function BranchesPage({ isDashBoard }: IProps) {
           {
             // checkPermissions(parsedData,'add-category') &&
             <Button variant="contained" color="info" onClick={handleOpen}>
-              {t('AddCategory')}
+              {t('Add Branch')}
             </Button>
           }
         </Stack>
@@ -114,6 +125,7 @@ function BranchesPage({ isDashBoard }: IProps) {
           handleEditOpen={handleEditOpen}
           handleOpend={handleOpend}
           setTempId={setTempId}
+          handleViewOpen={handleViewOpen}
         />
         <Stack
           direction={'row'}
@@ -132,7 +144,7 @@ function BranchesPage({ isDashBoard }: IProps) {
 
       {/* add modal */}
       <BasicModal open={open} handleClose={handleClose}>
-        <h2>{t('AddCategory')}</h2>
+      <Box component={"h2"} sx={{fontSize:"32px",textAlign:"center" }}>{t('Add Branch')}</Box>
 
         <AddBranchForm handleClose={handleClose} refetch={refetch} />
       </BasicModal>
@@ -148,9 +160,19 @@ function BranchesPage({ isDashBoard }: IProps) {
       />
       {/* update modal */}
       <BasicModal open={openU} handleClose={handleCloseU}>
-        <h2>{t('updateCategory')}</h2>
+        <h2>{t('Update Btanch')}</h2>
         <UpdateBrancheForm
           handleClose={handleCloseU}
+          initialData={selectedBranch}
+          refetch={refetch}
+        />
+      </BasicModal>
+
+
+      {/* View modal */}
+      <BasicModal open={openV} handleClose={handleCloseV}>
+        <ViewBrancheForm
+          handleClose={handleCloseV}
           initialData={selectedBranch}
           refetch={refetch}
         />

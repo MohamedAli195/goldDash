@@ -12,43 +12,48 @@ interface IProps {
   handleOpend:()=>void
   setTempId:(val:number)=>void
   data: IBranch[];
+  handleViewOpen:(val:IBranch)=>void
 }
-function BranchTable({data,handleEditOpen,setTempId,handleOpend}: IProps) {
-
+function BranchTable({data,handleEditOpen,setTempId,handleOpend,handleViewOpen}: IProps) {
+console.log(data)
   const navigate = useNavigate();
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID' },
     i18n.language === 'ar'
-      ? { field: 'address', headerName: 'العنوان', flex: 0.4 }
-      : { field: 'address', headerName: 'Address', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'client_name', headerName: 'أسم العميل', flex: 0.4 }
-      : { field: 'client_name', headerName: 'Client Name', flex: 0.4 },
-
-    i18n.language === 'ar'
-      ? { field: 'email', headerName: 'البريد الألكترونى', flex: 0.4 }
-      : { field: 'email', headerName: 'email', flex: 0.4 },
-    i18n.language === 'ar'
       ? { field: 'name', headerName: 'أسم الفرع', flex: 0.4 }
       : { field: 'name', headerName: 'Branch Name', flex: 0.4 },
+      i18n.language === 'ar'
+      ? { field: 'client_name', headerName: 'أسم العميل', flex: 0.4 }
+      : { field: 'client_name', headerName: 'Client Name', flex: 0.4 },
+      { field: 'companyCode', headerName:i18n.language === 'ar' ? 'كود الشركة':'Company code', renderCell: (params) => (params.row.company.id), flex: 0.4 },
+      { field: 'companyName', headerName:i18n.language === 'ar' ? 'أسم الشركة':'Company Name', renderCell: (params) => (params.row.company.name), flex: 0.4 },
+
     i18n.language === 'ar'
-      ? { field: 'phone1', headerName: 'رقم الهاتف 1', flex: 0.4 }
-      : { field: 'phone1', headerName: 'Phone Number 1', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'phone2', headerName: 'رقم الهاتف 2', flex: 0.4 }
-      : { field: 'phone2', headerName: 'Phone Number 2', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'tax_end_date', headerName: 'انتهاء البطاقة الضريبية', flex: 0.4 }
-      : { field: 'tax_end_date', headerName: 'Tax End Date', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'tax_num', headerName: 'رقم البطاقة', flex: 0.4 }
-      : { field: 'tax_num', headerName: 'Tax Number', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'company_id', headerName: 'كود الشركة', flex: 0.4 }
-      : { field: 'company_id', headerName: 'Company code', flex: 0.4 },
-    i18n.language === 'ar'
-      ? { field: 'company_name', headerName: 'أسم الشركة', flex: 0.4 }
-      : { field: 'company_name', headerName: 'Company Name', flex: 0.4 },
+      ? { field: 'address', headerName: 'العنوان', flex: 0.4 }
+      : { field: 'address', headerName: 'Address', flex: 0.4 },
+    
+
+    // i18n.language === 'ar'
+    //   ? { field: 'email', headerName: 'البريد الألكترونى', flex: 0.4 }
+    //   : { field: 'email', headerName: 'email', flex: 0.4 },
+    
+    // i18n.language === 'ar'
+    //   ? { field: 'phone1', headerName: 'رقم الهاتف 1', flex: 0.4 }
+    //   : { field: 'phone1', headerName: 'Phone Number 1', flex: 0.4 },
+    // i18n.language === 'ar'
+    //   ? { field: 'phone2', headerName: 'رقم الهاتف 2', flex: 0.4 }
+    //   : { field: 'phone2', headerName: 'Phone Number 2', flex: 0.4 },
+    // i18n.language === 'ar'
+    //   ? { field: 'tax_end_date', headerName: 'انتهاء البطاقة الضريبية', flex: 0.4 }
+    //   : { field: 'tax_end_date', headerName: 'Tax End Date', flex: 0.4 },
+    // i18n.language === 'ar'
+    //   ? { field: 'tax_num', headerName: 'رقم البطاقة', flex: 0.4 }
+    //   : { field: 'tax_num', headerName: 'Tax Number', flex: 0.4 },
+  
+      
+    // i18n.language === 'ar'
+    //   ? { field: 'company', headerName: 'أسم الشركة', flex: 0.4 }
+    //   : { field: 'company_name', headerName: 'Company Name', flex: 0.4 },
 
     {
       field: 'actions',
@@ -72,7 +77,10 @@ function BranchTable({data,handleEditOpen,setTempId,handleOpend}: IProps) {
           <Button
             variant="contained"
             color="info"
-            onClick={() => navigate(`${paths.categories}/${params.row.id}`)}
+          //   onClick={() => navigate(`${paths.categories}/${params.row.id}`)
+          
+          // }
+          onClick={() => handleViewOpen(params.row)}
           >
             {/* {t("view")}  */}
             <Eye />

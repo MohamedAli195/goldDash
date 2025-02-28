@@ -93,14 +93,6 @@ const generateMenuItems = (): IMenuitems[] => [
     href: paths.masterData,
     available: true,
   },
-
-  {
-    id: uniqueId(),
-    title: i18next.t("Categories"),
-    icon: CategoriesIcon,
-    href: paths.categories,
-    available: false,
-  },
   {
     id: uniqueId(),
     title: i18next.t("Permissions"),

@@ -139,51 +139,82 @@ function UpdateCompanyForm({
     >
       <Stack spacing={3} gap={2}>
         <Stack flexDirection={'row'} gap={2}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            id="address"
-            type="text"
-            label={t('address')}
-            error={!!errors.address}
-            helperText={errors.address?.message}
-            {...register('address', { required: t('addressReq') })}
-          />
-          <TextField
-            fullWidth
-            variant="outlined"
-            id="client_name"
-            type="text"
-            label={t('client_name')}
-            error={!!errors.client_name}
-            helperText={errors.client_name?.message}
-            {...register('client_name', { required: t('client_nameReq') })}
-          />
-          <TextField
-            fullWidth
-            variant="outlined"
-            id="email"
-            type="text"
-            label="email"
-            error={!!errors.email}
-            helperText={errors.email?.message}
-            {...register('email', { required: ' email is requried' })}
-          />
-        </Stack>
-        <Stack flexDirection={'row'} gap={2}>
-          <TextField
+        <TextField
             multiline
             fullWidth
             variant="outlined"
             id="name"
             type="text"
-            label={t('name')}
+            label={t('Company Name')}
             error={!!errors.name}
             helperText={errors.name?.message}
             {...register('name', { required: t('name') })}
+            InputLabelProps={{
+              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+            }}
             sx={{
               '& .MuiInputBase-input': {
-                lineHeight: '1.2', // Adjust line height
+                lineHeight: '1', // Adjust line height
+              },
+            }}
+          />
+          <TextField
+            fullWidth
+            multiline
+            variant="outlined"
+            id="address"
+            type="text"
+            label={t('Address')}
+            error={!!errors.address}
+            helperText={errors.address?.message}
+            {...register('address', { required: t('addressReq') })}
+            InputLabelProps={{
+              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
+          />
+          <TextField
+          multiline
+            fullWidth
+            variant="outlined"
+            id="client_name"
+            type="text"
+            label={t('Client Name')}
+            error={!!errors.client_name}
+            helperText={errors.client_name?.message}
+            {...register('client_name', { required: t('client_nameReq') })}
+            InputLabelProps={{
+              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
+          />
+          
+        </Stack>
+        <Stack flexDirection={'row'} gap={2}>
+        <TextField
+        multiline
+            fullWidth
+            variant="outlined"
+            id="email"
+            type="text"
+            label="Email"
+            error={!!errors.email}
+            helperText={errors.email?.message}
+            {...register('email', { required: ' email is requried' })}
+            InputLabelProps={{
+              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
               },
             }}
           />
@@ -193,13 +224,16 @@ function UpdateCompanyForm({
             variant="outlined"
             id="phone1"
             type="text"
-            label={t('phone1')}
+            label={t('Phone-1')}
             error={!!errors.phone1}
             helperText={errors.phone1?.message}
             {...register('phone1', { required: t('phone1') })}
+            InputLabelProps={{
+              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+            }}
             sx={{
               '& .MuiInputBase-input': {
-                lineHeight: '1.2', // Adjust line height
+                lineHeight: '1', // Adjust line height
               },
             }}
           />
@@ -209,30 +243,37 @@ function UpdateCompanyForm({
             variant="outlined"
             id="phone2"
             type="text"
-            label={t('phone2')}
+            label={t('Phone-2')}
             error={!!errors.phone2}
             helperText={errors.phone2?.message}
             {...register('phone2', { required: t('phone2') })}
+            InputLabelProps={{
+              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+            }}
             sx={{
               '& .MuiInputBase-input': {
-                lineHeight: '1.2', // Adjust line height
+                lineHeight: '1', // Adjust line height
               },
             }}
           />
-
+        </Stack>
+        <Stack flexDirection={'row'} gap={2}>
           <TextField
             multiline
             fullWidth
             variant="outlined"
             id="tax_num"
             type="text"
-            label="tax_num"
+            label="Tax Number"
             error={!!errors.tax_num}
             helperText={errors.tax_num?.message}
             {...register('tax_num', { required: 'tax_num is required' })}
+            InputLabelProps={{
+              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+            }}
             sx={{
               '& .MuiInputBase-input': {
-                lineHeight: '1.2', // Adjust line height
+                lineHeight: '1', // Adjust line height
               },
             }}
           />
@@ -242,13 +283,16 @@ function UpdateCompanyForm({
             variant="outlined"
             id="tax_end_date"
             type="text"
-            label="tax_end_date"
+            label="Tax End Date"
             error={!!errors.tax_end_date}
             helperText={errors.tax_end_date?.message}
             {...register('tax_end_date', { required: 'tax_end_date is required' })}
+            InputLabelProps={{
+              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+            }}
             sx={{
               '& .MuiInputBase-input': {
-                lineHeight: '1.2', // Adjust line height
+                lineHeight: '1', // Adjust line height
               },
             }}
           />
@@ -289,7 +333,7 @@ function UpdateCompanyForm({
         type="submit"
         sx={{ mt: 3, fontSize: '18px' }}
       >
-        {t('AddCategory')}
+        {t('Update Company')}
       </Button>
     </Box>
   );

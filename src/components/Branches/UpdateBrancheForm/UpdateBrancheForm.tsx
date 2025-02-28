@@ -69,6 +69,7 @@ function UpdateBrancheForm({
       setValue('phone2', initialData.phone2);
       setValue('tax_end_date', initialData.tax_end_date);
       setValue('tax_num', initialData.tax_num);
+      setValue('company_id', initialData.company.id);
     }
   }, [initialData, setValue]);
 
@@ -110,7 +111,61 @@ function UpdateBrancheForm({
     >
       <Stack spacing={3} gap={2}>
         <Stack flexDirection={'row'} gap={2}>
+        <TextField
+            multiline
+            fullWidth
+            variant="outlined"
+            id="name"
+            type="text"
+            label={t('Branch Name')}
+            error={!!errors.name}
+            helperText={errors.name?.message}
+            {...register('name', { required: t('name') })}
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
+          />
+                            <TextField
+            multiline
+            fullWidth
+            select
+            variant="outlined"
+            value={companyID}
+            label={t('Company name')}
+            error={!!errors.company_id}
+            helperText={errors.company_id?.message}
+            {...register('company_id', { required: t('company_idReq') })}
+            // sx={{
+            //   '.MuiOutlinedInput-root': {
+            //     lineHeight: 0,
+            //   },
+            //   width: '25%',
+            // }}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
+              setcompanyID(+e.target.value)
+            }
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
+          >
+            {data?.data?.data?.map((company: ICompany) => (
+              <MenuItem key={company.id} value={company.id}>
+                {company.name}
+              </MenuItem>
+            ))}
+          </TextField>
           <TextField
+            multiline
             fullWidth
             variant="outlined"
             id="address"
@@ -119,8 +174,22 @@ function UpdateBrancheForm({
             error={!!errors.address}
             helperText={errors.address?.message}
             {...register('address', { required: t('addressReq') })}
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
           />
-          <TextField
+
+          
+        </Stack>
+
+        <Stack flexDirection={'row'} gap={2}>
+        <TextField
+            multiline
             fullWidth
             variant="outlined"
             id="client_name"
@@ -129,8 +198,17 @@ function UpdateBrancheForm({
             error={!!errors.client_name}
             helperText={errors.client_name?.message}
             {...register('client_name', { required: t('client_nameReq') })}
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
           />
           <TextField
+            multiline
             fullWidth
             variant="outlined"
             id="email"
@@ -139,22 +217,12 @@ function UpdateBrancheForm({
             error={!!errors.email}
             helperText={errors.email?.message}
             {...register('email', { required: ' email is requried' })}
-          />
-        </Stack>
-        <Stack flexDirection={'row'} gap={2}>
-          <TextField
-            multiline
-            fullWidth
-            variant="outlined"
-            id="name"
-            type="text"
-            label={t('name')}
-            error={!!errors.name}
-            helperText={errors.name?.message}
-            {...register('name', { required: t('name') })}
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
             sx={{
               '& .MuiInputBase-input': {
-                lineHeight: '1.2', // Adjust line height
+                lineHeight: '1', // Adjust line height
               },
             }}
           />
@@ -168,13 +236,19 @@ function UpdateBrancheForm({
             error={!!errors.phone1}
             helperText={errors.phone1?.message}
             {...register('phone1', { required: t('phone1') })}
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
             sx={{
               '& .MuiInputBase-input': {
-                lineHeight: '1.2', // Adjust line height
+                lineHeight: '1', // Adjust line height
               },
             }}
           />
-          <TextField
+          
+        </Stack>
+        <Stack flexDirection={'row'} gap={2}>
+        <TextField
             multiline
             fullWidth
             variant="outlined"
@@ -184,13 +258,15 @@ function UpdateBrancheForm({
             error={!!errors.phone2}
             helperText={errors.phone2?.message}
             {...register('phone2', { required: t('phone2') })}
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
             sx={{
               '& .MuiInputBase-input': {
-                lineHeight: '1.2', // Adjust line height
+                lineHeight: '1', // Adjust line height
               },
             }}
           />
-
           <TextField
             multiline
             fullWidth
@@ -201,9 +277,12 @@ function UpdateBrancheForm({
             error={!!errors.tax_num}
             helperText={errors.tax_num?.message}
             {...register('tax_num', { required: 'tax_num is required' })}
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
             sx={{
               '& .MuiInputBase-input': {
-                lineHeight: '1.2', // Adjust line height
+                lineHeight: '1', // Adjust line height
               },
             }}
           />
@@ -217,36 +296,17 @@ function UpdateBrancheForm({
             error={!!errors.tax_end_date}
             helperText={errors.tax_end_date?.message}
             {...register('tax_end_date', { required: 'tax_end_date is required' })}
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
             sx={{
               '& .MuiInputBase-input': {
-                lineHeight: '1.2', // Adjust line height
+                lineHeight: '1', // Adjust line height
               },
             }}
           />
-          <TextField
-            select
-            variant="outlined"
-            value={companyID}
-            label={t('Company name')}
-            error={!!errors.company_id}
-            helperText={errors.company_id?.message}
-            {...register('company_id', { required: t('company_idReq') })}
-            onChange={(e) => {
-              setcompanyID(+e.target.value);
-            }}
-            sx={{
-              '.MuiOutlinedInput-root': {
-                lineHeight: 0,
-              },
-              width: '25%',
-            }}
-          >
-            {data?.data?.data?.map((company: ICompany) => (
-             company.id ? <MenuItem key={company.id} value={company.id}>
-                {company.name}
-              </MenuItem> :""
-            ))}
-          </TextField>
+
+  
         </Stack>
       </Stack>
       <Button
@@ -257,7 +317,7 @@ function UpdateBrancheForm({
         type="submit"
         sx={{ mt: 3, fontSize: '18px' }}
       >
-        {t('updateBranch')}
+        {t('Update Branch')}
       </Button>
     </Box>
   );

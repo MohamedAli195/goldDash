@@ -35,8 +35,8 @@ export interface ICompany {
 
 export interface IBranch {
   address: string;
-  company_id: number;
-  company_name: string;
+  // company_id: number;
+  // company_name: string;
   client_name: string;
   created_at?: string;
   email: string;

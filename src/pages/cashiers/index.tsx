@@ -25,6 +25,7 @@ import AddCashierForm from 'components/Cashiers/addCashierForm';
 import UpdateCashierForm from 'components/Cashiers/UpdateCashierForm/UpdateCashierForm';
 import CashierTable from 'components/Cashiers/CashierTable';
 import PaginationComponent from 'components/common/pagination';
+import ViewCashierForm from 'components/Cashiers/ViewCashierForm/ViewCashierForm';
 // Fetch packages function
 interface IProps {
   isDashBoard: boolean;
@@ -48,6 +49,11 @@ function CashiersPage({ isDashBoard }: IProps) {
   const [openU, setOpenU] = useState(false);
   const handleOpenU = () => setOpenU(true);
   const handleCloseU = () => setOpenU(false);
+
+      // view modal
+      const [openV, setOpenV] = useState(false);
+      const handleOpenV = () => setOpenV(true);
+      const handleCloseV = () => setOpenV(false);
   // delete modal
   const [opend, setOpend] = useState(false);
   const handleOpend = () => setOpend(true);
@@ -59,6 +65,10 @@ function CashiersPage({ isDashBoard }: IProps) {
     setSelectedCashier(CashierData); // Set selected package data
     handleOpenU(); // Open the update modal
   };
+    const handleViewOpen = (CashierData: ICashier) => {
+      setSelectedCashier(CashierData); // Set selected package data
+      handleOpenV(); // Open the update modal
+    };
 
   // fetch from api
   // fetchCategories();
@@ -193,6 +203,7 @@ function CashiersPage({ isDashBoard }: IProps) {
           handleEditOpen={handleEditOpen}
           handleOpend={handleOpend}
           setTempId={setTempId}
+          handleViewOpen={handleViewOpen}
         />
         <Stack
           direction={'row'}
@@ -230,6 +241,16 @@ function CashiersPage({ isDashBoard }: IProps) {
         <h2>{t('updateCategory')}</h2>
         <UpdateCashierForm
           handleClose={handleCloseU}
+          initialData={selectedCashier}
+          refetch={refetch}
+        />
+      </BasicModal>
+
+
+            {/* View modal */}
+            <BasicModal open={openV} handleClose={handleCloseV}>
+        <ViewCashierForm
+          handleClose={handleCloseV}
           initialData={selectedCashier}
           refetch={refetch}
         />

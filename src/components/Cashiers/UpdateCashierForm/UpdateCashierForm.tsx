@@ -51,11 +51,11 @@ function UpdateCashierForm({
     formState: { errors },
   } = useForm<IFormInput>();
   const { t } = useTranslation();
-  const [branchID, setBranchID] = useState(initialData?.branch?.id);
+  const [branchID, setBranchID] = useState<number |undefined>(initialData?.branch?.id);
   // console.log(ImageFromApi)
   // const [preview, setPreview] = useState<string | FileList | undefined | null>(ImageFromApi);
   // const [imageSrc, setImageSrc] = useState<string | undefined>();
-
+console.log(initialData)
   useEffect(() => {
     console.log(initialData);
     if (initialData) {
@@ -65,6 +65,7 @@ function UpdateCashierForm({
       setValue('email', initialData.email);
       setValue('phone1', initialData.phone1);
       setValue('phone2', initialData.phone2);
+      setValue('branch_id', initialData?.branch?.id);
       
     }
   }, [initialData, setValue]);
@@ -110,7 +111,16 @@ function UpdateCashierForm({
       <Stack spacing={3} gap={2}>
         <Stack flexDirection={'row'} gap={2}>
           <TextField
+            multiline
             fullWidth
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
             variant="outlined"
             id="address"
             type="text"
@@ -120,7 +130,16 @@ function UpdateCashierForm({
             {...register('address', { required: t('addressReq') })}
           />
           <TextField
+            multiline
             fullWidth
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
             variant="outlined"
             id="national_id"
             type="text"
@@ -130,7 +149,16 @@ function UpdateCashierForm({
             {...register('national_id', { required: t('national_idReq') })}
           />
           <TextField
+            multiline
             fullWidth
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
             variant="outlined"
             id="email"
             type="text"
@@ -144,6 +172,14 @@ function UpdateCashierForm({
           <TextField
             multiline
             fullWidth
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
             variant="outlined"
             id="name"
             type="text"
@@ -151,15 +187,18 @@ function UpdateCashierForm({
             error={!!errors.name}
             helperText={errors.name?.message}
             {...register('name', { required: t('name') })}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1.2', // Adjust line height
-              },
-            }}
           />
           <TextField
             multiline
             fullWidth
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
             variant="outlined"
             id="phone1"
             type="text"
@@ -167,15 +206,18 @@ function UpdateCashierForm({
             error={!!errors.phone1}
             helperText={errors.phone1?.message}
             {...register('phone1', { required: t('phone1') })}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1.2', // Adjust line height
-              },
-            }}
           />
           <TextField
             multiline
             fullWidth
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
             variant="outlined"
             id="phone2"
             type="text"
@@ -183,36 +225,34 @@ function UpdateCashierForm({
             error={!!errors.phone2}
             helperText={errors.phone2?.message}
             {...register('phone2', { required: t('phone2') })}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1.2', // Adjust line height
-              },
-            }}
           />
 
           <TextField
             select
-            variant="outlined"
             value={branchID}
-            label={t('Company name')}
+            variant="outlined"
+            label={t('Branch name')}
             error={!!errors.branch_id}
             helperText={errors.branch_id?.message}
             {...register('branch_id', { required: t('branch_idReq') })}
-            onChange={(e) => {
-              setBranchID(+e.target.value);
-            }}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
+              setBranchID(+e.target.value)
+            }
             sx={{
               '.MuiOutlinedInput-root': {
                 lineHeight: 0,
               },
-              width: '25%',
+            }}
+            multiline
+            fullWidth
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
           >
             {data?.data?.data?.map((branch: IBranch) => (
-              branch.id ? <MenuItem key={branch.id} value={+branch.id}>
-              {branch.name}
-            </MenuItem> :""
-              
+              <MenuItem key={branch.id} value={branch.id}>
+                {branch.name}
+              </MenuItem>
             ))}
           </TextField>
         </Stack>

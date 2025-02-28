@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
 import { Box, Button, MenuItem, Stack, TextField } from '@mui/material';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
 
 import { CloudUpload } from 'lucide-react';
-import { fetchAllDataGold, fetchAllDataGoldNoArg } from 'functionsWork';
+import { IBranch, ICompany } from 'interfaces';
 import { useQuery } from '@tanstack/react-query';
-import { ICompany } from 'interfaces';
+import { fetchAllDataGoldNoArg } from 'functionsWork';
+
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -27,6 +28,7 @@ interface IFormInput {
   client_name: string;
   company_id: number;
   email: string;
+  logo: string | FileList;
   name: string;
   phone1: string;
   phone2: string;
@@ -36,47 +38,63 @@ interface IFormInput {
   // name: { en: string; ar: string };
 }
 
-function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refetch: () => void }) {
+function ViewBrancheForm({
+  handleClose,
+  initialData,
+  refetch,
+  
+}: {
+  handleClose: () => void;
+  refetch: () => void;
+  initialData?: null | IBranch;
+}) {
   const {
     register,
+    setValue,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<IFormInput>();
-  // const [companies, setCompanies] = useState();
-
   const { t } = useTranslation();
+  const [companyID, setcompanyID] = useState(initialData?.company?.id);
+
+
+  useEffect(() => {
+    console.log(initialData);
+    if (initialData) {
+      setValue('address', initialData.address);
+      setValue('client_name', initialData.client_name);
+      setValue('name', initialData.name);
+      setValue('email', initialData.email);
+      setValue('phone1', initialData.phone1);
+      setValue('phone2', initialData.phone2);
+      setValue('tax_end_date', initialData.tax_end_date);
+      setValue('tax_num', initialData.tax_num);
+      setValue('company_id', initialData.company.id);
+    }
+  }, [initialData, setValue]);
+
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    console.log(data);
+
+    console.log(data)
     try {
-      // const formData = new FormData();
-      // formData.append('address', data.address);
-      // formData.append('client_name', data.client_name);
-      // formData.append('email', data.email);
-
-      // formData.append('name', data.name);
-      // formData.append('phone1', data.phone1);
-      // formData.append('phone2', data.phone2);
-      // formData.append('tax_end_date', data.tax_end_date);
-      // formData.append('tax_num', data.tax_num);
-
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('clintToken')}`,
-        'Content-Type': 'multipart/form-data',
+       'Content-Type': 'application/json',
       };
 
-      const response = await axios.post(
-        `https://4b96-197-59-106-248.ngrok-free.app/api/v1/branches`,
+      const response = await axios.put(
+        `https://4b96-197-59-106-248.ngrok-free.app/api/v1/branches/${initialData?.id}`,
         data,
         { headers },
       );
 
-      console.log(response.data);
-      toast.success('Category added successfully');
-      handleClose();
+      toast.success(t('Category updated successfully'));
       refetch();
+      handleClose();
     } catch (err) {
-      // console.error('Error:', err);
-      toast.error('Failed to add category, please check your input.');
+      // console.error('Error updating category:', err);
+      toast.error(t('Failed to update category, please check your input.'));
     }
   };
 
@@ -84,16 +102,13 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
     queryKey: [`companies`],
     queryFn: () => fetchAllDataGoldNoArg('companies'),
   });
-
-  console.log(data);
-
   return (
     <Box
       sx={{
         mt: { sm: 5, xs: 2.5 },
       }}
       component="form"
-      onSubmit={handleSubmit(onSubmit)}
+
     >
       <Stack spacing={3} gap={2}>
         <Stack flexDirection={'row'} gap={2}>
@@ -292,18 +307,8 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
   
         </Stack>
       </Stack>
-      <Button
-        color="primary"
-        variant="contained"
-        size="large"
-        fullWidth
-        type="submit"
-        sx={{ mt: 3, fontSize: '18px' }}
-      >
-        {t('Add Branch')}
-      </Button>
     </Box>
   );
 }
 
-export default AddBranchForm;
+export default ViewBrancheForm;

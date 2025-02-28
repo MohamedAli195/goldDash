@@ -19,3 +19,7 @@ input[data-autocompleted] {
 .css-smg4pr-MuiStack-root>:not(style)~:not(style){
   margin-left :0
 }
+.MuiFormLabel-root-MuiInputLabel-root{
+
+  font-weight: 900;
+}
