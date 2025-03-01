@@ -124,7 +124,7 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
             label={t('Company name')}
             error={!!errors.company_id}
             helperText={errors.company_id?.message}
-            {...register('company_id', { required: t('company_idReq') })}
+            {...register('company_id')}
             // sx={{
             //   '.MuiOutlinedInput-root': {
             //     lineHeight: 0,
@@ -156,7 +156,7 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
             label={t('address')}
             error={!!errors.address}
             helperText={errors.address?.message}
-            {...register('address', { required: t('addressReq') })}
+            {...register('address')}
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
@@ -180,7 +180,7 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
             label={t('client_name')}
             error={!!errors.client_name}
             helperText={errors.client_name?.message}
-            {...register('client_name', { required: t('client_nameReq') })}
+            {...register('client_name')}
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
@@ -199,7 +199,7 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
             label="email"
             error={!!errors.email}
             helperText={errors.email?.message}
-            {...register('email', { required: ' email is requried' })}
+            {...register('email')}
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
@@ -218,7 +218,7 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
             label={t('phone1')}
             error={!!errors.phone1}
             helperText={errors.phone1?.message}
-            {...register('phone1', { required: t('phone1') })}
+            {...register('phone1')}
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
@@ -240,7 +240,7 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
             label={t('phone2')}
             error={!!errors.phone2}
             helperText={errors.phone2?.message}
-            {...register('phone2', { required: t('phone2') })}
+            {...register('phone2')}
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
@@ -259,7 +259,7 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
             label="tax_num"
             error={!!errors.tax_num}
             helperText={errors.tax_num?.message}
-            {...register('tax_num', { required: 'tax_num is required' })}
+            {...register('tax_num')}
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
@@ -278,7 +278,7 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
             label="tax_end_date"
             error={!!errors.tax_end_date}
             helperText={errors.tax_end_date?.message}
-            {...register('tax_end_date', { required: 'tax_end_date is required' })}
+            {...register('tax_end_date')}
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}

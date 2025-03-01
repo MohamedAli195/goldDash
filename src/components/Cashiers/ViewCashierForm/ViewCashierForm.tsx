@@ -126,7 +126,7 @@ function ViewCashierForm({
             label={t('address')}
             error={!!errors.address}
             helperText={errors.address?.message}
-            {...register('address', { required: t('addressReq') })}
+            {...register('address')}
           />
           <TextField
             multiline
@@ -145,7 +145,7 @@ function ViewCashierForm({
             label={t('national_id')}
             error={!!errors.national_id}
             helperText={errors.national_id?.message}
-            {...register('national_id', { required: t('national_idReq') })}
+            {...register('national_id')}
           />
           <TextField
             multiline
@@ -164,7 +164,7 @@ function ViewCashierForm({
             label="email"
             error={!!errors.email}
             helperText={errors.email?.message}
-            {...register('email', { required: ' email is requried' })}
+            {...register('email')}
           />
         </Stack>
         <Stack flexDirection={'row'} gap={2}>
@@ -204,7 +204,7 @@ function ViewCashierForm({
             label={t('phone1')}
             error={!!errors.phone1}
             helperText={errors.phone1?.message}
-            {...register('phone1', { required: t('phone1') })}
+            {...register('phone1')}
           />
           <TextField
             multiline
@@ -223,7 +223,7 @@ function ViewCashierForm({
             label={t('phone2')}
             error={!!errors.phone2}
             helperText={errors.phone2?.message}
-            {...register('phone2', { required: t('phone2') })}
+            {...register('phone2')}
           />
 
           <TextField
@@ -232,7 +232,7 @@ function ViewCashierForm({
             label={t('Branch name')}
             error={!!errors.branch_id}
             helperText={errors.branch_id?.message}
-            {...register('branch_id', { required: t('branch_idReq') })}
+            {...register('branch_id',)}
             sx={{
               '.MuiOutlinedInput-root': {
                 lineHeight: 0,

@@ -167,7 +167,7 @@ function ViewCompanyForm({
             label={t('Address')}
             error={!!errors.address}
             helperText={errors.address?.message}
-            {...register('address', { required: t('addressReq') })}
+            {...register('address')}
             InputLabelProps={{
               style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
             }}
@@ -186,7 +186,7 @@ function ViewCompanyForm({
             label={t('Client Name')}
             error={!!errors.client_name}
             helperText={errors.client_name?.message}
-            {...register('client_name', { required: t('client_nameReq') })}
+            {...register('client_name')}
             InputLabelProps={{
               style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
             }}
@@ -208,7 +208,7 @@ function ViewCompanyForm({
             label="Email"
             error={!!errors.email}
             helperText={errors.email?.message}
-            {...register('email', { required: ' email is requried' })}
+            {...register('email')}
             InputLabelProps={{
               style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
             }}
@@ -227,7 +227,7 @@ function ViewCompanyForm({
             label={t('Phone-1')}
             error={!!errors.phone1}
             helperText={errors.phone1?.message}
-            {...register('phone1', { required: t('phone1') })}
+            {...register('phone1')}
             InputLabelProps={{
               style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
             }}
@@ -246,7 +246,7 @@ function ViewCompanyForm({
             label={t('Phone-2')}
             error={!!errors.phone2}
             helperText={errors.phone2?.message}
-            {...register('phone2', { required: t('phone2') })}
+            {...register('phone2')}
             InputLabelProps={{
               style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
             }}
@@ -267,7 +267,7 @@ function ViewCompanyForm({
             label="Tax Number"
             error={!!errors.tax_num}
             helperText={errors.tax_num?.message}
-            {...register('tax_num', { required: 'tax_num is required' })}
+            {...register('tax_num')}
             InputLabelProps={{
               style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
             }}
@@ -286,7 +286,7 @@ function ViewCompanyForm({
             label="Tax End Date"
             error={!!errors.tax_end_date}
             helperText={errors.tax_end_date?.message}
-            {...register('tax_end_date', { required: 'tax_end_date is required' })}
+            {...register('tax_end_date')}
             InputLabelProps={{
               style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
             }}
@@ -298,7 +298,7 @@ function ViewCompanyForm({
           />
         </Stack>
         <Stack flexDirection={'row'} gap={2} alignItems={'center'}>
-          {/* <Button
+          <Button
             component="label"
             role={undefined}
             variant="outlined"
@@ -313,7 +313,7 @@ function ViewCompanyForm({
               multiple
               onChange={handleFileChange}
             />
-          </Button> */}
+          </Button>
           {preview && (
             <Box sx={{ mt: 2 }}>
               <img
