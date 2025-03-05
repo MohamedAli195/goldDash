@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
 
 import { CloudUpload } from 'lucide-react';
-import { fetchAllDataGold, fetchAllDataGoldNoArg } from 'functionsWork';
+import { fetchAllDataGold, fetchAllDataGoldNoArg, newUrl } from 'functionsWork';
 import { useQuery } from '@tanstack/react-query';
 import { ICompany } from 'interfaces';
 const VisuallyHiddenInput = styled('input')({
@@ -65,7 +65,7 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
       };
 
       const response = await axios.post(
-        `https://4b96-197-59-106-248.ngrok-free.app/api/v1/branches`,
+        `${newUrl}/api/v1/branches`,
         data,
         { headers },
       );

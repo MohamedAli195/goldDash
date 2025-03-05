@@ -14,6 +14,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { newUrl } from 'functionsWork';
 
 interface IFormInput {
   email: string;
@@ -35,7 +36,7 @@ const LoginForm = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://4b96-197-59-106-248.ngrok-free.app/api/v1/auth/login`,
+        `${newUrl}/api/v1/auth/login`,
         data,
       );
 

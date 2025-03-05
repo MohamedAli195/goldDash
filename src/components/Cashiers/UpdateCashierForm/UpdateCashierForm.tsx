@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import { CloudUpload } from 'lucide-react';
 import { IBranch, ICashier, ICompany } from 'interfaces';
 import { useQuery } from '@tanstack/react-query';
-import { fetchAllDataGoldNoArg } from 'functionsWork';
+import { fetchAllDataGoldNoArg, newUrl } from 'functionsWork';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -80,7 +80,7 @@ console.log(initialData)
       };
 
       const response = await axios.put(
-        `https://4b96-197-59-106-248.ngrok-free.app/api/v1/cashiers/${initialData?.id}`,
+        `${newUrl}/api/v1/cashiers/${initialData?.id}`,
         {...data},
         { headers },
       );

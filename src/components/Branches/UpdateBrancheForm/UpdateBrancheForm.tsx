@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import { CloudUpload } from 'lucide-react';
 import { IBranch, ICompany } from 'interfaces';
 import { useQuery } from '@tanstack/react-query';
-import { fetchAllDataGoldNoArg } from 'functionsWork';
+import { fetchAllDataGoldNoArg, newUrl } from 'functionsWork';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -83,7 +83,7 @@ function UpdateBrancheForm({
       };
 
       const response = await axios.put(
-        `https://4b96-197-59-106-248.ngrok-free.app/api/v1/branches/${initialData?.id}`,
+        `${newUrl}/api/v1/branches/${initialData?.id}`,
         data,
         { headers },
       );

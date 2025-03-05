@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
 
 import { CloudUpload } from 'lucide-react';
+import { newUrl } from 'functionsWork';
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -78,7 +79,7 @@ function AddCompanyForm({
       };
 
       const response = await axios.post(
-        `https://4b96-197-59-106-248.ngrok-free.app/api/v1/companies`,
+        `${newUrl}/api/v1/companies`,
         formData,
         { headers },
       );

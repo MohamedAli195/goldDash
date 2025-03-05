@@ -93,41 +93,41 @@ function ViewCompanyForm({
   //   }
   // }, [selectedImage]);
 
-  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    try {
-      const formData = new FormData();
-      formData.append('address', data.address);
-      formData.append('client_name', data.client_name);
-      formData.append('email', data.email);
-      formData.append('name', data.name);
-      formData.append('phone1', data.phone1);
-      formData.append('phone2', data.phone2);
-      formData.append('tax_end_date', data.tax_end_date);
-      formData.append('tax_num', data.tax_num);
+  // const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('address', data.address);
+  //     formData.append('client_name', data.client_name);
+  //     formData.append('email', data.email);
+  //     formData.append('name', data.name);
+  //     formData.append('phone1', data.phone1);
+  //     formData.append('phone2', data.phone2);
+  //     formData.append('tax_end_date', data.tax_end_date);
+  //     formData.append('tax_num', data.tax_num);
 
-      if (data.logo && data.logo.length > 0) {
-        formData.append('image', data.logo[0]);
-      }
+  //     if (data.logo && data.logo.length > 0) {
+  //       formData.append('image', data.logo[0]);
+  //     }
 
-      const headers = {
-        Authorization: `Bearer ${localStorage.getItem('clintToken')}`,
-        'Content-Type': 'multipart/form-data',
-      };
+  //     const headers = {
+  //       Authorization: `Bearer ${localStorage.getItem('clintToken')}`,
+  //       'Content-Type': 'multipart/form-data',
+  //     };
 
-      const response = await axios.post(
-        `https://4b96-197-59-106-248.ngrok-free.app/api/v1/companies/${initialData?.id}`,
-        formData,
-        { headers },
-      );
+  //     const response = await axios.post(
+  //       `https://4b96-197-59-106-248.ngrok-free.app/api/v1/companies/${initialData?.id}`,
+  //       formData,
+  //       { headers },
+  //     );
 
-      toast.success(t('Category updated successfully'));
-      refetch();
-      handleClose();
-    } catch (err) {
-      // console.error('Error updating category:', err);
-      toast.error(t('Failed to update category, please check your input.'));
-    }
-  };
+  //     toast.success(t('Category updated successfully'));
+  //     refetch();
+  //     handleClose();
+  //   } catch (err) {
+  //     // console.error('Error updating category:', err);
+  //     toast.error(t('Failed to update category, please check your input.'));
+  //   }
+  // };
 
   return (
     <Box
@@ -135,7 +135,7 @@ function ViewCompanyForm({
         mt: { sm: 5, xs: 2.5 },
       }}
       component="form"
-      onSubmit={handleSubmit(onSubmit)}
+      // onSubmit={handleSubmit(onSubmit)}
     >
       <Stack spacing={3} gap={2}>
         <Stack flexDirection={'row'} gap={2}>

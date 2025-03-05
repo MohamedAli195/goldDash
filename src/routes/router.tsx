@@ -62,6 +62,14 @@ export const routes = [
             ),
           },
           {
+            path: paths.employees,
+            element: (
+              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
+                <CategoriesPage isDashBoard={false} />
+              </ProtectedRoute>
+            ),
+          },
+          {
             path: paths.masterData,
             element: (
               <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
@@ -81,6 +89,7 @@ export const routes = [
                 path: "cashier",
                 element: <CashiersPage isDashBoard={false} />,
               },
+              
             ],
           },
 

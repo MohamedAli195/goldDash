@@ -4,6 +4,7 @@ import { Ipermisson } from 'interfaces';
 import toast from 'react-hot-toast';
 
 const url = import.meta.env.VITE_API_URL;
+export const newUrl = "https://c865-197-59-83-223.ngrok-free.app";
 const token = localStorage.getItem('clintToken');
 
 const storedPermissions = localStorage.getItem('permissions');
@@ -21,7 +22,7 @@ export const deleteAnyThingGold = async (id: number, refetch: () => void, module
   }
 
   try {
-    await axios.delete(`https://4b96-197-59-106-248.ngrok-free.app/api/v1/${module}/${id}`, {
+    await axios.delete(`${newUrl}/api/v1/${module}/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -48,7 +49,7 @@ export const fetchAllDataGold = async (
   }
 
   const response = await axios.get(
-    `https://4b96-197-59-106-248.ngrok-free.app/api/v1/${module}?per_page=${perpage}&page=${page}&search=${search}&sort_direction=${sort_dir}&type=${typeFilter}`,
+    `${newUrl}/api/v1/${module}?per_page=${perpage}&page=${page}&search=${search}&sort_direction=${sort_dir}&type=${typeFilter}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -67,27 +68,11 @@ export const fetchAllDataGoldNoArg = async (module: string) => {
     throw new Error('Authorization token is missing');
   }
 
-  const response = await axios.get(`https://4b96-197-59-106-248.ngrok-free.app/api/v1/${module}`, {
+  const response = await axios.get(`${newUrl}/api/v1/${module}`, {
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json',
       'Content-Type': 'multipart/form-data',
-      lang: i18n.language,
-    },
-  });
-
-  return response.data;
-};
-/// Api requestes
-export const fetchPackagesOrCAtegoriesForCourses = async (module: string) => {
-  if (!token) {
-    throw new Error('Authorization token is missing');
-  }
-
-  const response = await axios.get(`${url}/admin/${module}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
       lang: i18n.language,
     },
   });

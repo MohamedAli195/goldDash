@@ -32,6 +32,22 @@ export interface ICompany {
   updated_at?: string;
   // name: { en: string; ar: string };
 }
+export interface IEmployee {
+  address: string;
+  client_name: string;
+  created_at?: string;
+  email: string;
+  id?: number;
+  logo?: string | undefined | null;
+
+  name: string;
+  phone1: string;
+  phone2: string;
+  tax_end_date: string;
+  tax_num: string;
+  updated_at?: string;
+  // name: { en: string; ar: string };
+}
 
 export interface IBranch {
   address: string;

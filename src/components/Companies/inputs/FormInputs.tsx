@@ -40,7 +40,6 @@ interface IProps {
 export const FormInputs = ({errors,register,initialData,setValue}:IProps) => {
 
       const [preview, setPreview] = useState<string | null>(null);
-      const url = import.meta.env.VITE_API_URL;
       const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
