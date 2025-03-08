@@ -1,3 +1,5 @@
+import { number } from 'echarts';
+
 export interface ISelectCategory {
   id: number;
   nameAr: string;
@@ -64,10 +66,10 @@ export interface IBranch {
   tax_end_date: string;
   tax_num: string;
   updated_at?: string;
-  company:{
-    name:string
-    id:number
-  }
+  company: {
+    name: string;
+    id: number;
+  };
 }
 
 export interface ICashier {
@@ -81,11 +83,10 @@ export interface ICashier {
   address: string;
   created_at?: string;
   updated_at?: string;
-  branch:{
-    id:number;
-    name:string
-  }
-
+  branch: {
+    id: number;
+    name: string;
+  };
 }
 
 //package done
@@ -111,4 +112,18 @@ export interface Ipermisson {
   id: number;
   name: string;
   display_name: string;
+}
+
+export interface ISupPermission {
+  entity_type: string;
+  entity_id: number;
+
+  name: string;
+  permissions: string[];
+}
+export interface IUser {
+  id: number;
+  name: string;
+  email: string;
+  permission?: ISupPermission[];
 }

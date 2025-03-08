@@ -12,6 +12,7 @@ const paths = {
   default: `${rootPaths.root}`,
   categories: `${rootPaths.pagesRoot}categories`,
   employees: `${rootPaths.pagesRoot}employees`,
+  users: `${rootPaths.pagesRoot}users`,
   masterData: `${rootPaths.pagesRoot}masterData`,
   permissions: `${rootPaths.pagesRoot}permissions`,
   subAdmins: `${rootPaths.pagesRoot}sub-admins`,

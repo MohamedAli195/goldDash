@@ -42,7 +42,6 @@ function ViewBrancheForm({
   handleClose,
   initialData,
   refetch,
-  
 }: {
   handleClose: () => void;
   refetch: () => void;
@@ -57,7 +56,6 @@ function ViewBrancheForm({
   } = useForm<IFormInput>();
   const { t } = useTranslation();
   const [companyID, setcompanyID] = useState(initialData?.company?.id);
-
 
   useEffect(() => {
     console.log(initialData);
@@ -75,12 +73,11 @@ function ViewBrancheForm({
   }, [initialData, setValue]);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-
-    console.log(data)
+    console.log(data);
     try {
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('clintToken')}`,
-       'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       };
 
       const response = await axios.put(
@@ -108,11 +105,10 @@ function ViewBrancheForm({
         mt: { sm: 5, xs: 2.5 },
       }}
       component="form"
-
     >
       <Stack spacing={3} gap={2}>
         <Stack flexDirection={'row'} gap={2}>
-        <TextField
+          <TextField
             multiline
             fullWidth
             variant="outlined"
@@ -131,7 +127,7 @@ function ViewBrancheForm({
               },
             }}
           />
-                            <TextField
+          <TextField
             multiline
             fullWidth
             select
@@ -181,12 +177,10 @@ function ViewBrancheForm({
               },
             }}
           />
-
-          
         </Stack>
 
         <Stack flexDirection={'row'} gap={2}>
-        <TextField
+          <TextField
             multiline
             fullWidth
             variant="outlined"
@@ -243,10 +237,9 @@ function ViewBrancheForm({
               },
             }}
           />
-          
         </Stack>
         <Stack flexDirection={'row'} gap={2}>
-        <TextField
+          <TextField
             multiline
             fullWidth
             variant="outlined"
@@ -303,8 +296,6 @@ function ViewBrancheForm({
               },
             }}
           />
-
-  
         </Stack>
       </Stack>
     </Box>

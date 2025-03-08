@@ -14,6 +14,7 @@ import PageNotFound from 'errors/PageNotFound';
 import CompaniesPage from 'pages/comapanies';
 import BranchesPage from 'pages/branches';
 import CashiersPage from 'pages/cashiers';
+import UsersPage from '../pages/Users';
 
 // Lazy-loaded components
 const App = lazy(() => import('App'));
@@ -70,6 +71,14 @@ export const routes = [
             ),
           },
           {
+            path: paths.users,
+            element: (
+              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
+                <UsersPage isDashBoard={false} />
+              </ProtectedRoute>
+            ),
+          },
+          {
             path: paths.masterData,
             element: (
               <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
@@ -82,14 +91,13 @@ export const routes = [
                 element: <CompaniesPage isDashBoard={false} />,
               },
               {
-                path: "branch",
+                path: 'branch',
                 element: <BranchesPage isDashBoard={false} />,
               },
               {
-                path: "cashier",
+                path: 'cashier',
                 element: <CashiersPage isDashBoard={false} />,
               },
-              
             ],
           },
 
