@@ -57,7 +57,6 @@ function UpdateBrancheForm({
   const { t } = useTranslation();
   const [companyID, setcompanyID] = useState(initialData?.company?.id);
 
-
   useEffect(() => {
     console.log(initialData);
     if (initialData) {
@@ -74,19 +73,16 @@ function UpdateBrancheForm({
   }, [initialData, setValue]);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-
-    console.log(data)
+    console.log(data);
     try {
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('clintToken')}`,
-       'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       };
 
-      const response = await axios.put(
-        `${newUrl}/api/v1/branches/${initialData?.id}`,
-        data,
-        { headers },
-      );
+      const response = await axios.put(`${newUrl}/api/v1/branches/${initialData?.id}`, data, {
+        headers,
+      });
 
       toast.success(t('Category updated successfully'));
       refetch();
@@ -111,7 +107,7 @@ function UpdateBrancheForm({
     >
       <Stack spacing={3} gap={2}>
         <Stack flexDirection={'row'} gap={2}>
-        <TextField
+          <TextField
             multiline
             fullWidth
             variant="outlined"
@@ -130,7 +126,7 @@ function UpdateBrancheForm({
               },
             }}
           />
-                            <TextField
+          <TextField
             multiline
             fullWidth
             select
@@ -138,6 +134,7 @@ function UpdateBrancheForm({
             label={t('Company name')}
             error={!!errors.company_id}
             helperText={errors.company_id?.message}
+            value={companyID}
             {...register('company_id')}
             // sx={{
             //   '.MuiOutlinedInput-root': {
@@ -180,12 +177,10 @@ function UpdateBrancheForm({
               },
             }}
           />
-
-          
         </Stack>
 
         <Stack flexDirection={'row'} gap={2}>
-        <TextField
+          <TextField
             multiline
             fullWidth
             variant="outlined"
@@ -242,10 +237,9 @@ function UpdateBrancheForm({
               },
             }}
           />
-          
         </Stack>
         <Stack flexDirection={'row'} gap={2}>
-        <TextField
+          <TextField
             multiline
             fullWidth
             variant="outlined"
@@ -302,8 +296,6 @@ function UpdateBrancheForm({
               },
             }}
           />
-
-  
         </Stack>
       </Stack>
       <Button

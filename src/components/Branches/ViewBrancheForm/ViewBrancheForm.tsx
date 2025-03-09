@@ -134,6 +134,7 @@ function ViewBrancheForm({
             variant="outlined"
             label={t('Company name')}
             error={!!errors.company_id}
+            value={companyID}
             helperText={errors.company_id?.message}
             {...register('company_id')}
             // sx={{

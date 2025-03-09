@@ -229,6 +229,7 @@ function ViewCashierForm({
           <TextField
             select
             variant="outlined"
+            value={branchID}
             label={t('Branch name')}
             error={!!errors.branch_id}
             helperText={errors.branch_id?.message}

@@ -231,6 +231,7 @@ console.log(initialData)
             select
             variant="outlined"
             label={t('Branch name')}
+            value={branchID}
             error={!!errors.branch_id}
             helperText={errors.branch_id?.message}
             {...register('branch_id',)}
