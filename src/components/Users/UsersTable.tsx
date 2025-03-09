@@ -39,17 +39,32 @@ function UsersTable({
     {
       field: 'permissions',
       headerName: i18n.language === 'ar' ? 'الصلاحيات' : 'permissions',
-      flex: 0.4,
+      flex: 1,
       renderCell: (params) => (
-        <Stack direction="row" gap={1}>
+        <Stack direction="column" gap={1}>
           {params.row.permissions.map((permission: { name: string; permissions: string[] }) => (
-            <Box key={permission.name}>
+            <Stack key={permission.name} direction="row" gap={1}>
               {' '}
               {permission.name} :{' '}
               {permission.permissions.map((val) => {
-                return <span key={val}>{val} | </span>;
+                return <Box component="div" sx={(theme) => ({
+                  display: 'inline',
+                  p: 0.3,
+                  bgcolor: '#fff',
+                  color: 'grey.800',
+                  border: '1px solid',
+                  borderColor: 'grey.300',
+                  borderRadius: 2,
+                  fontSize: '0.875rem',
+                  fontWeight: '700',
+                  ...theme.applyStyles('dark', {
+                    bgcolor: '#101010',
+                    color: 'grey.300',
+                    borderColor: 'grey.800',
+                  }),
+                })} key={val}>{val}</Box>
               })}
-            </Box>
+            </Stack>
           ))}
         </Stack>
       ),

@@ -102,9 +102,9 @@ const generateMenuItems = (): IMenuitems[] => [
   },
   {
     id: uniqueId(),
-    title: i18next.t("Sub-Admins"),
+    title: i18next.t("Users"),
     icon: CustomersIcon,
-    href: paths.subAdmins,
+    href: paths.users,
     available: false,
   },
   {
