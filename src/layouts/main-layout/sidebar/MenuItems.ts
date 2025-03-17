@@ -47,6 +47,7 @@ import ForgotPasswordIcon from 'components/icons/menu-icons/ForgotPasswordIcon';
 import GlobalSettingsIcon from 'components/icons/menu-icons/GlobalSettingsIcon';
 import HomeIcon from 'components/icons/menu-icons/HomeIcon';
 import InboxIcon from 'components/icons/menu-icons/InboxIcon';
+import KnowledgebaseIcon from 'components/icons/menu-icons/KnowledgebaseIcon';
 import OrderIcon from 'components/icons/menu-icons/OrderIcon';
 import PersonalSettingsIcon from 'components/icons/menu-icons/PersonalSettingsIcon';
 import ProductsIcon from 'components/icons/menu-icons/ProductsIcon';
@@ -89,23 +90,37 @@ const generateMenuItems = (): IMenuitems[] => [
   {
     id: uniqueId(),
     title: i18next.t("MasterData"),
-    icon: HomeIcon,
+    icon: CategoriesIcon,
     href: paths.masterData,
+    available: true,
+  },
+  // {
+  //   id: uniqueId(),
+  //   title: i18next.t("Permissions"),
+  //   icon: GlobalSettingsIcon,
+  //   href: paths.permissions,
+  //   available: true,
+  // },
+  {
+    id: uniqueId(),
+    title: i18next.t("Users"),
+    icon: GlobalSettingsIcon,
+    href: paths.users,
     available: true,
   },
   {
     id: uniqueId(),
-    title: i18next.t("Permissions"),
+    title: i18next.t("Employees"),
     icon: CustomersIcon,
-    href: paths.permissions,
-    available: false,
+    href: paths.employees,
+    available: true,
   },
   {
     id: uniqueId(),
-    title: i18next.t("Users"),
+    title: i18next.t("Employees Actions"),
     icon: CustomersIcon,
-    href: paths.users,
-    available: false,
+    href: paths.actions,
+    available: true,
   },
   {
     id: uniqueId(),
@@ -114,49 +129,42 @@ const generateMenuItems = (): IMenuitems[] => [
     href: '#!',
     chip: '16',
     chipColor: 'secondary',
-    available: false,
+    available: true,
   },
-  {
-    id: uniqueId(),
-    title: 'Products',
-    icon: ProductsIcon,
-    href: '#!',
-    available: false,
-  },
-  {
-    id: uniqueId(),
-    title: 'Categories',
-    icon: CategoriesIcon,
-    href: '#!',
-    available: false,
-  },
-  {
-    id: uniqueId(),
-    title: 'Customers',
-    icon: CustomersIcon,
-    href: '#!',
-    available: false,
-  },
+  // {
+  //   id: uniqueId(),
+  //   title: 'Products',
+  //   icon: ProductsIcon,
+  //   href: '#!',
+  //   available: true,
+  // },
+  // {
+  //   id: uniqueId(),
+  //   title: 'Customers',
+  //   icon: CustomersIcon,
+  //   href: '#!',
+  //   available: true,
+  // },
   {
     id: uniqueId(),
     title: 'Reports',
     icon: ReportsIcon,
     href: '#!',
-    available: false,
+    available: true,
   },
   {
     id: uniqueId(),
     title: 'Coupons',
     icon: CouponsIcon,
     href: '#!',
-    available: false,
+    available: true,
   },
   {
     id: uniqueId(),
     title: 'Inbox',
     icon: InboxIcon,
     href: '#!',
-    available: false,
+    available: true,
   },
   
 

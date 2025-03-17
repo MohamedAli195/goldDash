@@ -5,9 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
-
-import { CloudUpload } from 'lucide-react';
-import { IBranch, ICashier, ICompany } from 'interfaces';
+import { IAction, IBranch, ICashier, ICompany, IEmployee, IUser } from 'interfaces';
 import { useQuery } from '@tanstack/react-query';
 import { fetchAllDataGoldNoArg, newUrl } from 'functionsWork';
 
@@ -23,25 +21,22 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-interface IFormInput {
-  branch_id: number;
-  name: string;
-  national_id: string;
-  phone1: string;
-  phone2: string;
-  email: string;
-  address: string;
-  // name: { en: string; ar: string };
+export interface IFormUnput {
+  action_type: string;
+  amount: number;
+  date: string;
+  description:string;
+  employee_id:number
 }
 
-function UpdateCashierForm({
+function UpdateEmployAction({
   handleClose,
   initialData,
   refetch,
 }: {
   handleClose: () => void;
   refetch: () => void;
-  initialData?: null | ICashier;
+  initialData?: null | IAction;
 }) {
   const {
     register,
@@ -49,28 +44,33 @@ function UpdateCashierForm({
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IFormInput>();
+  } = useForm<IFormUnput>();
   const { t } = useTranslation();
-  const [branchID, setBranchID] = useState<number |undefined>(initialData?.branch?.id);
-  // console.log(ImageFromApi)
-  // const [preview, setPreview] = useState<string | FileList | undefined | null>(ImageFromApi);
-  // const [imageSrc, setImageSrc] = useState<string | undefined>();
+
+// const [branchID, setBranchID] = useState<number |undefined>(initialData?.branch_id);
+// const [cashierID, setcashierID] = useState<number |undefined>(initialData?.cashier_id);
+// const [companyID, setcompanyID] = useState<number |undefined>(initialData?.company_id);
+const [employeeID, setemployeeID] = useState<number |undefined>(initialData?.employee.id);
+
 console.log(initialData)
   useEffect(() => {
     console.log(initialData);
     if (initialData) {
-      setValue('address', initialData.address);
-      setValue('national_id', initialData.national_id);
-      setValue('name', initialData.name);
-      setValue('email', initialData.email);
-      setValue('phone1', initialData.phone1);
-      setValue('phone2', initialData.phone2);
-      setValue('branch_id', initialData?.branch?.id);
+      setValue('action_type', initialData.action_type);
+      setValue('amount', initialData.amount);
+      setValue('date', initialData.date);
+      setValue('description', initialData.description);
+      setValue('employee_id', initialData.employee.id);
       
     }
   }, [initialData, setValue]);
 
-  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    const { data: employees } = useQuery({
+      queryKey: [`employees`],
+      queryFn: () => fetchAllDataGoldNoArg('employees'),
+    });
+
+  const onSubmit: SubmitHandler<IFormUnput> = async (data) => {
 
     console.log(data) 
     try {
@@ -80,13 +80,13 @@ console.log(initialData)
       };
 
       const response = await axios.put(
-        `${newUrl}/api/v1/cashiers/${initialData?.id}`,
+        `${newUrl}/api/v1/employee-actions/${initialData?.id}`,
         {...data},
         { headers },
       );
 
       console.log(response)
-      toast.success(t('Cashier updated successfully'));
+      toast.success(t('Cashier updated successfully',));
       refetch();
       handleClose();
     } catch (err) {
@@ -95,12 +95,10 @@ console.log(initialData)
     }
   };
 
-  const { data, error, isLoading, isError } = useQuery({
-    queryKey: [`branches`],
-    queryFn: () => fetchAllDataGoldNoArg('branches'),
-  });
 
-  return (
+
+
+    return (
     <Box
       sx={{
         mt: { sm: 5, xs: 2.5 },
@@ -122,12 +120,12 @@ console.log(initialData)
               },
             }}
             variant="outlined"
-            id="address"
+            id="action_type"
             type="text"
-            label={t('address')}
-            error={!!errors.address}
-            helperText={errors.address?.message}
-            {...register('address')}
+            label={t('action_type')}
+            error={!!errors.action_type}
+            helperText={errors.action_type?.message}
+            {...register('action_type')}
           />
           <TextField
             multiline
@@ -141,12 +139,12 @@ console.log(initialData)
               },
             }}
             variant="outlined"
-            id="national_id"
+            id="amount"
             type="text"
-            label={t('national_id')}
-            error={!!errors.national_id}
-            helperText={errors.national_id?.message}
-            {...register('national_id')}
+            label={t('amount')}
+            error={!!errors.amount}
+            helperText={errors.amount?.message}
+            {...register('amount')}
           />
           <TextField
             multiline
@@ -160,81 +158,41 @@ console.log(initialData)
               },
             }}
             variant="outlined"
-            id="email"
+            id="date"
             type="text"
-            label="email"
-            error={!!errors.email}
-            helperText={errors.email?.message}
-            {...register('email')}
-          />
-        </Stack>
-        <Stack flexDirection={'row'} gap={2}>
-          <TextField
-            multiline
-            fullWidth
-            InputLabelProps={{
-              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-            }}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1', // Adjust line height
-              },
-            }}
-            variant="outlined"
-            id="name"
-            type="text"
-            label={t('name')}
-            error={!!errors.name}
-            helperText={errors.name?.message}
-            {...register('name', { required: t('name') })}
-          />
-          <TextField
-            multiline
-            fullWidth
-            InputLabelProps={{
-              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-            }}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1', // Adjust line height
-              },
-            }}
-            variant="outlined"
-            id="phone1"
-            type="text"
-            label={t('phone1')}
-            error={!!errors.phone1}
-            helperText={errors.phone1?.message}
-            {...register('phone1')}
-          />
-          <TextField
-            multiline
-            fullWidth
-            InputLabelProps={{
-              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-            }}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1', // Adjust line height
-              },
-            }}
-            variant="outlined"
-            id="phone2"
-            type="text"
-            label={t('phone2')}
-            error={!!errors.phone2}
-            helperText={errors.phone2?.message}
-            {...register('phone2')}
+            label="date"
+            error={!!errors.date}
+            helperText={errors.date?.message}
+            {...register('date')}
           />
 
-          <TextField
+<TextField
+            multiline
+            fullWidth
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
+            variant="outlined"
+            id="description "
+            type="text"
+            label="description  "
+            error={!!errors.description }
+            helperText={errors.description  ?.message}
+            {...register('description')}
+          />
+
+<TextField
             select
             variant="outlined"
-            label={t('Branch name')}
-            value={branchID}
-            error={!!errors.branch_id}
-            helperText={errors.branch_id?.message}
-            {...register('branch_id',)}
+            label={t('users name')}
+            error={!!errors.employee_id}
+            helperText={errors.employee_id?.message}
+            {...register('employee_id')}
             sx={{
               '.MuiOutlinedInput-root': {
                 lineHeight: 0,
@@ -245,16 +203,23 @@ console.log(initialData)
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
+            value={employeeID}
 
-            onChange={(e) => setBranchID(+e.target.value)}
+
+            onChange={(e) => setemployeeID(+e.target.value)}
           >
-            {data?.data?.data?.map((branch: IBranch) => (
-              <MenuItem key={branch.id} value={branch.id}>
-                {branch.name}
+            {employees?.data?.data?.map((emp: IEmployee) => (
+              <MenuItem key={emp.id} value={emp.id}>
+                {emp.name}
               </MenuItem>
             ))}
           </TextField>
         </Stack>
+
+
+
+
+
       </Stack>
       <Button
         color="primary"
@@ -264,10 +229,10 @@ console.log(initialData)
         type="submit"
         sx={{ mt: 3, fontSize: '18px' }}
       >
-        {t('updateBranch')}
+        {t('Add Employee')}
       </Button>
     </Box>
-  );
+    );
 }
 
-export default UpdateCashierForm;
+export default UpdateEmployAction;

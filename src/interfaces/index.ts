@@ -53,6 +53,18 @@ export interface IEmployee {
   id?:number
 }
 
+export interface IAction {
+  action_type: string;
+  amount: number;
+  date: string;
+  description:string;
+  employee : {
+    id:number;
+    name:string;
+  };
+  id?:number
+}
+
 export interface IBranch {
   address: string;
   // company_id: number;

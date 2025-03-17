@@ -136,13 +136,6 @@ function UpdateBrancheForm({
             helperText={errors.company_id?.message}
             value={companyID}
             {...register('company_id')}
-            // sx={{
-            //   '.MuiOutlinedInput-root': {
-            //     lineHeight: 0,
-            //   },
-            //   width: '25%',
-            // }}
-
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
@@ -151,6 +144,8 @@ function UpdateBrancheForm({
                 lineHeight: '1', // Adjust line height
               },
             }}
+
+            onChange={(e) => setcompanyID(+e.target.value)}
           >
             {data?.data?.data?.map((company: ICompany) => (
               <MenuItem key={company.id} value={company.id}>
@@ -167,7 +162,7 @@ function UpdateBrancheForm({
             label={t('address')}
             error={!!errors.address}
             helperText={errors.address?.message}
-            {...register('address', { required: t('addressReq') })}
+            {...register('address')}
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}

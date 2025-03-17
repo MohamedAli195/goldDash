@@ -1,6 +1,6 @@
 import { Box, Button, Stack } from '@mui/material';
 import i18n from 'i18n';
-import { Eye, Pencil, Trash2 } from 'lucide-react';
+import { Eye, MonitorCog, Pencil, Trash2 } from 'lucide-react';
 import React from 'react';
 import imgNotFound from './../../../public/images/No_Image_Available.jpg';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -108,11 +108,12 @@ function UsersTable({
 
           <Button
             variant="contained"
-            color="primary"
+            color="success"
             onClick={() => handlePermisionsOpen(params.row)}
           >
-            Permissions
-            <Pencil />
+            {/* Permissions */}
+            {/* <Pencil /> */}
+            <MonitorCog color='#FFF' />
           </Button>
         </Stack>
       ),
