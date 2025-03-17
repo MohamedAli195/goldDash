@@ -115,6 +115,9 @@ function UpdateCompanyForm({
         'Content-Type': 'multipart/form-data',
       };
 
+      console.log(data)
+      console.log(formData)
+
       const response = await axios.post(
         `${newUrl}/api/v1/companies/${initialData?.id}`,
         formData,
@@ -205,7 +208,7 @@ function UpdateCompanyForm({
             fullWidth
             variant="outlined"
             id="email"
-            type="text"
+            type="email"
             label="Email"
             error={!!errors.email}
             helperText={errors.email?.message}
@@ -283,7 +286,7 @@ function UpdateCompanyForm({
             fullWidth
             variant="outlined"
             id="tax_end_date"
-            type="text"
+            type="date"
             label="Tax End Date"
             error={!!errors.tax_end_date}
             helperText={errors.tax_end_date?.message}

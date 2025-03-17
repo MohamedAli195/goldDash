@@ -338,6 +338,8 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
             helperText={errors.start_time?.message}
             {...register('start_time')}
           />
+
+
           <TextField
             multiline
             fullWidth
@@ -356,6 +358,25 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
             error={!!errors.end_time}
             helperText={errors.end_time?.message}
             {...register('end_time')}
+          />
+          <TextField
+            multiline
+            fullWidth
+            InputLabelProps={{
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                lineHeight: '1', // Adjust line height
+              },
+            }}
+            variant="outlined"
+            id="hire_date"
+            type="text"
+            label={t('hire_date')}
+            error={!!errors.hire_date}
+            helperText={errors.hire_date?.message}
+            {...register('hire_date')}
           />
           <TextField
             multiline
