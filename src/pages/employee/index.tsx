@@ -168,7 +168,7 @@ function EmployeePage({ isDashBoard }: IProps) {
           {
             // checkPermissions(parsedData,'add-category') &&
             <Button variant="contained" color="info" onClick={handleOpen}>
-              {t('AddCashier')}
+              {t('Add Employee')}
             </Button>
           }
         </Stack>
@@ -177,7 +177,7 @@ function EmployeePage({ isDashBoard }: IProps) {
       <Paper sx={{ width: '100%' }}>
         {isDashBoard && (
           <Typography variant="h1" color="initial">
-            {t('Cashiers')}
+            {t('Employees')}
           </Typography>
         )}
         <Stack flexDirection={'row'} alignItems={'center'}>
