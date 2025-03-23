@@ -71,7 +71,6 @@ function UpdateCompanyForm({
       reader.readAsDataURL(file);
     }
   };
-
   useEffect(() => {
     // console.log(initialData);
     if (initialData) {
@@ -99,7 +98,7 @@ function UpdateCompanyForm({
       const formData = new FormData();
       formData.append('address', data.address);
       formData.append('client_name', data.client_name);
-      formData.append('email', data.email);
+      formData.append('email', data.email || '');
       formData.append('name', data.name);
       formData.append('phone1', data.phone1);
       formData.append('phone2', data.phone2);
@@ -118,11 +117,9 @@ function UpdateCompanyForm({
       console.log(data)
       console.log(formData)
 
-      const response = await axios.post(
-        `${newUrl}/api/v1/companies/${initialData?.id}`,
-        formData,
-        { headers },
-      );
+      const response = await axios.post(`${newUrl}/api/v1/companies/${initialData?.id}`, formData, {
+        headers,
+      });
 
       toast.success(t('Category updated successfully'));
       refetch();
@@ -143,7 +140,7 @@ function UpdateCompanyForm({
     >
       <Stack spacing={3} gap={2}>
         <Stack flexDirection={'row'} gap={2}>
-        <TextField
+          <TextField
             multiline
             fullWidth
             variant="outlined"
@@ -154,7 +151,7 @@ function UpdateCompanyForm({
             helperText={errors.name?.message}
             {...register('name', { required: t('name') })}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -173,7 +170,7 @@ function UpdateCompanyForm({
             helperText={errors.address?.message}
             {...register('address')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -182,7 +179,7 @@ function UpdateCompanyForm({
             }}
           />
           <TextField
-          multiline
+            multiline
             fullWidth
             variant="outlined"
             id="client_name"
@@ -192,7 +189,7 @@ function UpdateCompanyForm({
             helperText={errors.client_name?.message}
             {...register('client_name')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -200,11 +197,10 @@ function UpdateCompanyForm({
               },
             }}
           />
-          
         </Stack>
         <Stack flexDirection={'row'} gap={2}>
-        <TextField
-        multiline
+          <TextField
+            multiline
             fullWidth
             variant="outlined"
             id="email"
@@ -214,7 +210,7 @@ function UpdateCompanyForm({
             helperText={errors.email?.message}
             {...register('email')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -233,7 +229,7 @@ function UpdateCompanyForm({
             helperText={errors.phone1?.message}
             {...register('phone1')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -252,7 +248,7 @@ function UpdateCompanyForm({
             helperText={errors.phone2?.message}
             {...register('phone2')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -273,7 +269,7 @@ function UpdateCompanyForm({
             helperText={errors.tax_num?.message}
             {...register('tax_num')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -292,7 +288,7 @@ function UpdateCompanyForm({
             helperText={errors.tax_end_date?.message}
             {...register('tax_end_date')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
