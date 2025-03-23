@@ -16,6 +16,7 @@ interface IProps {
 }
 function CompanyTable({data,handleEditOpen,setTempId,handleOpend,handleViewOpen}: IProps) {
 
+  console.log(data)
   const navigate = useNavigate();
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID' },

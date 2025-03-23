@@ -21,16 +21,18 @@ import DeleteModal from 'components/common/deleteModal';
 import PackagesPageSkeleton from 'components/common/skelton';
 import { deleteAnyThingGold, fetchAllDataGold } from 'functionsWork';
 
-import AddCashierForm from 'components/Cashiers/addCashierForm';
-import UpdateCashierForm from 'components/Cashiers/UpdateCashierForm/UpdateCashierForm';
-import CashierTable from 'components/Cashiers/CashierTable';
+import AddPosForm from 'components/Point-Of-Sales/addPosForm';
+
+import CashierTable from 'components/Point-Of-Sales/CashierTable';
 import PaginationComponent from 'components/common/pagination';
-import ViewCashierForm from 'components/Cashiers/ViewCashierForm/ViewCashierForm';
+import UpdatePosForm from 'components/Point-Of-Sales/UpdatePosForm/UpdatePosForm';
+import ViewPosForm from 'components/Point-Of-Sales/ViewPosForm/ViewPosForm';
+
 // Fetch packages function
 interface IProps {
   isDashBoard: boolean;
 }
-function CashiersPage({ isDashBoard }: IProps) {
+function PointOfSalesPage({ isDashBoard }: IProps) {
   // states
   const [page, setPage] = useState(1);
   const [per, setper] = useState(10);
@@ -139,8 +141,8 @@ function CashiersPage({ isDashBoard }: IProps) {
 
   // Fetch packages using React Query
   const { data, error, isLoading, isError, refetch } = useQuery({
-    queryKey: [`cashiers-${page}-${per}-${search}-${sort}`],
-    queryFn: () => fetchAllDataGold(page, per, search, sort, '', 'cashiers'),
+    queryKey: [`point-of-sales-${page}-${per}-${search}-${sort}`],
+    queryFn: () => fetchAllDataGold(page, per, search, sort, '', 'point-of-sales'),
   });
   console.log(data);
 
@@ -159,13 +161,13 @@ function CashiersPage({ isDashBoard }: IProps) {
       {!isDashBoard && (
         <Stack flexDirection="row" alignItems="center" justifyContent="space-between" mb={3}>
           <Typography variant="h1" color="initial">
-            {t('Cashiers')}
+          {t('Point Of Sales')}
           </Typography>
 
           {
             // checkPermissions(parsedData,'add-category') &&
             <Button variant="contained" color="info" onClick={handleOpen}>
-              {t('AddCashier')}
+              {t('Add Point Of Sales')}
             </Button>
           }
         </Stack>
@@ -174,7 +176,7 @@ function CashiersPage({ isDashBoard }: IProps) {
       <Paper sx={{ width: '100%' }}>
         {isDashBoard && (
           <Typography variant="h1" color="initial">
-            {t('Cashiers')}
+            {t('Point Of Sales')}
           </Typography>
         )}
         <Stack flexDirection={'row'} alignItems={'center'}>
@@ -222,9 +224,9 @@ function CashiersPage({ isDashBoard }: IProps) {
 
       {/* add modal */}
       <BasicModal open={open} handleClose={handleClose}>
-        <h2>{t('AddCashier')}</h2>
+        <h2>{t('AddPos')}</h2>
 
-        <AddCashierForm handleClose={handleClose} refetch={refetch} />
+        <AddPosForm handleClose={handleClose} refetch={refetch} />
       </BasicModal>
 
       <DeleteModal
@@ -233,13 +235,13 @@ function CashiersPage({ isDashBoard }: IProps) {
         refetch={refetch}
         tempId={tempId}
         deleteFunc={() => {
-          deleteAnyThingGold(tempId, refetch, 'cashiers');
+          deleteAnyThingGold(tempId, refetch, 'point-of-sales');
         }}
       />
       {/* update modal */}
       <BasicModal open={openU} handleClose={handleCloseU}>
-        <h2>{t('updateCategory')}</h2>
-        <UpdateCashierForm
+        <h2>{t('Update Pos')}</h2>
+        <UpdatePosForm
           handleClose={handleCloseU}
           initialData={selectedCashier}
           refetch={refetch}
@@ -249,7 +251,7 @@ function CashiersPage({ isDashBoard }: IProps) {
 
             {/* View modal */}
             <BasicModal open={openV} handleClose={handleCloseV}>
-        <ViewCashierForm
+        <ViewPosForm
           handleClose={handleCloseV}
           initialData={selectedCashier}
           refetch={refetch}
@@ -260,4 +262,4 @@ function CashiersPage({ isDashBoard }: IProps) {
   );
 }
 
-export default CashiersPage;
+export default PointOfSalesPage;

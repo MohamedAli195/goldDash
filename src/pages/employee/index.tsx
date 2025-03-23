@@ -21,11 +21,11 @@ import DeleteModal from 'components/common/deleteModal';
 import PackagesPageSkeleton from 'components/common/skelton';
 import { deleteAnyThingGold, fetchAllDataGold } from 'functionsWork';
 
-import AddCashierForm from 'components/Cashiers/addCashierForm';
-import UpdateCashierForm from 'components/Cashiers/UpdateCashierForm/UpdateCashierForm';
-import CashierTable from 'components/Cashiers/CashierTable';
+import AddPosForm from 'components/Point-Of-Sales/addPosForm';
+
+import CashierTable from 'components/Point-Of-Sales/CashierTable';
 import PaginationComponent from 'components/common/pagination';
-import ViewCashierForm from 'components/Cashiers/ViewCashierForm/ViewCashierForm';
+
 import EmployTable from 'components/Employ/EmployTable';
 import UpdateEmployForm from 'components/Employ/UpdateEmployForm/UpdateEmployForm';
 import ViewEmployForm from 'components/Employ/ViewEmployForm/ViewEmployForm';

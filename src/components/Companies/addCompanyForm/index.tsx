@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Stack, TextField } from '@mui/material';
+import { Box, Button, FormLabel, Stack, TextField } from '@mui/material';
 import axios from 'axios';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -31,7 +31,10 @@ interface IFormInput {
   tax_end_date: string;
   tax_num: string;
 
-  // name: { en: string; ar: string };
+  tax_image: string | FileList;
+  identity_image: string | FileList;
+  contract_file: string | FileList;
+
 }
 
 function AddCompanyForm({
@@ -47,18 +50,65 @@ function AddCompanyForm({
     formState: { errors },
   } = useForm<IFormInput>();
 
-  const [preview, setPreview] = useState<string | null>(null);
+  const [previewLogo, setPreviewLogo] = useState<string | null>(null);
+  const [previewContract, setPreviewContract] = useState<string | null>(null);
+  const [previewTaxImage, setPreviewTaxImage] = useState<string | null>(null);
+  const [previewIdentityImage, setPreviewIdentityImage] = useState<string | null>(null);
   const url = import.meta.env.VITE_API_URL;
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  console.log(previewContract)
+    // logo handler
+    const handleContractChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setPreviewContract(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+  // images handlers
+
+  // logo handler
+  const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setPreview(reader.result as string);
+        setPreviewLogo(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
+
+  // tax_image handler
+  const handleTaxImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setPreviewTaxImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // tax_image handler
+  const handleTaxIdentityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setPreviewIdentityImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+
+  };
+
+  //end  images handlers
+
   const { t } = useTranslation();
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
@@ -67,6 +117,9 @@ function AddCompanyForm({
       formData.append('client_name', data.client_name);
       formData.append('email', data.email);
       formData.append('logo', data.logo[0]);
+      formData.append('tax_image', data.tax_image[0]);
+      formData.append('identity_image', data.identity_image[0]);
+      formData.append('contract_file', data.contract_file[0]);
       formData.append('name', data.name);
       formData.append('phone1', data.phone1);
       formData.append('phone2', data.phone2);
@@ -78,11 +131,7 @@ function AddCompanyForm({
         'Content-Type': 'multipart/form-data',
       };
 
-      const response = await axios.post(
-        `${newUrl}/api/v1/companies`,
-        formData,
-        { headers },
-      );
+      const response = await axios.post(`${newUrl}/api/v1/companies`, formData, { headers });
 
       // (response.data);
       toast.success('Category added successfully');
@@ -104,7 +153,7 @@ function AddCompanyForm({
     >
       <Stack spacing={3} gap={2}>
         <Stack flexDirection={'row'} gap={2}>
-        <TextField
+          <TextField
             multiline
             fullWidth
             variant="outlined"
@@ -115,7 +164,7 @@ function AddCompanyForm({
             helperText={errors.name?.message}
             {...register('name', { required: t('name') })}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -134,7 +183,7 @@ function AddCompanyForm({
             helperText={errors.address?.message}
             {...register('address')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -143,7 +192,7 @@ function AddCompanyForm({
             }}
           />
           <TextField
-          multiline
+            multiline
             fullWidth
             variant="outlined"
             id="client_name"
@@ -153,7 +202,7 @@ function AddCompanyForm({
             helperText={errors.client_name?.message}
             {...register('client_name')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -161,11 +210,10 @@ function AddCompanyForm({
               },
             }}
           />
-          
         </Stack>
         <Stack flexDirection={'row'} gap={2}>
-        <TextField
-        multiline
+          <TextField
+            multiline
             fullWidth
             variant="outlined"
             id="email"
@@ -175,7 +223,7 @@ function AddCompanyForm({
             helperText={errors.email?.message}
             {...register('email')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -194,7 +242,7 @@ function AddCompanyForm({
             helperText={errors.phone1?.message}
             {...register('phone1')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -213,7 +261,7 @@ function AddCompanyForm({
             helperText={errors.phone2?.message}
             {...register('phone2')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -234,7 +282,7 @@ function AddCompanyForm({
             helperText={errors.tax_num?.message}
             {...register('tax_num')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -253,7 +301,7 @@ function AddCompanyForm({
             helperText={errors.tax_end_date?.message}
             {...register('tax_end_date')}
             InputLabelProps={{
-              style: { fontWeight: 800 ,fontSize:"18px" }, // Makes the label bold
+              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
             sx={{
               '& .MuiInputBase-input': {
@@ -263,31 +311,125 @@ function AddCompanyForm({
           />
         </Stack>
         <Stack flexDirection={'row'} gap={2} alignItems={'center'}>
-          <Button
-            component="label"
-            role={undefined}
-            variant="outlined"
-            tabIndex={-1}
-            startIcon={<CloudUpload />}
-            sx={{ height: '100%' }}
-          >
-            Upload Image
-            <VisuallyHiddenInput
-              type="file"
-              {...register('logo')}
-              multiple
-              onChange={handleFileChange}
-            />
-          </Button>
-          {preview && (
-            <Box sx={{ mt: 2 }}>
-              <img
-                src={preview}
-                alt={t('Preview')}
-                style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
+          <Stack flexDirection={'column'} gap={2}>
+            <FormLabel>logo</FormLabel>
+            {/* logo */}
+            <Button
+              component="label"
+              role={undefined}
+              variant="outlined"
+              tabIndex={-1}
+              startIcon={<CloudUpload />}
+              sx={{ height: '100%' }}
+            >
+              Upload Image
+              <VisuallyHiddenInput
+                type="file"
+                {...register('logo')}
+                multiple
+                onChange={handleLogoChange}
               />
-            </Box>
-          )}
+            </Button>
+            {previewLogo && (
+              <Box sx={{ mt: 2 }}>
+                <img
+                  src={previewLogo}
+                  alt={t('Preview')}
+                  style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
+                />
+              </Box>
+            )}
+          </Stack>
+          {/* tax_image */}
+
+          <Stack flexDirection={'column'} gap={2}>
+            <FormLabel>tax_image</FormLabel>
+            <Button
+              component="label"
+              role={undefined}
+              variant="outlined"
+              tabIndex={-1}
+              startIcon={<CloudUpload />}
+              sx={{ height: '100%' }}
+            >
+              Upload Image
+              <VisuallyHiddenInput
+                type="file"
+                {...register('tax_image')}
+                multiple
+                onChange={handleTaxImageChange}
+              />
+            </Button>
+            {previewTaxImage && (
+              <Box sx={{ mt: 2 }}>
+                <img
+                  src={previewTaxImage}
+                  alt={t('Preview')}
+                  style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
+                />
+              </Box>
+            )}
+          </Stack>
+
+          <Stack flexDirection={'column'} gap={2}>
+            <FormLabel>identity_image</FormLabel>
+            {/* tax_image */}
+            <Button
+              component="label"
+              role={undefined}
+              variant="outlined"
+              tabIndex={-1}
+              startIcon={<CloudUpload />}
+              sx={{ height: '100%' }}
+            >
+              Upload Image
+              <VisuallyHiddenInput
+                type="file"
+                {...register('identity_image')}
+                multiple
+                onChange={handleTaxIdentityChange}
+              />
+            </Button>
+            {previewIdentityImage && (
+              <Box sx={{ mt: 2 }}>
+                <img
+                  src={previewIdentityImage}
+                  alt={t('Preview')}
+                  style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
+                />
+              </Box>
+            )}
+          </Stack>
+
+          <Stack flexDirection={'column'} gap={2}>
+            <FormLabel>Contract File</FormLabel>
+            {/* tax_image */}
+            <Button
+              component="label"
+              role={undefined}
+              variant="outlined"
+              tabIndex={-1}
+              startIcon={<CloudUpload />}
+              sx={{ height: '100%' }}
+            >
+              Upload File
+              <VisuallyHiddenInput
+                type="file"
+                {...register('contract_file')}
+                multiple
+                onChange={handleContractChange}
+              />
+            </Button>
+            {previewContract && (
+              <Box sx={{ mt: 2 }}>
+                <img
+                  src={previewContract}
+                  alt={t('Preview')}
+                  style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
+                />
+              </Box>
+            )}
+          </Stack>
         </Stack>
       </Stack>
       <Button

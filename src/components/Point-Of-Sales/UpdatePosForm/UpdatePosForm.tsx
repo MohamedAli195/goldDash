@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import { CloudUpload } from 'lucide-react';
 import { IBranch, ICashier, ICompany } from 'interfaces';
 import { useQuery } from '@tanstack/react-query';
-import { fetchAllDataGoldNoArg } from 'functionsWork';
+import { fetchAllDataGoldNoArg, newUrl } from 'functionsWork';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -34,7 +34,7 @@ interface IFormInput {
   // name: { en: string; ar: string };
 }
 
-function ViewCashierForm({
+function UpdatePosForm({
   handleClose,
   initialData,
   refetch,
@@ -51,11 +51,11 @@ function ViewCashierForm({
     formState: { errors },
   } = useForm<IFormInput>();
   const { t } = useTranslation();
-  const [branchID, setBranchID] = useState(initialData?.branch?.id);
+  const [branchID, setBranchID] = useState<number |undefined>(initialData?.branch?.id);
   // console.log(ImageFromApi)
   // const [preview, setPreview] = useState<string | FileList | undefined | null>(ImageFromApi);
   // const [imageSrc, setImageSrc] = useState<string | undefined>();
-
+console.log(initialData)
   useEffect(() => {
     console.log(initialData);
     if (initialData) {
@@ -65,6 +65,7 @@ function ViewCashierForm({
       setValue('email', initialData.email);
       setValue('phone1', initialData.phone1);
       setValue('phone2', initialData.phone2);
+      setValue('branch_id', initialData?.branch?.id);
       
     }
   }, [initialData, setValue]);
@@ -79,7 +80,7 @@ function ViewCashierForm({
       };
 
       const response = await axios.put(
-        `https://4b96-197-59-106-248.ngrok-free.app/api/v1/cashiers/${initialData?.id}`,
+        `${newUrl}/api/v1/cashiers/${initialData?.id}`,
         {...data},
         { headers },
       );
@@ -229,8 +230,8 @@ function ViewCashierForm({
           <TextField
             select
             variant="outlined"
-            value={branchID}
             label={t('Branch name')}
+            value={branchID}
             error={!!errors.branch_id}
             helperText={errors.branch_id?.message}
             {...register('branch_id',)}
@@ -244,6 +245,8 @@ function ViewCashierForm({
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
+
+            onChange={(e) => setBranchID(+e.target.value)}
           >
             {data?.data?.data?.map((branch: IBranch) => (
               <MenuItem key={branch.id} value={branch.id}>
@@ -253,9 +256,18 @@ function ViewCashierForm({
           </TextField>
         </Stack>
       </Stack>
-    
+      <Button
+        color="primary"
+        variant="contained"
+        size="large"
+        fullWidth
+        type="submit"
+        sx={{ mt: 3, fontSize: '18px' }}
+      >
+        {t('updateBranch')}
+      </Button>
     </Box>
   );
 }
 
-export default ViewCashierForm;
+export default UpdatePosForm;

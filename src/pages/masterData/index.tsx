@@ -3,7 +3,7 @@ import { Routes, Route, Link, Navigate, Outlet } from 'react-router-dom';
 import { Box, Button, Stack } from '@mui/material';
 import CompaniesPage from 'pages/comapanies';
 import BranchesPage from 'pages/branches';
-import CashiersPage from 'pages/cashiers';
+import PointOfSalesPage from 'pages/point-of-sales';
 
 function MasterDataPage() {
   return (
@@ -16,7 +16,7 @@ function MasterDataPage() {
           <Button component={Link} to="/masterData/branch">Branch</Button>
         </Box>
         <Box>
-          <Button component={Link} to="/masterData/cashier">Cashier</Button>
+          <Button component={Link} to="/masterData/point-of-sales">Point Of Sales</Button>
         </Box>
       </Stack>
 

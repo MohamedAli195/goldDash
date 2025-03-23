@@ -13,7 +13,7 @@ import MasterDataPage from 'pages/masterData';
 import PageNotFound from 'errors/PageNotFound';
 import CompaniesPage from 'pages/comapanies';
 import BranchesPage from 'pages/branches';
-import CashiersPage from 'pages/cashiers';
+import PointOfSalesPage from 'pages/point-of-sales';
 import UsersPage from '../pages/Users';
 import EmployeePage from 'pages/employee';
 import ActionsPage from 'pages/actions';
@@ -105,8 +105,8 @@ export const routes = [
                 element: <BranchesPage isDashBoard={false} />,
               },
               {
-                path: 'cashier',
-                element: <CashiersPage isDashBoard={false} />,
+                path: 'point-of-sales',
+                element: <PointOfSalesPage isDashBoard={false} />,
               },
             ],
           },

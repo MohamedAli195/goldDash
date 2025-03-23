@@ -31,8 +31,12 @@ export interface ICompany {
   phone2: string;
   tax_end_date: string;
   tax_num: string;
+  
   updated_at?: string;
-  // name: { en: string; ar: string };
+  tax_image?: string | FileList;
+  identity_image?: string | FileList;
+  contract_file?: string | FileList;
+
 }
 export interface IEmployee {
   user_id: number;
