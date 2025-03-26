@@ -54,9 +54,7 @@ function AddCompanyForm({
   const [previewContract, setPreviewContract] = useState<string | null>(null);
   const [previewTaxImage, setPreviewTaxImage] = useState<string | null>(null);
   const [previewIdentityImage, setPreviewIdentityImage] = useState<string | null>(null);
-  const url = import.meta.env.VITE_API_URL;
 
-  console.log(previewContract)
     // logo handler
     const handleContractChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
@@ -340,6 +338,8 @@ function AddCompanyForm({
               </Box>
             )}
           </Stack>
+
+
           {/* tax_image */}
 
           <Stack flexDirection={'column'} gap={2}>

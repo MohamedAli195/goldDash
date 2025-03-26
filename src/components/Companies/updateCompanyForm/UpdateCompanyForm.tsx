@@ -1,14 +1,14 @@
-import { Box, Button, Stack, TextField } from '@mui/material';
+import { Box, Button, FormLabel, Stack, TextField } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
-
 import { CloudUpload } from 'lucide-react';
 import { ICompany } from 'interfaces';
 import { newUrl } from 'functionsWork';
+import Input from 'components/common/UI/Input';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -26,14 +26,15 @@ interface IFormInput {
   address: string;
   client_name: string;
   email: string;
-  logo: string | FileList;
+  logo: FileList | null;
   name: string;
   phone1: string;
   phone2: string;
   tax_end_date: string;
   tax_num: string;
-
-  // name: { en: string; ar: string };
+  tax_image: FileList | null;
+  identity_image: FileList | null;
+  contract_file: FileList | null;
 }
 
 function UpdateCompanyForm({
@@ -43,7 +44,7 @@ function UpdateCompanyForm({
 }: {
   handleClose: () => void;
   refetch: () => void;
-  initialData?: null | ICompany;
+  initialData?: ICompany | null;
 }) {
   const {
     register,
@@ -53,48 +54,84 @@ function UpdateCompanyForm({
     formState: { errors },
   } = useForm<IFormInput>();
   const { t } = useTranslation();
-  const ImageFromApi = initialData?.logo;
-  // console.log(ImageFromApi)
-  // const [preview, setPreview] = useState<string | FileList | undefined | null>(ImageFromApi);
-  // const [imageSrc, setImageSrc] = useState<string | undefined>();
-  const [preview, setPreview] = useState<string | undefined | null>(ImageFromApi);
 
-  const url = import.meta.env.VITE_API_URL;
+  // const [previewLogo, setPreviewLogo] = useState<string | null>(initialData?.logo || null);
+  // const [previewContract, setPreviewContract] = useState<string | null>(null);
+  // const [previewTaxImage, setPreviewTaxImage] = useState<string | null>(null);
+  // const [previewIdentityImage, setPreviewIdentityImage] = useState<string | null>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const [preview, setPreview] = useState<string | null>(initialData?.logo ?? null);
+  const [previewTax, setPreviewTax] = useState<string | null>(initialData?.tax_image ?? null);
+  const [previewID, setPreviewID] = useState<string | null>(initialData?.identity_image ?? null);
+
+  const [contractFileUrl, setContractFileUrl] = useState<string | null>(
+    initialData?.contract_file ?? null,
+  );
+
   useEffect(() => {
-    // console.log(initialData);
     if (initialData) {
       setValue('address', initialData.address);
       setValue('client_name', initialData.client_name);
-      setValue('name', initialData.name);
       setValue('email', initialData.email);
+      setValue('name', initialData.name);
       setValue('phone1', initialData.phone1);
       setValue('phone2', initialData.phone2);
-      setValue('tax_end_date', initialData.tax_end_date);
-      setValue('tax_num', initialData.tax_num);
-      // setValue('logo', initialData?.logo?[0]);
+      setValue('tax_end_date', initialData.tax_end_date || '');
+      setValue('tax_num', initialData.tax_num || '');
     }
   }, [initialData, setValue]);
 
-  // useEffect(() => {
-  //   if (selectedImage && selectedImage.length > 0) {
-  //     const file = selectedImage[0];
-  //     setPreviewImage(URL.createObjectURL(file));
+  // Watch file inputs to update previews
+  const logoFile = watch('logo') as FileList | undefined;
+  const taxImageFile = watch('tax_image') as FileList | undefined;
+  const identityImageFile = watch('identity_image') as FileList | undefined;
+  const contractFile = watch('contract_file') as FileList | undefined;
+
+  useEffect(() => {
+    if (logoFile && logoFile.length > 0) {
+      setPreview(URL.createObjectURL(logoFile[0]));
+    }
+    if (taxImageFile && taxImageFile.length > 0) {
+      setPreviewTax(URL.createObjectURL(taxImageFile[0]));
+    }
+    if (identityImageFile && identityImageFile.length > 0) {
+      setPreviewID(URL.createObjectURL(identityImageFile[0]));
+    }
+    if (contractFile && contractFile.length > 0) {
+      setContractFileUrl(URL.createObjectURL(contractFile[0]));
+    }
+  }, [logoFile, taxImageFile, identityImageFile, contractFile]);
+
+  // const handleFileChange = (
+  //   event: React.ChangeEvent<HTMLInputElement>,
+  //   setPreview: React.Dispatch<React.SetStateAction<string | null>>,
+  // ) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = () => setPreview(reader.result as string);
+  //     reader.readAsDataURL(file);
   //   }
-  // }, [selectedImage]);
+  // };
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+
+    console.log(data)
     try {
+      // formData.append('address', data.address);
+      // formData.append('client_name', data.client_name);
+      // formData.append('email', data.email || '');
+      // formData.append('name', data.name);
+      // formData.append('phone1', data.phone1);
+      // formData.append('phone2', data.phone2);
+      // formData.append('tax_end_date', data.tax_end_date || '');
+      // formData.append('tax_num', data.tax_num);
+
+      // if (data.logo?.length) formData.append('logo', data.logo[0]);
+      // if (data.tax_image?.length) formData.append('tax_image', data.tax_image[0]);
+      // if (data.identity_image?.length) formData.append('identity_image', data.identity_image[0]);
+      // if (data.contract_file?.length) formData.append('contract_file', data.contract_file[0]);
+
       const formData = new FormData();
       formData.append('address', data.address);
       formData.append('client_name', data.client_name);
@@ -105,233 +142,150 @@ function UpdateCompanyForm({
       formData.append('tax_end_date', data.tax_end_date);
       formData.append('tax_num', data.tax_num);
 
-      if (data.logo && data.logo.length > 0) {
-        formData.append('image', data.logo[0]);
+      if (logoFile?.length) formData.append('logo', logoFile[0]);
+      if (contractFile?.length) {
+        formData.append('contract_file', contractFile[0]);
       }
-
+      if (taxImageFile?.length) formData.append('tax_image', taxImageFile[0]);
+      if (identityImageFile?.length) formData.append('identity_image', identityImageFile[0]);
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('clintToken')}`,
         'Content-Type': 'multipart/form-data',
       };
 
-      console.log(data)
-      console.log(formData)
+      await axios.post(`${newUrl}/api/v1/companies/${initialData?.id}`, formData, { headers });
 
-      const response = await axios.post(`${newUrl}/api/v1/companies/${initialData?.id}`, formData, {
-        headers,
-      });
-
-      toast.success(t('Category updated successfully'));
+      toast.success(t('Company updated successfully'));
       refetch();
       handleClose();
     } catch (err) {
-      // console.error('Error updating category:', err);
-      toast.error(t('Failed to update category, please check your input.'));
+      toast.error(t('Failed to update company, please check your input.'));
     }
   };
 
   return (
-    <Box
-      sx={{
-        mt: { sm: 5, xs: 2.5 },
-      }}
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: { sm: 5, xs: 2.5 } }}>
       <Stack spacing={3} gap={2}>
-        <Stack flexDirection={'row'} gap={2}>
+        <Stack flexDirection="row" gap={2}>
           <TextField
-            multiline
             fullWidth
             variant="outlined"
-            id="name"
-            type="text"
             label={t('Company Name')}
             error={!!errors.name}
             helperText={errors.name?.message}
             {...register('name', { required: t('name') })}
-            InputLabelProps={{
-              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-            }}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1', // Adjust line height
-              },
-            }}
           />
+          <TextField fullWidth variant="outlined" label={t('Address')} {...register('address')} />
           <TextField
             fullWidth
-            multiline
             variant="outlined"
-            id="address"
-            type="text"
-            label={t('Address')}
-            error={!!errors.address}
-            helperText={errors.address?.message}
-            {...register('address')}
-            InputLabelProps={{
-              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-            }}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1', // Adjust line height
-              },
-            }}
-          />
-          <TextField
-            multiline
-            fullWidth
-            variant="outlined"
-            id="client_name"
-            type="text"
             label={t('Client Name')}
-            error={!!errors.client_name}
-            helperText={errors.client_name?.message}
             {...register('client_name')}
-            InputLabelProps={{
-              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-            }}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1', // Adjust line height
-              },
-            }}
           />
         </Stack>
-        <Stack flexDirection={'row'} gap={2}>
-          <TextField
-            multiline
-            fullWidth
-            variant="outlined"
-            id="email"
-            type="email"
-            label="Email"
-            error={!!errors.email}
-            helperText={errors.email?.message}
-            {...register('email')}
-            InputLabelProps={{
-              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-            }}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1', // Adjust line height
-              },
-            }}
-          />
-          <TextField
-            multiline
-            fullWidth
-            variant="outlined"
-            id="phone1"
-            type="text"
-            label={t('Phone-1')}
-            error={!!errors.phone1}
-            helperText={errors.phone1?.message}
-            {...register('phone1')}
-            InputLabelProps={{
-              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-            }}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1', // Adjust line height
-              },
-            }}
-          />
-          <TextField
-            multiline
-            fullWidth
-            variant="outlined"
-            id="phone2"
-            type="text"
-            label={t('Phone-2')}
-            error={!!errors.phone2}
-            helperText={errors.phone2?.message}
-            {...register('phone2')}
-            InputLabelProps={{
-              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-            }}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1', // Adjust line height
-              },
-            }}
-          />
+
+        <Stack flexDirection="row" gap={2}>
+          <TextField fullWidth variant="outlined" label="Email" {...register('email')} />
+          <TextField fullWidth variant="outlined" label={t('Phone-1')} {...register('phone1')} />
+          <TextField fullWidth variant="outlined" label={t('Phone-2')} {...register('phone2')} />
         </Stack>
-        <Stack flexDirection={'row'} gap={2}>
+
+        <Stack flexDirection="row" gap={2}>
+          <TextField fullWidth variant="outlined" label="Tax Number" {...register('tax_num')} />
           <TextField
-            multiline
             fullWidth
             variant="outlined"
-            id="tax_num"
-            type="text"
-            label="Tax Number"
-            error={!!errors.tax_num}
-            helperText={errors.tax_num?.message}
-            {...register('tax_num')}
-            InputLabelProps={{
-              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-            }}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1', // Adjust line height
-              },
-            }}
-          />
-          <TextField
-            multiline
-            fullWidth
-            variant="outlined"
-            id="tax_end_date"
             type="date"
             label="Tax End Date"
-            error={!!errors.tax_end_date}
-            helperText={errors.tax_end_date?.message}
             {...register('tax_end_date')}
-            InputLabelProps={{
-              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-            }}
-            sx={{
-              '& .MuiInputBase-input': {
-                lineHeight: '1', // Adjust line height
-              },
-            }}
           />
         </Stack>
-        <Stack flexDirection={'row'} gap={2} alignItems={'center'}>
-          <Button
-            component="label"
-            role={undefined}
-            variant="outlined"
-            tabIndex={-1}
-            startIcon={<CloudUpload />}
-            sx={{ height: '100%' }}
-          >
-            Upload Image
-            <VisuallyHiddenInput
-              type="file"
-              {...register('logo')}
-              multiple
-              onChange={handleFileChange}
-            />
-          </Button>
+
+        {/* <Stack flexDirection="row" gap={2} alignItems="center">
+          <Stack>
+            <FormLabel>Logo</FormLabel>
+            <Button component="label" variant="outlined" startIcon={<CloudUpload />}>
+              Upload Image
+              <VisuallyHiddenInput type="file" {...register('logo')} onChange={(e) => handleFileChange(e, setPreviewLogo)} />
+            </Button>
+            {previewLogo && <img src={previewLogo} alt={t('Preview')} style={{ maxWidth: '100%', maxHeight: 200 }} />}
+          </Stack>
+
+          <Stack>
+            <FormLabel>Tax Image</FormLabel>
+            <Button component="label" variant="outlined" startIcon={<CloudUpload />}>
+              Upload Image
+              <VisuallyHiddenInput type="file" {...register('tax_image')} onChange={(e) => handleFileChange(e, setPreviewTaxImage)} />
+            </Button>
+            {previewTaxImage && <img src={previewTaxImage} alt={t('Preview')} style={{ maxWidth: '100%', maxHeight: 200 }} />}
+          </Stack>
+
+          <Stack>
+            <FormLabel>Identity Image</FormLabel>
+            <Button component="label" variant="outlined" startIcon={<CloudUpload />}>
+              Upload Image
+              <VisuallyHiddenInput type="file" {...register('identity_image')} onChange={(e) => handleFileChange(e, setPreviewIdentityImage)} />
+            </Button>
+            {previewIdentityImage && <img src={previewIdentityImage} alt={t('Preview')} style={{ maxWidth: '100%', maxHeight: 200 }} />}
+          </Stack>
+        </Stack> */}
+
+        {/* File Uploads */}
+        <Stack flexDirection="row" gap={2}>
+          <label className="block text-sm font-medium text-gray-700">Upload Logo</label>
+          <Input type="file" accept="image/*" {...register('logo')} />
           {preview && (
-            <Box sx={{ mt: 2 }}>
-              <img
-                src={preview}
-                alt={t('Preview')}
-                style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
-              />
-            </Box>
+            <img
+              src={preview}
+              alt="Logo Preview"
+              className="max-w-full max-h-48 mt-2 object-cover"
+            />
+          )}
+        </Stack>
+
+        <Stack flexDirection="row" gap={2}>
+          <label className="block text-sm font-medium text-gray-700">Upload Tax Image</label>
+          <Input type="file" accept="image/*" {...register('tax_image')} />
+          {previewTax && (
+            <img
+              src={previewTax}
+              alt="Tax Image Preview"
+              className="max-w-full max-h-48 mt-2 object-cover"
+            />
+          )}
+        </Stack>
+        <Stack flexDirection="row" gap={2}>
+          <label className="block text-sm font-medium text-gray-700">Upload Identity Image</label>
+          <Input type="file" accept="image/*" {...register('identity_image')} />
+          {previewID && (
+            <img
+              src={previewID}
+              alt="Identity Image Preview"
+              className="max-w-full max-h-48 mt-2 object-cover"
+            />
+          )}
+        </Stack>
+        <Stack flexDirection="row" gap={2}>
+          <label className="block text-sm font-medium text-gray-700">Upload Contract File</label>
+          <Input type="file" accept=".pdf,.doc,.docx" {...register('contract_file')} />
+          {contractFileUrl && (
+            <span className="text-gray-500 text-sm">
+              Current File:{' '}
+              <a href={contractFileUrl} download className="text-blue-500 underline">
+                {contractFileUrl.split('/').pop()}
+              </a>
+            </span>
           )}
         </Stack>
       </Stack>
+
       <Button
         color="primary"
         variant="contained"
         size="large"
         fullWidth
         type="submit"
-        sx={{ mt: 3, fontSize: '18px' }}
+        sx={{ mt: 3 }}
       >
         {t('Update Company')}
       </Button>
@@ -340,3 +294,221 @@ function UpdateCompanyForm({
 }
 
 export default UpdateCompanyForm;
+
+// import toast, { Toaster } from "react-hot-toast";
+// import { Form, SubmitHandler, useForm } from "react-hook-form";
+// import { useEffect, useState } from "react";
+
+// import axios from "axios";
+// import { useParams } from "react-router";
+// import Input from "components/common/UI/Input";
+// import { Button } from "@mui/material";
+// import { newUrl, token } from "functionsWork";
+// import { ICompany } from "interfaces";
+
+// const UpdateCompanyForm = ({
+//   onCloseEditModal,
+//   refetch,
+//   selectedCompany,
+// }: {
+//   onCloseEditModal: () => void;
+//   refetch: () => void;
+//   selectedCompany?: null | ICompany;
+// }) => {
+//   const { register, setValue, handleSubmit, watch } = useForm<ICompany>();
+//   const { id } = useParams();
+
+//   const [preview, setPreview] = useState<string | null>(
+//     selectedCompany?.logo ?? null
+//   );
+//   const [previewTax, setPreviewTax] = useState<string | null>(
+//     selectedCompany?.tax_image ?? null
+//   );
+//   const [previewID, setPreviewID] = useState<string | null>(
+//     selectedCompany?.identity_image ?? null
+//   );
+
+//   const [contractFileUrl, setContractFileUrl] = useState<string | null>(
+//     selectedCompany?.contract_file ?? null
+//   );
+
+//   useEffect(() => {
+//     if (selectedCompany) {
+//       setValue("address", selectedCompany.address);
+//       setValue("client_name", selectedCompany.client_name);
+//       setValue("email", selectedCompany.email);
+//       setValue("name", selectedCompany.name);
+//       setValue("phone1", selectedCompany.phone1);
+//       setValue("phone2", selectedCompany.phone2);
+//       setValue("tax_end_date", selectedCompany.tax_end_date);
+//       setValue("tax_num", selectedCompany.tax_num);
+//       setValue("subscription_start", selectedCompany.subscription_start);
+//       setValue("subscription_end", selectedCompany.subscription_end);
+//     }
+//   }, [selectedCompany, setValue]);
+
+//   // Watch file inputs to update previews
+//   const logoFile = watch("logo") as FileList | undefined;
+//   const taxImageFile = watch("tax_image") as FileList | undefined;
+//   const identityImageFile = watch("identity_image") as FileList | undefined;
+//   const contractFile = watch("contract_file") as FileList | undefined;
+
+//   useEffect(() => {
+//     if (logoFile && logoFile.length > 0) {
+//       setPreview(URL.createObjectURL(logoFile[0]));
+//     }
+//     if (taxImageFile && taxImageFile.length > 0) {
+//       setPreviewTax(URL.createObjectURL(taxImageFile[0]));
+//     }
+//     if (identityImageFile && identityImageFile.length > 0) {
+//       setPreviewID(URL.createObjectURL(identityImageFile[0]));
+//     }
+//     if (contractFile && contractFile.length > 0) {
+//       setContractFileUrl(URL.createObjectURL(contractFile[0]));
+//     }
+//   }, [logoFile, taxImageFile, identityImageFile, contractFile]);
+
+//   const onSubmit: SubmitHandler<ICompany> = async (data) => {
+//     try {
+//       const formData = new FormData();
+//       formData.append("address", data.address);
+//       formData.append("client_name", data.client_name);
+//       formData.append("email", data.email);
+//       formData.append("name", data.name);
+//       formData.append("phone1", data.phone1);
+//       formData.append("phone2", data.phone2);
+//       formData.append("tax_end_date", data.tax_end_date);
+//       formData.append("tax_num", data.tax_num);
+//       formData.append("subscription_start", data.subscription_start);
+//       formData.append("subscription_end", data.subscription_end);
+
+//       if (logoFile?.length) formData.append("logo", logoFile[0]);
+//       if (contractFile?.length) {
+//         formData.append("contract_file", contractFile[0]);
+//       }
+//       if (taxImageFile?.length) formData.append("tax_image", taxImageFile[0]);
+//       if (identityImageFile?.length)
+//         formData.append("identity_image", identityImageFile[0]);
+
+//       const headers = {
+//         Authorization: `Bearer ${token}`,
+//         "Content-Type": "multipart/form-data",
+//       };
+
+//       await axios.post(
+//         `${newUrl}/api/admin/v1/${id}/companies/${selectedCompany?.id}`,
+//         formData,
+//         { headers }
+//       );
+
+//       toast.success("Company updated successfully");
+//       refetch();
+//       onCloseEditModal();
+//     } catch (err) {
+//       console.error("Error updating company:", err);
+//       toast.error("Failed to update company, please check your input.");
+//     }
+//   };
+
+//   return (
+//     <>
+//       <Form onSubmit={handleSubmit(onSubmit)}>
+//         <Input
+//           type="text"
+//           placeholder="Company Name"
+//           {...register("name", { required: true })}
+//         />
+//         <Input
+//           type="text"
+//           placeholder="Client Name"
+//           {...register("client_name")}
+//         />
+//         <Input type="email" placeholder="Email" {...register("email")} />
+//         <Input type="text" placeholder="Address" {...register("address")} />
+//         <Input type="tel" placeholder="Phone 1" {...register("phone1")} />
+//         <Input type="tel" placeholder="Phone 2" {...register("phone2")} />
+//         <Input type="text" placeholder="Tax Number" {...register("tax_num")} />
+//         <Input
+//           type="date"
+//           placeholder="Tax End Date"
+//           {...register("tax_end_date")}
+//         />
+//         <Input
+//           type="date"
+//           placeholder="Subscription Start"
+//           {...register("subscription_start")}
+//         />
+//         <Input
+//           type="date"
+//           placeholder="Subscription End"
+//           {...register("subscription_end")}
+//         />
+
+//         {/* File Uploads */}
+//         <label className="block text-sm font-medium text-gray-700">
+//           Upload Logo
+//         </label>
+//         <Input type="file" accept="image/*" {...register("logo")} />
+//         {preview && (
+//           <img
+//             src={preview}
+//             alt="Logo Preview"
+//             className="max-w-full max-h-48 mt-2 object-cover"
+//           />
+//         )}
+
+//         <label className="block text-sm font-medium text-gray-700">
+//           Upload Tax Image
+//         </label>
+//         <Input type="file" accept="image/*" {...register("tax_image")} />
+//         {previewTax && (
+//           <img
+//             src={previewTax}
+//             alt="Tax Image Preview"
+//             className="max-w-full max-h-48 mt-2 object-cover"
+//           />
+//         )}
+
+//         <label className="block text-sm font-medium text-gray-700">
+//           Upload Identity Image
+//         </label>
+//         <Input type="file" accept="image/*" {...register("identity_image")} />
+//         {previewID && (
+//           <img
+//             src={previewID}
+//             alt="Identity Image Preview"
+//             className="max-w-full max-h-48 mt-2 object-cover"
+//           />
+//         )}
+
+//         <label className="block text-sm font-medium text-gray-700">
+//           Upload Contract File
+//         </label>
+//         <Input
+//           type="file"
+//           accept=".pdf,.doc,.docx"
+//           {...register("contract_file")}
+//         />
+//         {contractFileUrl && (
+//           <span className="text-gray-500 text-sm">
+//             Current File:{" "}
+//             <a
+//               href={contractFileUrl}
+//               download
+//               className="text-blue-500 underline"
+//             >
+//               {contractFileUrl.split("/").pop()}
+//             </a>
+//           </span>
+//         )}
+//         <Button type="submit" className="w-full mt-5">
+//           Update Company
+//         </Button>
+//       </Form>
+//       <Toaster position="bottom-center" reverseOrder={false} />
+//     </>
+//   );
+// };
+
+// export default UpdateCompanyForm;
+

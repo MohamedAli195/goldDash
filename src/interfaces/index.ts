@@ -29,13 +29,13 @@ export interface ICompany {
   name: string;
   phone1: string;
   phone2: string;
-  tax_end_date: string;
-  tax_num: string;
+  tax_end_date?: string | undefined | null;
+  tax_num?: string | undefined | null;
   
   updated_at?: string;
-  tax_image?: string | FileList;
-  identity_image?: string | FileList;
-  contract_file?: string | FileList;
+  tax_image?: string | undefined | null;
+  identity_image?: string | undefined | null;
+  contract_file?: string | undefined | null |FileList;
 
 }
 export interface IEmployee {

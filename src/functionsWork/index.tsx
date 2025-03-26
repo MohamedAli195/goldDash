@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 
 const url = import.meta.env.VITE_API_URL;
 export const newUrl = "https://72c9-197-59-81-83.ngrok-free.app";
-const token = localStorage.getItem('clintToken');
+export const token = localStorage.getItem('clintToken');
 
 const storedPermissions = localStorage.getItem('permissions');
 export let parsedData: Ipermisson[];
