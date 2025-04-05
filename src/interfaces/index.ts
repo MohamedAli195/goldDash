@@ -24,25 +24,33 @@ export interface ICompany {
   created_at?: string;
   email: string;
   id?: number;
-  logo?: string | undefined | null;
-
   name: string;
   phone1: string;
   phone2: string;
-  tax_end_date?: string | undefined | null;
-  tax_num?: string | undefined | null;
-  
+  tax_end_date?: string  | null;
+  tax_num?: string  | null;
   updated_at?: string;
+  logo?: string | undefined | null;
   tax_image?: string | undefined | null;
   identity_image?: string | undefined | null;
-  contract_file?: string | undefined | null |FileList;
+  contract_file?: string | undefined | null;
 
 }
+export interface IVendor {
+ id?: number;
+ name: string;
+ email: string;  
+ phone: string;
+ address: string;     
+identity_id: string,
+               
+}
 export interface IEmployee {
-  user_id: number;
+  // user_id: number;
   company_id: number;
   branch_id: number;
-  cashier_id: number;
+  // cashier_id: number;
+  isCashier:boolean
   name: string;
   address: string;
   national_id: string;
@@ -71,13 +79,11 @@ export interface IAction {
 
 export interface IBranch {
   address: string;
-  // company_id: number;
-  // company_name: string;
+
   client_name: string;
   created_at?: string;
   email: string;
   id?: number;
-  logo?: string | undefined | null;
   name: string;
   phone1: string;
   phone2: string;
@@ -88,6 +94,11 @@ export interface IBranch {
     name: string;
     id: number;
   };
+
+  logo?: string | undefined | null;
+  tax_image?: string | undefined | null;
+  identity_image?: string | undefined | null;
+  contract_file?: string | undefined | null;
 }
 
 export interface ICashier {

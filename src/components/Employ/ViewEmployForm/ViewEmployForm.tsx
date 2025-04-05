@@ -53,9 +53,9 @@ function ViewEmployForm({
   const { t } = useTranslation();
   const [branchID, setBranchID] = useState<number |undefined>(initialData?.branch_id);
 
-const [cashierID, setcashierID] = useState<number |undefined>(initialData?.cashier_id);
+
   const [companyID, setcompanyID] = useState<number |undefined>(initialData?.company_id);
-  const [userID, setuserID] = useState<number |undefined>(initialData?.user_id);
+
 
   useEffect(() => {
     console.log(initialData);
@@ -67,10 +67,7 @@ const [cashierID, setcashierID] = useState<number |undefined>(initialData?.cashi
       setValue('phone1', initialData.phone1);
       setValue('phone2', initialData.phone2);
       setValue('branch_id', initialData?.branch_id);
-
-      setValue('user_id', initialData.user_id);
       setValue('company_id', initialData.company_id);
-      setValue('cashier_id', initialData.cashier_id);
       setValue('position', initialData.position);
       setValue('start_time', initialData.start_time);
       setValue('end_time', initialData.end_time);
@@ -279,63 +276,9 @@ const [cashierID, setcashierID] = useState<number |undefined>(initialData?.cashi
             </MenuItem>
           ))}
         </TextField>
-
-        <TextField
-          select
-          variant="outlined"
-          label={t('cashier name')}
-          error={!!errors.cashier_id}
-          helperText={errors.cashier_id?.message}
-          value={cashierID}
-          {...register('cashier_id')}
-          
-          sx={{
-            '.MuiOutlinedInput-root': {
-              lineHeight: 0,
-            },
-          }}
-          multiline
-          fullWidth
-          InputLabelProps={{
-            style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-          }}
-        >
-          {cashiers?.data?.data?.map((cashiers: ICashier) => (
-            <MenuItem key={cashiers.id} value={cashiers.id}>
-              {cashiers.name}
-            </MenuItem>
-          ))}
-        </TextField>
       </Stack>
 
       <Stack flexDirection={'row'} gap={2}>
-        <TextField
-          select
-          variant="outlined"
-          label={t('users name')}
-          error={!!errors.user_id}
-          value={userID}
-
-          helperText={errors.user_id?.message}
-          {...register('user_id')}
-          sx={{
-            '.MuiOutlinedInput-root': {
-              lineHeight: 0,
-            },
-          }}
-          multiline
-          fullWidth
-          InputLabelProps={{
-            style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-          }}
-        >
-          {users?.data?.data?.map((user: IUser) => (
-            <MenuItem key={user.id} value={user.id}>
-              {user.name}
-            </MenuItem>
-          ))}
-        </TextField>
-
         <TextField
           multiline
           fullWidth

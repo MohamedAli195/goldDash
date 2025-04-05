@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, MenuItem, Stack, TextField } from '@mui/material';
+import { Box, Button, FormControl, FormLabel, MenuItem, Stack, TextField } from '@mui/material';
 import axios from 'axios';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -10,6 +10,7 @@ import { CloudUpload } from 'lucide-react';
 import { fetchAllDataGold, fetchAllDataGoldNoArg, newUrl } from 'functionsWork';
 import { useQuery } from '@tanstack/react-query';
 import { IBranch, ICashier, ICompany, IEmployee, IUser } from 'interfaces';
+import CheckboxIsCashier from 'components/common/UI/CheckBoxIsCasher';
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -22,7 +23,6 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-
 function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refetch: () => void }) {
   const {
     register,
@@ -30,17 +30,21 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
     formState: { errors },
   } = useForm<IEmployee>();
   // const [companies, setCompanies] = useState();
+  const [checked, setChecked] = useState(true);
 
+  console.log(checked)
   const { t } = useTranslation();
   const onSubmit: SubmitHandler<IEmployee> = async (data) => {
-    console.log(data);
+    const extractData = {...data,is_cashier:checked}
+
+    console.log(extractData)
     try {
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('clintToken')}`,
         'Content-Type': 'multipart/form-data',
       };
 
-      const response = await axios.post(`${newUrl}/api/v1/employees`, data, { headers });
+      const response = await axios.post(`${newUrl}/api/v1/employees`, extractData, { headers });
 
       console.log(response.data);
       toast.success('employees added successfully');
@@ -56,20 +60,11 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
     queryKey: [`branches`],
     queryFn: () => fetchAllDataGoldNoArg('branches'),
   });
-  const { data: users } = useQuery({
-    queryKey: [`users`],
-    queryFn: () => fetchAllDataGoldNoArg('users'),
-  });
   const { data: companies } = useQuery({
     queryKey: [`companies`],
     queryFn: () => fetchAllDataGoldNoArg('companies'),
   });
-  const { data: cashiers } = useQuery({
-    queryKey: [`cashiers`],
-    queryFn: () => fetchAllDataGoldNoArg('cashiers'),
-  });
 
-  console.log(data);
   return (
     <Box
       sx={{
@@ -81,7 +76,6 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
       <Stack spacing={3} gap={2}>
         <Stack flexDirection={'row'} gap={2}>
           <TextField
-            multiline
             fullWidth
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
@@ -100,7 +94,6 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
             {...register('address')}
           />
           <TextField
-            multiline
             fullWidth
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
@@ -119,7 +112,6 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
             {...register('national_id')}
           />
           <TextField
-            multiline
             fullWidth
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
@@ -140,7 +132,6 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
         </Stack>
         <Stack flexDirection={'row'} gap={2}>
           <TextField
-            multiline
             fullWidth
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
@@ -159,7 +150,6 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
             {...register('name', { required: t('name') })}
           />
           <TextField
-            multiline
             fullWidth
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
@@ -211,7 +201,6 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
                 lineHeight: 0,
               },
             }}
-            multiline
             fullWidth
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
@@ -235,7 +224,6 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
                 lineHeight: 0,
               },
             }}
-            multiline
             fullWidth
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
@@ -249,59 +237,6 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
           </TextField>
 
           <TextField
-            select
-            variant="outlined"
-            label={t('cashier name')}
-            error={!!errors.cashier_id}
-            helperText={errors.cashier_id?.message}
-            {...register('cashier_id')}
-            sx={{
-              '.MuiOutlinedInput-root': {
-                lineHeight: 0,
-              },
-            }}
-            multiline
-            fullWidth
-            InputLabelProps={{
-              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-            }}
-          >
-            {cashiers?.data?.data?.map((cashiers: ICashier) => (
-              <MenuItem key={cashiers.id} value={cashiers.id}>
-                {cashiers.name}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Stack>
-
-        <Stack flexDirection={'row'} gap={2}>
-          <TextField
-            select
-            variant="outlined"
-            label={t('users name')}
-            error={!!errors.user_id}
-            helperText={errors.user_id?.message}
-            {...register('user_id')}
-            sx={{
-              '.MuiOutlinedInput-root': {
-                lineHeight: 0,
-              },
-            }}
-            multiline
-            fullWidth
-            InputLabelProps={{
-              style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
-            }}
-          >
-            {users?.data?.data?.map((user: IUser) => (
-              <MenuItem key={user.id} value={user.id}>
-                {user.name}
-              </MenuItem>
-            ))}
-          </TextField>
-
-          <TextField
-            multiline
             fullWidth
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
@@ -319,8 +254,10 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
             helperText={errors.salary?.message}
             {...register('salary')}
           />
+        </Stack>
+
+        <Stack flexDirection={'row'} gap={2}>
           <TextField
-            multiline
             fullWidth
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
@@ -339,9 +276,7 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
             {...register('start_time')}
           />
 
-
           <TextField
-            multiline
             fullWidth
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
@@ -360,7 +295,6 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
             {...register('end_time')}
           />
           <TextField
-            multiline
             fullWidth
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
@@ -378,9 +312,11 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
             helperText={errors.hire_date?.message}
             {...register('hire_date')}
           />
+        </Stack>
+
+        <Stack flexDirection={'row'} gap={2}>
           <TextField
-            multiline
-            fullWidth
+            
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
@@ -397,6 +333,11 @@ function AddEmployForm({ handleClose, refetch }: { handleClose: () => void; refe
             helperText={errors.position?.message}
             {...register('position')}
           />
+
+          <FormControl>
+            <FormLabel> is cashier </FormLabel>
+            <CheckboxIsCashier checked={checked} setChecked={setChecked} />
+          </FormControl>
         </Stack>
       </Stack>
       <Button

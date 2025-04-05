@@ -55,7 +55,7 @@ function AddCompanyForm({
   const [previewTaxImage, setPreviewTaxImage] = useState<string | null>(null);
   const [previewIdentityImage, setPreviewIdentityImage] = useState<string | null>(null);
 
-    // logo handler
+    // contract handler
     const handleContractChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
       if (file) {

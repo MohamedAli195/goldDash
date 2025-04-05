@@ -61,8 +61,8 @@ export const FormInputs = ({errors,register,initialData,setValue}:IProps) => {
             setValue('email', initialData.email);
             setValue('phone1', initialData.phone1);
             setValue('phone2', initialData.phone2);
-            setValue('tax_end_date', initialData.tax_end_date);
-            setValue('tax_num', initialData.tax_num);
+            setValue('tax_end_date', initialData?.tax_end_date ?? '');
+            setValue('tax_num', initialData?.tax_num ?? '');
             // setValue('logo', initialData?.logo?[0]);
           }
         }, [initialData, setValue]);

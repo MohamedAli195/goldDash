@@ -171,8 +171,6 @@ console.log(data)
       </Button>
     </Stack>
     }
-      
-
       <Paper sx={{ width: '100%' }}>
         {
           isDashBoard && <Typography variant="h1" color="initial">

@@ -17,6 +17,7 @@ import PointOfSalesPage from 'pages/point-of-sales';
 import UsersPage from '../pages/Users';
 import EmployeePage from 'pages/employee';
 import ActionsPage from 'pages/actions';
+import VendorsPage from 'pages/vendors';
 
 // Lazy-loaded components
 const App = lazy(() => import('App'));
@@ -85,6 +86,14 @@ export const routes = [
             element: (
               <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
                 <UsersPage isDashBoard={false} />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: paths.vendors,
+            element: (
+              <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
+                <VendorsPage isDashBoard={false} />
               </ProtectedRoute>
             ),
           },

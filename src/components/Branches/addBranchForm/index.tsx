@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, MenuItem, Stack, TextField } from '@mui/material';
+import { Box, Button, FormLabel, MenuItem, Stack, TextField } from '@mui/material';
 import axios from 'axios';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -30,9 +30,12 @@ interface IFormInput {
   name: string;
   phone1: string;
   phone2: string;
+  logo: string | FileList;
   tax_end_date: string;
   tax_num: string;
-
+  tax_image: string | FileList;
+  identity_image: string | FileList;
+  contract_file: string | FileList;
   // name: { en: string; ar: string };
 }
 
@@ -44,20 +47,79 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
   } = useForm<IFormInput>();
   // const [companies, setCompanies] = useState();
 
+    const [previewLogo, setPreviewLogo] = useState<string | null>(null);
+    const [previewContract, setPreviewContract] = useState<string | null>(null);
+    const [previewTaxImage, setPreviewTaxImage] = useState<string | null>(null);
+    const [previewIdentityImage, setPreviewIdentityImage] = useState<string | null>(null);
+  
+
+        // contract handler
+        const handleContractChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+          const file = event.target.files?.[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+              setPreviewContract(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+          }
+        };
+      // images handlers
+    
+      // logo handler
+      const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            setPreviewLogo(reader.result as string);
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+    
+      // tax_image handler
+      const handleTaxImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            setPreviewTaxImage(reader.result as string);
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+    
+      // tax_image handler
+      const handleTaxIdentityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            setPreviewIdentityImage(reader.result as string);
+          };
+          reader.readAsDataURL(file);
+        }
+    
+      };
   const { t } = useTranslation();
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     console.log(data);
     try {
-      // const formData = new FormData();
-      // formData.append('address', data.address);
-      // formData.append('client_name', data.client_name);
-      // formData.append('email', data.email);
-
-      // formData.append('name', data.name);
-      // formData.append('phone1', data.phone1);
-      // formData.append('phone2', data.phone2);
-      // formData.append('tax_end_date', data.tax_end_date);
-      // formData.append('tax_num', data.tax_num);
+      const formData = new FormData();
+      formData.append('address', data.address);
+      formData.append('client_name', data.client_name);
+      formData.append('company_id', String(data?.company_id));
+      formData.append('email', data.email);
+      formData.append('logo', data.logo[0]);
+      formData.append('tax_image', data.tax_image[0]);
+      formData.append('identity_image', data.identity_image[0]);
+      formData.append('contract_file', data.contract_file[0]);
+      formData.append('name', data.name);
+      formData.append('phone1', data.phone1);
+      formData.append('phone2', data.phone2);
+      formData.append('tax_end_date', data.tax_end_date);
+      formData.append('tax_num', data.tax_num);
 
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('clintToken')}`,
@@ -66,7 +128,7 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
 
       const response = await axios.post(
         `${newUrl}/api/v1/branches`,
-        data,
+        formData,
         { headers },
       );
 
@@ -291,6 +353,129 @@ function AddBranchForm({ handleClose, refetch }: { handleClose: () => void; refe
 
   
         </Stack>
+                <Stack flexDirection={'row'} gap={2} alignItems={'center'}>
+                  <Stack flexDirection={'column'} gap={2}>
+                    <FormLabel>logo</FormLabel>
+                    {/* logo */}
+                    <Button
+                      component="label"
+                      role={undefined}
+                      variant="outlined"
+                      tabIndex={-1}
+                      startIcon={<CloudUpload />}
+                      sx={{ height: '100%' }}
+                    >
+                      Upload Image
+                      <VisuallyHiddenInput
+                        type="file"
+                        {...register('logo')}
+                        multiple
+                        onChange={handleLogoChange}
+                      />
+                    </Button>
+                    {previewLogo && (
+                      <Box sx={{ mt: 2 }}>
+                        <img
+                          src={previewLogo}
+                          alt={t('Preview')}
+                          style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
+                        />
+                      </Box>
+                    )}
+                  </Stack>
+        
+        
+                  {/* tax_image */}
+        
+                  <Stack flexDirection={'column'} gap={2}>
+                    <FormLabel>tax_image</FormLabel>
+                    <Button
+                      component="label"
+                      role={undefined}
+                      variant="outlined"
+                      tabIndex={-1}
+                      startIcon={<CloudUpload />}
+                      sx={{ height: '100%' }}
+                    >
+                      Upload Image
+                      <VisuallyHiddenInput
+                        type="file"
+                        {...register('tax_image')}
+                        multiple
+                        onChange={handleTaxImageChange}
+                      />
+                    </Button>
+                    {previewTaxImage && (
+                      <Box sx={{ mt: 2 }}>
+                        <img
+                          src={previewTaxImage}
+                          alt={t('Preview')}
+                          style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
+                        />
+                      </Box>
+                    )}
+                  </Stack>
+        
+                  <Stack flexDirection={'column'} gap={2}>
+                    <FormLabel>identity_image</FormLabel>
+                    {/* tax_image */}
+                    <Button
+                      component="label"
+                      role={undefined}
+                      variant="outlined"
+                      tabIndex={-1}
+                      startIcon={<CloudUpload />}
+                      sx={{ height: '100%' }}
+                    >
+                      Upload Image
+                      <VisuallyHiddenInput
+                        type="file"
+                        {...register('identity_image')}
+                        multiple
+                        onChange={handleTaxIdentityChange}
+                      />
+                    </Button>
+                    {previewIdentityImage && (
+                      <Box sx={{ mt: 2 }}>
+                        <img
+                          src={previewIdentityImage}
+                          alt={t('Preview')}
+                          style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
+                        />
+                      </Box>
+                    )}
+                  </Stack>
+        
+                  <Stack flexDirection={'column'} gap={2}>
+                    <FormLabel>Contract File</FormLabel>
+                    {/* tax_image */}
+                    <Button
+                      component="label"
+                      role={undefined}
+                      variant="outlined"
+                      tabIndex={-1}
+                      startIcon={<CloudUpload />}
+                      sx={{ height: '100%' }}
+                    >
+                      Upload File
+                      <VisuallyHiddenInput
+                        type="file"
+                        {...register('contract_file')}
+                        multiple
+                        onChange={handleContractChange}
+                      />
+                    </Button>
+                    {previewContract && (
+                      <Box sx={{ mt: 2 }}>
+                        <img
+                          src={previewContract}
+                          alt={t('Preview')}
+                          style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
+                        />
+                      </Box>
+                    )}
+                  </Stack>
+                </Stack>
       </Stack>
       <Button
         color="primary"

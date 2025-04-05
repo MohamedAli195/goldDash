@@ -1,4 +1,4 @@
-import { Box, Button, MenuItem, Stack, TextField } from '@mui/material';
+import { Box, Button, FormLabel, MenuItem, Stack, TextField } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import { CloudUpload } from 'lucide-react';
 import { IBranch, ICompany } from 'interfaces';
 import { useQuery } from '@tanstack/react-query';
-import { fetchAllDataGoldNoArg } from 'functionsWork';
+import { fetchAllDataGoldNoArg, newUrl } from 'functionsWork';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -28,13 +28,15 @@ interface IFormInput {
   client_name: string;
   company_id: number;
   email: string;
-  logo: string | FileList;
   name: string;
   phone1: string;
   phone2: string;
   tax_end_date: string;
   tax_num: string;
-
+  logo: FileList | null;
+  tax_image: FileList | null;
+  identity_image: FileList | null;
+  contract_file: FileList | null;
   // name: { en: string; ar: string };
 }
 
@@ -57,6 +59,16 @@ function ViewBrancheForm({
   const { t } = useTranslation();
   const [companyID, setcompanyID] = useState(initialData?.company?.id);
 
+  const [previewLogo, setPreviewLogo] = useState<string | null>(initialData?.logo || null);
+  const [previewContract, setPreviewContract] = useState<string | null>(
+    initialData?.contract_file || null,
+  );
+  const [previewTaxImage, setPreviewTaxImage] = useState<string | null>(
+    initialData?.tax_image || null,
+  );
+  const [previewIdentityImage, setPreviewIdentityImage] = useState<string | null>(
+    initialData?.identity_image || null,
+  );
   useEffect(() => {
     console.log(initialData);
     if (initialData) {
@@ -72,29 +84,6 @@ function ViewBrancheForm({
     }
   }, [initialData, setValue]);
 
-  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    console.log(data);
-    try {
-      const headers = {
-        Authorization: `Bearer ${localStorage.getItem('clintToken')}`,
-        'Content-Type': 'application/json',
-      };
-
-      const response = await axios.put(
-        `https://4b96-197-59-106-248.ngrok-free.app/api/v1/branches/${initialData?.id}`,
-        data,
-        { headers },
-      );
-
-      toast.success(t('Category updated successfully'));
-      refetch();
-      handleClose();
-    } catch (err) {
-      // console.error('Error updating category:', err);
-      toast.error(t('Failed to update category, please check your input.'));
-    }
-  };
-
   const { data, error, isLoading, isError } = useQuery({
     queryKey: [`companies`],
     queryFn: () => fetchAllDataGoldNoArg('companies'),
@@ -105,11 +94,11 @@ function ViewBrancheForm({
         mt: { sm: 5, xs: 2.5 },
       }}
       component="form"
+     
     >
       <Stack spacing={3} gap={2}>
         <Stack flexDirection={'row'} gap={2}>
           <TextField
-            multiline
             fullWidth
             variant="outlined"
             id="name"
@@ -128,22 +117,14 @@ function ViewBrancheForm({
             }}
           />
           <TextField
-            multiline
             fullWidth
             select
             variant="outlined"
             label={t('Company name')}
             error={!!errors.company_id}
-            value={companyID}
             helperText={errors.company_id?.message}
+            value={companyID}
             {...register('company_id')}
-            // sx={{
-            //   '.MuiOutlinedInput-root': {
-            //     lineHeight: 0,
-            //   },
-            //   width: '25%',
-            // }}
-
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
@@ -152,6 +133,7 @@ function ViewBrancheForm({
                 lineHeight: '1', // Adjust line height
               },
             }}
+            onChange={(e) => setcompanyID(+e.target.value)}
           >
             {data?.data?.data?.map((company: ICompany) => (
               <MenuItem key={company.id} value={company.id}>
@@ -160,7 +142,6 @@ function ViewBrancheForm({
             ))}
           </TextField>
           <TextField
-            multiline
             fullWidth
             variant="outlined"
             id="address"
@@ -168,7 +149,7 @@ function ViewBrancheForm({
             label={t('address')}
             error={!!errors.address}
             helperText={errors.address?.message}
-            {...register('address', { required: t('addressReq') })}
+            {...register('address')}
             InputLabelProps={{
               style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
             }}
@@ -182,7 +163,6 @@ function ViewBrancheForm({
 
         <Stack flexDirection={'row'} gap={2}>
           <TextField
-            multiline
             fullWidth
             variant="outlined"
             id="client_name"
@@ -201,7 +181,6 @@ function ViewBrancheForm({
             }}
           />
           <TextField
-            multiline
             fullWidth
             variant="outlined"
             id="email"
@@ -220,7 +199,6 @@ function ViewBrancheForm({
             }}
           />
           <TextField
-            multiline
             fullWidth
             variant="outlined"
             id="phone1"
@@ -241,7 +219,6 @@ function ViewBrancheForm({
         </Stack>
         <Stack flexDirection={'row'} gap={2}>
           <TextField
-            multiline
             fullWidth
             variant="outlined"
             id="phone2"
@@ -260,7 +237,6 @@ function ViewBrancheForm({
             }}
           />
           <TextField
-            multiline
             fullWidth
             variant="outlined"
             id="tax_num"
@@ -279,7 +255,6 @@ function ViewBrancheForm({
             }}
           />
           <TextField
-            multiline
             fullWidth
             variant="outlined"
             id="tax_end_date"
@@ -297,6 +272,69 @@ function ViewBrancheForm({
               },
             }}
           />
+        </Stack>
+        {/* File Uploads */}
+        <Stack flexDirection={'row'} gap={2} alignItems={'center'}>
+          <Stack flexDirection={'column'} gap={2}>
+            <FormLabel>logo</FormLabel>
+            {/* logo */}
+            
+            {previewLogo && (
+              <Box sx={{ mt: 2 }}>
+                <img
+                  src={previewLogo}
+                  alt={t('Preview')}
+                  style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
+                />
+              </Box>
+            )}
+          </Stack>
+
+          {/* tax_image */}
+
+          <Stack flexDirection={'column'} gap={2}>
+            <FormLabel>tax_image</FormLabel>
+            
+            {previewTaxImage && (
+              <Box sx={{ mt: 2 }}>
+                <img
+                  src={previewTaxImage}
+                  alt={t('Preview')}
+                  style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
+                />
+              </Box>
+            )}
+          </Stack>
+
+          <Stack flexDirection={'column'} gap={2}>
+            <FormLabel>identity_image</FormLabel>
+            {/* tax_image */}
+            
+            {previewIdentityImage && (
+              <Box sx={{ mt: 2 }}>
+                <img
+                  src={previewIdentityImage}
+                  alt={t('Preview')}
+                  style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
+                />
+              </Box>
+            )}
+          </Stack>
+
+          <Stack flexDirection={'column'} gap={2}>
+            <FormLabel>Contract File</FormLabel>
+            {/* tax_image */}
+            
+            {previewContract && (
+              <Box sx={{ mt: 2 }}>
+                <img
+                  src={previewContract}
+                  alt={t('Preview')}
+                  style={{ maxWidth: '100%', maxHeight: 200, objectFit: 'cover' }}
+                />
+              </Box>
+            )}
+          </Stack>
         </Stack>
       </Stack>
     </Box>
