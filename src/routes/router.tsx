@@ -17,7 +17,10 @@ import PointOfSalesPage from 'pages/point-of-sales';
 import UsersPage from '../pages/Users';
 import EmployeePage from 'pages/employee';
 import ActionsPage from 'pages/actions';
-import VendorsPage from 'pages/vendors';
+import VendorsPage from 'pages/vendors/VendorsPage';
+import Vendors from 'pages/vendors';
+import SalesInvoicePage from 'pages/vendors/SalesInvoicePage/SalesInvoicePage';
+import BuyInvoicePage from 'pages/vendors/BuyInvoicePage/BuyInvoicePage';
 
 // Lazy-loaded components
 const App = lazy(() => import('App'));
@@ -93,9 +96,22 @@ export const routes = [
             path: paths.vendors,
             element: (
               <ProtectedRoute isAllowed={isLoggedIn} redirect={paths.login}>
-                <VendorsPage isDashBoard={false} />
+                <Vendors />
               </ProtectedRoute>
-            ),
+            ),  children: [
+              {
+                index: true, // Default route for /master-data
+                element: <VendorsPage isDashBoard={false} />,
+              },
+              {
+                path: 'sales-invoice',
+                element: <SalesInvoicePage/>,
+              },
+              {
+                path: 'buy-invoice',
+                element: <BuyInvoicePage/>,
+              },
+            ],
           },
           {
             path: paths.masterData,

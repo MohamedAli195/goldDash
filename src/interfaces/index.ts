@@ -45,6 +45,14 @@ export interface IVendor {
 identity_id: string,
                
 }
+export interface items{
+  itemName:string;
+  id?:number;
+  quantity:number;
+  weight:number;
+  extraWeight:number;
+
+}
 export interface IEmployee {
   // user_id: number;
   company_id: number;
