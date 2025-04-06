@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, FormLabel, Stack, TextField } from '@mui/material';
 import axios from 'axios';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -25,9 +25,14 @@ const VisuallyHiddenInput = styled('input')({
 interface IFormInput {
 
   itemName:string;
-  quantity:number;
+  CT:number;
   weight:number;
-  extraWeight:number;
+  pureGold:number;
+  ManufacturerPrice:number
+  totalAmount:number;
+  totalGold:number;
+  totalManufacturerPrice:number
+
 }
 
 interface IProps {
@@ -40,15 +45,37 @@ function InvoceItems({setItems}:IProps) {
       formState: { errors },
     } = useForm<items>();
       const { t } = useTranslation();
-      const [extraW,setExtraW]=useState<number>()
+      const [PureGold,setPureGold]=useState<number>(1)
+     
+      const [CT,setCT]=useState<number>(1)
+      const [weight,setweight]=useState<number>(1)
+      const [manufactoryPrice,setManufactoryPrice]=useState<number>(1)
+      const [totalAmount,settotalAmount]=useState<number>(1)
+      const pureGoldHandler = ()=>{
+        if(CT===18){
+          setPureGold(weight * (750/999) )
+        }else if(CT===21){
+          setPureGold(weight * (875/999) )
+        }else if(CT===22){
+          setPureGold(weight * (915/999) )
+        }else{
+          setPureGold(weight)
+        }
+          
+      }
+      const totalAmountHandler = ()=>{
+        
+        settotalAmount(manufactoryPrice * PureGold )
+      }
       const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
           const lastData = {
             ...data,
-            extraWeight: extraW ?? 0, // uses 0 if extraW is undefined
+            pureGold:PureGold,
+            totalAmount:totalAmount,
             id: Date.now()
           };
-                    setItems((prev: items[]) => [...prev, lastData]);
+          setItems((prev: items[]) => [...prev, lastData]);
           toast.success('Vendor added successfully');
           
         } catch (err) {
@@ -56,6 +83,11 @@ function InvoceItems({setItems}:IProps) {
           toast.error('Failed to add Vendor, please check your input.');
         }
       };
+      useEffect(()=>{
+        pureGoldHandler()
+        totalAmountHandler()
+      },[CT,weight,manufactoryPrice])
+
   return (
         <Box
           sx={{
@@ -65,7 +97,7 @@ function InvoceItems({setItems}:IProps) {
           onSubmit={handleSubmit(onSubmit)}
         >
          
-            <Stack flexDirection={'column'} gap={2}>
+            <Stack flexDirection={'row'} gap={2}>
               <TextField
                 
                 fullWidth
@@ -89,12 +121,14 @@ function InvoceItems({setItems}:IProps) {
                 fullWidth
                 
                 variant="outlined"
-                id="quantity"
+                id="CT"
                 type="text"
-                label={t('quantity')}
-                error={!!errors.quantity}
-                helperText={errors.quantity?.message}
-                {...register('quantity')}
+                label={t('CT')}
+                error={!!errors.CT}
+                helperText={errors.CT?.message}
+                {...register('CT')}
+                onChange={(e)=>setCT(+e.target.value)}
+                
                 InputLabelProps={{
                   style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
                 }}
@@ -114,7 +148,7 @@ function InvoceItems({setItems}:IProps) {
                 error={!!errors.weight}
                 helperText={errors.weight?.message}
                 {...register('weight')}
-                onChange={(e)=>setExtraW(+e.target.value *1000 )}
+                onChange={(e)=>setweight(+e.target.value)}
                 InputLabelProps={{
                   style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
                 }}
@@ -124,30 +158,71 @@ function InvoceItems({setItems}:IProps) {
                   },
                 }}
               />
-               <TextField
+
+              <TextField
                 fullWidth
-                value={extraW}
+                value={PureGold}
                 variant="outlined"
-                id="extraWeight"
+                id="pureGold"
                 type="text"
-                label={t('extraWeight')}
-                error={!!errors.extraWeight}
-                helperText={errors.extraWeight?.message}
-                {...register('extraWeight')}
+                label={t('pureGold')}
+                error={!!errors.pureGold}
+                helperText={errors.pureGold?.message}
+                {...register('pureGold')}
+                // onChange={(e)=>setExtraW(+e.target.value *1000 )}
                 InputLabelProps={{
                   style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
                 }}
-                hidden
                 sx={{
                   '& .MuiInputBase-input': {
                     lineHeight: '1', // Adjust line height
                   },
                 }}
               />
-              
-              
-          </Stack>
-          <Button
+              <TextField
+                fullWidth
+                value={manufactoryPrice}
+                variant="outlined"
+                id="ManufacturerPrice"
+                type="text"
+                label={t('ManufacturerPrice')}
+                error={!!errors.ManufacturerPrice}
+                helperText={errors.ManufacturerPrice?.message}
+                {...register('ManufacturerPrice')}
+                // onChange={(e)=>setExtraW(+e.target.value *1000 )}
+                onChange={(e)=>setManufactoryPrice(+e.target.value)}
+
+                InputLabelProps={{
+                  style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+                }}
+                sx={{
+                  '& .MuiInputBase-input': {
+                    lineHeight: '1', // Adjust line height
+                  },
+                }}
+              />
+              <TextField
+                fullWidth
+                value={totalAmount}
+                variant="outlined"
+                id="totalAmount"
+                type="text"
+                label={t('totalAmount')}
+                error={!!errors.totalAmount}
+                helperText={errors.totalAmount?.message}
+                {...register('totalAmount')}
+                // onChange={(e)=>setExtraW(+e.target.value *1000 )}
+                InputLabelProps={{
+                  style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
+                }}
+                sx={{
+                  '& .MuiInputBase-input': {
+                    lineHeight: '1', // Adjust line height
+                  },
+                }}
+              />
+
+<Button
             color="primary"
             variant="contained"
             size="large"
@@ -157,6 +232,10 @@ function InvoceItems({setItems}:IProps) {
           >
             {t('Add Items')}
           </Button>
+              
+              
+          </Stack>
+
         </Box>
   )
 }

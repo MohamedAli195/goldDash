@@ -18,10 +18,10 @@ function BuyInvoicePage() {
       <VendorInfo setClinet={setVendor} />
       <p>Vendor id :{vendor }</p>
     </div>
-    <Stack flexDirection={'row'}>
+  
     <InvoceItems setItems={setItems} />
     <IvoiceTable data={items} />
-      </Stack>
+
       
       </>
   )

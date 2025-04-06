@@ -1,4 +1,4 @@
-import { Button, Stack } from '@mui/material';
+import { Button, Stack, TextField } from '@mui/material';
 import i18n from 'i18n';
 import { Eye, Pencil, Trash2 } from 'lucide-react';
 import React from 'react';
@@ -19,10 +19,39 @@ function IvoiceTable({data}: IProps) {
   const navigate = useNavigate();
   const columns: GridColDef[] = [
     // { field: 'id', headerName: 'ID' },
+    
+  // itemName:string;
+  // CT:number;
+  // weight:number;
+  // pureGold:number;
+  // ManufacturerPrice:number
+  // totalAmount:number;
+  // totalGold:number;
+  // totalManufacturerPrice:number
     { field: 'itemName', headerName: i18n.language === 'ar' ? 'الصنف' :'itemName', flex: 0.4 },
-    { field: 'quantity', headerName: i18n.language === 'ar' ? 'الكمية' :'quantity', flex: 0.4 },
-    { field: 'weight', headerName: i18n.language === 'ar' ? ' الوزن' :'weight', flex: 0.4 },
-    { field: 'extraWeight', headerName: i18n.language === 'ar' ? 'الوزن بالرملة' :'extraWeight', flex: 0.4 },
+    {
+      field: 'CT',
+      headerName: i18n.language === 'ar' ? 'العيار' : 'CT',
+      flex: 0.4,
+      renderCell: (params) => (
+        <TextField
+          type="number"
+          variant="standard"
+          value={params.value}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            // You can handle the change here (e.g., update state or call a function)
+            console.log(`New value for row ${params.id}:`, newValue);
+          }}
+          InputProps={{ disableUnderline: true }}
+          sx={{ width: '100%' }}
+        />
+      ),
+    },
+    { field: 'weight', headerName: i18n.language === 'ar' ? ' وزن الذهب' :'weight', flex: 0.4 },
+    { field: 'pureGold', headerName: i18n.language === 'ar' ? 'الذهب الصافى' :'pureGold', flex: 0.4 },
+    { field: 'ManufacturerPrice', headerName: i18n.language === 'ar' ? 'ثمن المصنعية ':'ManufacturerPrice', flex: 0.4 },
+    { field: 'totalAmount', headerName: i18n.language === 'ar' ? 'المبلغ الاجمالى':'totalAmount', flex: 0.4 },
   ];
 
 

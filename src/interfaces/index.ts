@@ -47,10 +47,13 @@ identity_id: string,
 }
 export interface items{
   itemName:string;
-  id?:number;
-  quantity:number;
+  CT:number;
   weight:number;
-  extraWeight:number;
+  pureGold:number;
+  ManufacturerPrice:number
+  totalAmount:number;
+  totalGold:number;
+  totalManufacturerPrice:number
 
 }
 export interface IEmployee {
