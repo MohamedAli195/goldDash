@@ -38,7 +38,7 @@ interface IFormInput {
 interface IProps {
   setItems: Dispatch<SetStateAction<items[]>>;
 }
-function InvoceItems({setItems}:IProps) {
+function InvoceItemsForm({setItems}:IProps) {
     const {
       register,
       handleSubmit,
@@ -240,4 +240,4 @@ function InvoceItems({setItems}:IProps) {
   )
 }
 
-export default InvoceItems
+export default InvoceItemsForm

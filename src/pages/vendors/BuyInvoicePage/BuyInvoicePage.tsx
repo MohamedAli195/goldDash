@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import VendorInfo from '../VendorInfo/VendorInfo'
 import { items } from 'interfaces';
-import InvoceItems from '../InvoiceItems.tsx/InvoceItems';
 import IvoiceTable from '../InvoiceTable/InvoiceTable';
 import { Stack } from '@mui/material';
+import InvoceItemsForm from '../InvoiceItemsForm.tsx/InvoceItemsForm';
 
 function BuyInvoicePage() {
 
@@ -19,7 +19,7 @@ function BuyInvoicePage() {
       <p>Vendor id :{vendor }</p>
     </div>
   
-    <InvoceItems setItems={setItems} />
+    <InvoceItemsForm setItems={setItems} />
     <IvoiceTable data={items} />
 
       
