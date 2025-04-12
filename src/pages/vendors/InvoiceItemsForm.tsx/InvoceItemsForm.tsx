@@ -24,14 +24,15 @@ const VisuallyHiddenInput = styled('input')({
 });
 interface IFormInput {
 
-  itemName:string;
-  CT:number;
-  weight:number;
-  pureGold:number;
-  ManufacturerPrice:number
-  totalAmount:number;
-  totalGold:number;
-  totalManufacturerPrice:number
+  id: number;
+  item: string;
+  carat: number;
+  gold_weight: number;
+  pure_gold_999: number;
+  manufacturing_price: number;
+  totalAmount?: number;
+  total_pure_gold_999: number;
+  total_manufacturing: number;
 
 }
 
@@ -71,7 +72,7 @@ function InvoceItemsForm({setItems}:IProps) {
         try {
           const lastData = {
             ...data,
-            pureGold:PureGold,
+            pure_gold_999:PureGold,
             totalAmount:totalAmount,
             id: Date.now()
           };
@@ -86,9 +87,10 @@ function InvoceItemsForm({setItems}:IProps) {
       useEffect(()=>{
         pureGoldHandler()
         totalAmountHandler()
-      },[CT,weight,manufactoryPrice])
+      },[CT,weight,manufactoryPrice,totalAmount,PureGold])
 
   return (
+    <>
         <Box
           sx={{
             mt: { sm: 5, xs: 2.5 },
@@ -102,12 +104,12 @@ function InvoceItemsForm({setItems}:IProps) {
                 
                 fullWidth
                 variant="outlined"
-                id="itemName"
+                id="item"
                 type="text"
-                label={t('itemName')}
-                error={!!errors.itemName}
-                helperText={errors.itemName?.message}
-                {...register('itemName', { required: t('itemName') })}
+                label={t('item')}
+                error={!!errors.item}
+                helperText={errors.item?.message}
+                {...register('item', { required: t('item') })}
                 InputLabelProps={{
                   style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
                 }}
@@ -121,12 +123,12 @@ function InvoceItemsForm({setItems}:IProps) {
                 fullWidth
                 
                 variant="outlined"
-                id="CT"
+                id="carat"
                 type="text"
-                label={t('CT')}
-                error={!!errors.CT}
-                helperText={errors.CT?.message}
-                {...register('CT')}
+                label={t('carat')}
+                error={!!errors.carat}
+                helperText={errors.carat?.message}
+                {...register('carat')}
                 onChange={(e)=>setCT(+e.target.value)}
                 
                 InputLabelProps={{
@@ -142,12 +144,12 @@ function InvoceItemsForm({setItems}:IProps) {
                 fullWidth
                 
                 variant="outlined"
-                id="weight"
-                type="text"
-                label={t('weight')}
-                error={!!errors.weight}
-                helperText={errors.weight?.message}
-                {...register('weight')}
+                id="gold_weight"
+                type="number"
+                label={t('gold_weight')}
+                error={!!errors.gold_weight}
+                helperText={errors.gold_weight?.message}
+                {...register('gold_weight')}
                 onChange={(e)=>setweight(+e.target.value)}
                 InputLabelProps={{
                   style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
@@ -163,12 +165,12 @@ function InvoceItemsForm({setItems}:IProps) {
                 fullWidth
                 value={PureGold}
                 variant="outlined"
-                id="pureGold"
+                id="pure_gold_999"
                 type="text"
-                label={t('pureGold')}
-                error={!!errors.pureGold}
-                helperText={errors.pureGold?.message}
-                {...register('pureGold')}
+                label={t('pure_gold_999')}
+                error={!!errors.pure_gold_999}
+                helperText={errors.pure_gold_999?.message}
+                {...register('pure_gold_999')}
                 // onChange={(e)=>setExtraW(+e.target.value *1000 )}
                 InputLabelProps={{
                   style: { fontWeight: 800, fontSize: '18px' }, // Makes the label bold
@@ -183,12 +185,12 @@ function InvoceItemsForm({setItems}:IProps) {
                 fullWidth
                 value={manufactoryPrice}
                 variant="outlined"
-                id="ManufacturerPrice"
-                type="text"
-                label={t('ManufacturerPrice')}
-                error={!!errors.ManufacturerPrice}
-                helperText={errors.ManufacturerPrice?.message}
-                {...register('ManufacturerPrice')}
+                id="manufacturing_price"
+                type="number"
+                label={t('manufacturing_price')}
+                error={!!errors.manufacturing_price}
+                helperText={errors.manufacturing_price?.message}
+                {...register('manufacturing_price')}
                 // onChange={(e)=>setExtraW(+e.target.value *1000 )}
                 onChange={(e)=>setManufactoryPrice(+e.target.value)}
 
@@ -237,6 +239,7 @@ function InvoceItemsForm({setItems}:IProps) {
           </Stack>
 
         </Box>
+        </>
   )
 }
 

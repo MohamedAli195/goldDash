@@ -28,10 +28,10 @@ function IvoiceTable({data}: IProps) {
   // totalAmount:number;
   // totalGold:number;
   // totalManufacturerPrice:number
-    { field: 'itemName', headerName: i18n.language === 'ar' ? 'الصنف' :'itemName', flex: 0.4 },
+    { field: 'item', headerName: i18n.language === 'ar' ? 'الصنف' :'itemName', flex: 0.4 },
     {
-      field: 'CT',
-      headerName: i18n.language === 'ar' ? 'العيار' : 'CT',
+      field: 'carat',
+      headerName: i18n.language === 'ar' ? 'العيار' : 'carat',
       flex: 0.4,
       renderCell: (params) => (
         <TextField
@@ -42,15 +42,16 @@ function IvoiceTable({data}: IProps) {
             const newValue = e.target.value;
             // You can handle the change here (e.g., update state or call a function)
             console.log(`New value for row ${params.id}:`, newValue);
+            
           }}
           InputProps={{ disableUnderline: true }}
           sx={{ width: '100%' }}
         />
       ),
     },
-    { field: 'weight', headerName: i18n.language === 'ar' ? ' وزن الذهب' :'weight', flex: 0.4 },
-    { field: 'pureGold', headerName: i18n.language === 'ar' ? 'الذهب الصافى' :'pureGold', flex: 0.4 },
-    { field: 'ManufacturerPrice', headerName: i18n.language === 'ar' ? 'ثمن المصنعية ':'ManufacturerPrice', flex: 0.4 },
+    { field: 'gold_weight', headerName: i18n.language === 'ar' ? ' وزن الذهب' :'gold_weight', flex: 0.4 },
+    { field: 'pure_gold_999', headerName: i18n.language === 'ar' ? 'الذهب الصافى' :'pure_gold_999', flex: 0.4 },
+    { field: 'manufacturing_price', headerName: i18n.language === 'ar' ? 'ثمن المصنعية ':'manufacturing_price', flex: 0.4 },
     { field: 'totalAmount', headerName: i18n.language === 'ar' ? 'المبلغ الاجمالى':'totalAmount', flex: 0.4 },
   ];
 
@@ -61,6 +62,8 @@ function IvoiceTable({data}: IProps) {
           ...item,
         }))
       : [];
+
+      console.log(rows)
   return (
     <DataGrid
       rows={rows}
@@ -75,7 +78,7 @@ function IvoiceTable({data}: IProps) {
       disableRowSelectionOnClick
       disableMultipleRowSelection
       hideFooterPagination={true}
-      getRowId={(row) => row.itemName} // or any unique property or combination
+      getRowId={(row) => row.item} // or any unique property or combination
 
       
     />

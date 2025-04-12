@@ -46,14 +46,15 @@ identity_id: string,
                
 }
 export interface items{
-  itemName:string;
-  CT:number;
-  weight:number;
-  pureGold:number;
-  ManufacturerPrice:number
-  totalAmount:number;
-  totalGold:number;
-  totalManufacturerPrice:number
+  id: number;
+  item: string;
+  carat: number;
+  gold_weight: number;
+  pure_gold_999: number;
+  manufacturing_price: number;
+  totalAmount?: number;
+  total_pure_gold_999: number;
+  total_manufacturing: number;
 
 }
 export interface IEmployee {
