@@ -38,8 +38,10 @@ interface IFormInput {
 
 interface IProps {
   setItems: Dispatch<SetStateAction<items[]>>;
+  setTotalPureGold:Dispatch<SetStateAction<number>>
+  setTotaltotalManfPrice:Dispatch<SetStateAction<number>>
 }
-function InvoceItemsForm({setItems}:IProps) {
+function InvoceItemsForm({setItems,setTotalPureGold,setTotaltotalManfPrice}:IProps) {
     const {
       register,
       handleSubmit,
@@ -52,6 +54,10 @@ function InvoceItemsForm({setItems}:IProps) {
       const [weight,setweight]=useState<number>(1)
       const [manufactoryPrice,setManufactoryPrice]=useState<number>(1)
       const [totalAmount,settotalAmount]=useState<number>(1)
+
+      
+      // console.log("totalPureGold",totalPureGold)
+      // console.log("totalManfPrice",totalManfPrice)
       const pureGoldHandler = ()=>{
         if(CT===18){
           setPureGold(weight * (750/999) )
@@ -77,11 +83,13 @@ function InvoceItemsForm({setItems}:IProps) {
             id: Date.now()
           };
           setItems((prev: items[]) => [...prev, lastData]);
-          toast.success('Vendor added successfully');
+          setTotalPureGold((prev) => prev+PureGold)
+          setTotaltotalManfPrice((prev) => prev+manufactoryPrice)
+          toast.success('item added successfully');
           
         } catch (err) {
           // console.error('Error:', err);
-          toast.error('Failed to add Vendor, please check your input.');
+          toast.error('Failed to add item, please check your input.');
         }
       };
       useEffect(()=>{

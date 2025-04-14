@@ -16,15 +16,18 @@ function BuyInvoicePage() {
   const [items, setItems] = useState<items[]>([]);
 
 
+  const [totalPureGold,setTotalPureGold]= useState<number>(0)
+  const [totalManfPrice,setTotaltotalManfPrice]= useState<number>(0)
+
   const SaveHandler = async () => {
     try {
       const data = {
         branch_id :branch,
         gold_vendor_id:vendor,
         items:items,
-        total_pure_gold_999:55,
-        total_manufacturing : 52225,
-        invoice_date: "2025-03-15",
+        total_pure_gold_999:totalPureGold,
+        total_manufacturing : totalManfPrice,
+        invoice_date: Date.now(),
       }
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('clintToken')}`,
@@ -59,10 +62,13 @@ function BuyInvoicePage() {
     </Stack>
 
   
-    <InvoceItemsForm setItems={setItems} />
+    <InvoceItemsForm setItems={setItems} setTotaltotalManfPrice={setTotaltotalManfPrice} setTotalPureGold={setTotalPureGold} />
     <IvoiceTable data={items} />
+    <p>Total pure gold: {totalPureGold}</p>
+    <p>Total total manufacturing : {totalManfPrice}</p>
 
-      <Button onClick={SaveHandler} >Save</Button>
+
+      <Button onClick={SaveHandler} variant="contained">Save</Button>
       </>
   )
 }

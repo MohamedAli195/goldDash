@@ -55,7 +55,6 @@ export interface items{
   totalAmount?: number;
   total_pure_gold_999: number;
   total_manufacturing: number;
-
 }
 export interface IEmployee {
   // user_id: number;
@@ -167,4 +166,9 @@ export interface IUser {
   name: string;
   email: string;
   permission?: ISupPermission[];
+}
+export interface IInvoice {
+  items:items[],
+  branch:number,
+  vendor:number
 }

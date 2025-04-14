@@ -18,6 +18,9 @@ function Vendors() {
         <Box>
           <Button component={Link} to="/vendors/buy-invoice">buy invoice</Button>
         </Box>
+        <Box>
+          <Button component={Link} to="/vendors/vendor-invoice">vendors invoices</Button>
+        </Box>
       </Stack>
 
 

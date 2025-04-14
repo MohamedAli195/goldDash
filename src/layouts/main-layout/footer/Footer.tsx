@@ -36,7 +36,7 @@ const Footer = () => {
                         '&:hover': { color: 'primary.main' },
                         cursor:"pointer"
                       }}>
-                     FLEXI-CODE.
+                     Goldest
                   </Typography>
                   <Typography
                     variant="h6"
@@ -47,7 +47,7 @@ const Footer = () => {
                     fontWeight="regular"
                   >
                     
-                    Made with
+                    Made By us
                     
                     <IconifyIcon icon="ri:heart-fill" sx={{ mx: 1, color: 'error.main' }} />
                     
@@ -63,7 +63,7 @@ const Footer = () => {
                         '&:hover': { color: 'primary.main' },
                       }}
                     >
-                      Market Mentor 
+                      
                       &copy; {new Date().getFullYear()},
                     </Link>
                   </Typography>

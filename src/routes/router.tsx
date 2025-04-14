@@ -21,6 +21,7 @@ import VendorsPage from 'pages/vendors/VendorsPage';
 import Vendors from 'pages/vendors';
 import SalesInvoicePage from 'pages/vendors/SalesInvoicePage/SalesInvoicePage';
 import BuyInvoicePage from 'pages/vendors/BuyInvoicePage/BuyInvoicePage';
+import VendorInvoicesPage from 'pages/VendorInvoices';
 
 // Lazy-loaded components
 const App = lazy(() => import('App'));
@@ -110,6 +111,9 @@ export const routes = [
               {
                 path: 'buy-invoice',
                 element: <BuyInvoicePage/>,
+              },{
+                path: 'vendor-invoice',
+                element: <VendorInvoicesPage isDashBoard={false}/>,
               },
             ],
           },
