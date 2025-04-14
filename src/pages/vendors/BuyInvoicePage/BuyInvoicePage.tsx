@@ -6,7 +6,7 @@ import { Button, Stack } from '@mui/material';
 import InvoceItemsForm from '../InvoiceItemsForm.tsx/InvoceItemsForm';
 import BranchInfo from '../BranchInfo/BranchInfo';
 import axios from 'axios';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { newUrl } from 'functionsWork';
 
 function BuyInvoicePage() {
@@ -27,7 +27,7 @@ function BuyInvoicePage() {
         items:items,
         total_pure_gold_999:totalPureGold,
         total_manufacturing : totalManfPrice,
-        invoice_date: Date.now(),
+        invoice_date: "2025-04-14",
       }
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('clintToken')}`,
@@ -69,6 +69,9 @@ function BuyInvoicePage() {
 
 
       <Button onClick={SaveHandler} variant="contained">Save</Button>
+
+
+      <Toaster position="bottom-center" reverseOrder={false} />
       </>
   )
 }

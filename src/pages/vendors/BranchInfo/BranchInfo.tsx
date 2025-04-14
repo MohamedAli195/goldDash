@@ -17,6 +17,7 @@ function BranchInfo({ setBranch }: IProps) {
   console.log(data)
   return (
     <TextField
+    fullWidth
       select
       variant="outlined"
       InputLabelProps={{

@@ -17,10 +17,11 @@ function VendorInfo({ setClinet }: IProps) {
   console.log(data)
   return (
     <TextField
+    fullWidth
       select
       variant="outlined"
       InputLabelProps={{
-        style: { fontWeight: 800, fontSize: '18px',width:"50%" }, // Makes the label bold
+        style: { fontWeight: 800, fontSize: '18px',width:"100%" }, // Makes the label bold
       }}
       sx={{
         '& .MuiInputBase-input': {
